@@ -25,3 +25,7 @@ android.nonTransitiveRClass=true
 # Proot/Termux Compatibility Settings
 # Disable AAPT2 daemon mode to prevent "Daemon startup failed" errors in proot environment
 android.aapt2.process.daemon=false
+
+# ARM64 Linux: ZipFlinger fails to merge resources/manifest into APK, fall back to legacy packager
+android.enableZipFlinger=false
+android.useNewApkCreator=false

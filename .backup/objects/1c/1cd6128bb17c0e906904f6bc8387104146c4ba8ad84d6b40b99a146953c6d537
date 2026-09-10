@@ -2,9 +2,9 @@
 agp = "9.4.0"
 appVersion = "3.2.0-1"
 android-versionCode = "117"
-android-compileSdk = "37"
+android-compileSdk = "36"
 android-minSdk = "26"
-android-targetSdk = "37"
+android-targetSdk = "36"
 androidx-activityCompose = "1.13.0"
 slf4jNop = "2.0.19"
 spght-encryptedprefs = "1.1.1"
@@ -77,7 +77,6 @@ tts = { module = "nl.marc-apps:tts", version.ref = "tts" }
 tts-compose = { module = "nl.marc-apps:tts-compose", version.ref = "tts" }
 androidx-foundation-android = { group = "androidx.compose.foundation", name = "foundation-android", version.ref = "foundationAndroid" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3" }
 compose-material-icons-core = { module = "org.jetbrains.compose.material:material-icons-core", version.ref = "materialIcons" }
