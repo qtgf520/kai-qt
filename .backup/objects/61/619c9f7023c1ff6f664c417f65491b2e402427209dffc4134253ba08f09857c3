@@ -525,9 +525,8 @@ class ChatViewModel(
     }
 
     private fun startNewChat(composerPrefill: String? = null) {
-        // Do NOT cancel the in-flight request: starting a new chat must not kill a
-        // running task. The turn is bound to its snapshot conversation id, so it
-        // keeps executing and its result lands in the original chat.
+        currentJob?.cancel()
+        currentJob = null
         dataRepository.startNewChat()
         dataRepository.setInteractiveMode(false)
         _state.update {

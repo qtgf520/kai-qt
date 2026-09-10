@@ -932,9 +932,8 @@ class RemoteDataRepository(
             }
             // Persist the user message immediately so switching chats (or leaving the
             // screen) never loses it — previously the conversation was only saved after
-            // the assistant's full response arrived. Bind to the snapshot id so an
-            // in-flight turn that survives a chat switch still lands in its own chat.
-            saveCurrentConversation(turnConversationId)
+            // the assistant's full response arrived.
+            saveCurrentConversation()
         }
 
         compactHistoryIfNeeded()
@@ -1538,16 +1537,14 @@ class RemoteDataRepository(
         return history.subList(cutoffIndex, history.size)
     }
 
-    private suspend fun saveCurrentConversation(conversationIdOverride: String? = null) {
+    private suspend fun saveCurrentConversation() {
         val history = trimToRecentExchanges(chatHistory.value, 20)
         if (history.isEmpty()) return
 
         val now = Clock.System.now().toEpochMilliseconds()
-        val conversationId = conversationIdOverride
-            ?: _currentConversationId.value
-            ?: Uuid.random().toString().also {
-                setCurrentConversationId(it)
-            }
+        val conversationId = _currentConversationId.value ?: Uuid.random().toString().also {
+            setCurrentConversationId(it)
+        }
 
         val existingConversation = savedConversations.value.find { it.id == conversationId }
 

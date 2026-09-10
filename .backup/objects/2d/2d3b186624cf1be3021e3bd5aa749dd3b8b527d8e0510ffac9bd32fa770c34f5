@@ -932,9 +932,8 @@ class RemoteDataRepository(
             }
             // Persist the user message immediately so switching chats (or leaving the
             // screen) never loses it — previously the conversation was only saved after
-            // the assistant's full response arrived. Bind to the snapshot id so an
-            // in-flight turn that survives a chat switch still lands in its own chat.
-            saveCurrentConversation(turnConversationId)
+            // the assistant's full response arrived.
+            saveCurrentConversation()
         }
 
         compactHistoryIfNeeded()
