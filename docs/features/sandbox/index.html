@@ -1,0 +1,1198 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Kai - AI Assistant App">
+      
+      
+      
+        <link rel="canonical" href="https://kai9000.com/docs/features/sandbox/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Linux Sandbox - Kai Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux-sandbox" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kai Documentation" class="md-header__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kai Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Linux Sandbox
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kai Documentation" class="md-nav__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kai Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Servers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daemon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daemon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encryption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../settings-export-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../splinterlands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Splinterlands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choosing-a-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#carrying-files-across" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Carrying files across
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-linux-or-two" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One Linux, or two
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-conversation-shell-sessions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-conversation shell sessions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#terminal-tab-session-picker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal tab session picker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-installed-tooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pre-installed tooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#where-root-lives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where /root lives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssh-host-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSH host configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-shot-escape-hatch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot escape hatch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#background-processes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Background processes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cancellation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancellation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-healing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-healing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="linux-sandbox">Linux Sandbox</h1>
+<p><strong>Last verified:</strong> 2026-08-30</p>
+<p>Kai ships a self-contained Linux environment on Android so the assistant — and the user, via the in-app Terminal — can run real shell commands. The agent can install packages, write and run scripts, hit the network, and reach external servers over SSH/SFTP/FTP. The sandbox runs the user-space <code>proot</code> runtime against a rootfs extracted into the app's private storage; no root or system access is required.</p>
+<p>The sandbox is <strong>Android-only</strong>. iOS, desktop, and web have no-op stubs — sandbox operations are simply unavailable on those platforms.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="choosing-a-distribution">Choosing a distribution</h3>
+<p>The Settings card offers two, and the choice is always open — before the first install and at any point afterwards:</p>
+<ul>
+<li><strong>Debian 12</strong> — the recommended default. ~150 MB, apt, glibc, and the same Linux <a href="../kai-build/">Kai Build</a> runs in.</li>
+<li><strong>Alpine Linux</strong> — the small option. ~4 MB, apk, musl. Kai Build cannot use it, so picking Alpine means Kai Build installs a Debian of its own alongside.</li>
+</ul>
+<p><strong>Switching is not a reinstall.</strong> Each distribution keeps its own install in its own directory, so picking the other one points the shell integration at it and leaves the one being left exactly as it was — same <code>/root</code>, same SSH keys, same skills, same installed packages. Switching back is instant. If the distribution picked has no install yet, the card simply offers to install it, and the other one still stays put. Nothing is ever downloaded or deleted by the act of switching; removing a Linux is only ever the explicit <strong>Uninstall</strong> action, which removes the one currently selected.</p>
+<p>Because Debian has exactly one directory on the device, pointing the shell integration at Debian when Kai Build already set one up costs nothing at all — it is the install that is already there.</p>
+<p>The picker lists which distributions are already on disk, so a choice that is a switch reads differently from one that is a download. It is hidden only while an install is actually running.</p>
+<p>Whichever install is selected, its recorded distribution wins over the setting everywhere downstream — package commands, the tool descriptions sent to the model, the name on the card and in the Terminal header. Live shell sessions do not survive a switch (each is a <code>proot</code> bound to the outgoing rootfs); they are dropped and started again lazily against the new one, the same way they are after an uninstall.</p>
+<p>Alpine is capped at 3.22 because 3.23+ ships apk-tools 3, which is incompatible with proot (<code>execveat</code>), so package installs would fail. Debian comes from the Linux Containers image index, architecture-matched, and needs proot's hardlink-to-symlink emulation because dpkg unpacks packages using hardlinks that Android refuses inside the app sandbox.</p>
+<p><strong>Sandboxes installed before this choice existed are Alpine, and open on Alpine.</strong> Such a sandbox never recorded a choice, so the setting's default would otherwise send it to a Debian it has never had; an install already sitting in the chat sandbox's own directory counts as the choice until the user makes a different one. They are recognised on sight, keep their <code>/root</code>, their SSH keys and their skills, and are never re-downloaded — and switching to Debian and back finds them exactly as they were left.</p>
+<h3 id="carrying-files-across">Carrying files across</h3>
+<p>Switching distribution keeps both installs, but it does not merge them — the new one starts with its own empty <code>/root</code>. So whenever the distribution <em>not</em> selected still holds files in its home that the selected one does not, the card offers to copy them: how many files, how large, and a <strong>Copy Files</strong> action.</p>
+<p>The copy is a <strong>merge, and it is one-way</strong>. Anything already in the selected install wins and is never overwritten, and the install the files come from is left completely untouched — it stays a working fallback until the user chooses to remove it. That makes the action safe to repeat, and makes its own disappearance the signal that it worked: once everything has been copied there is nothing left to offer, and the row goes away.</p>
+<p>What comes across is the user's home — SSH keys and <code>known_hosts</code>, installed skills, scripts, and whatever the agent wrote — with file permissions preserved, because a private key that arrives world-readable is one openssh refuses to use. Symlinks come across as symlinks rather than being followed, since a rootfs contains link loops.</p>
+<p>Four kinds of thing are deliberately left behind:</p>
+<ul>
+<li><strong><code>projects</code></strong> — a bind mount both installs already share, so there is nothing to move.</li>
+<li><strong>Shell startup files</strong> (<code>.bashrc</code>, <code>.profile</code>, and friends) — every rootfs ships its own, written for that distribution's layout.</li>
+<li><strong><code>.cache</code></strong> — regenerable, and often larger than everything that matters.</li>
+<li><strong>Coding-agent directories</strong> — the binaries there are compiled against the source distribution's libc and cannot run on the target, and Kai Build only ever runs in Debian anyway.</li>
+</ul>
+<p>Packages are not migrated either, and cannot be: the two distributions have different package managers and different package names. The Settings <strong>Install Packages</strong> action covers the standard bundle on whichever system is selected.</p>
+<p>The full move is therefore: switch to the distribution you want, install it if it is not there, <strong>Copy Files</strong>, then select the old one and <strong>Uninstall</strong> it. Nothing is destroyed until that last step, which is the only one that removes anything.</p>
+<h3 id="one-linux-or-two">One Linux, or two</h3>
+<p>Debian has one install on this device, so whenever the shell integration is pointed at Debian the chat sandbox and Kai Build are the <strong>same install</strong>. One download, one rootfs, one uninstall: setting up Linux from Settings means opening Kai Build lands straight on the project list, and installing from Kai Build's setup screen leaves Settings reporting the sandbox as ready. Uninstalling from either surface removes it for both, and both confirmation dialogs say so. Project folders survive it.</p>
+<p>Pointing the shell integration at Alpine instead splits them: the chat sandbox runs in its Alpine, and Kai Build keeps (or bootstraps) its own Debian. Both exist at once, which is exactly what makes switching back and forth free.</p>
+<p>Package installs are serialized across the two, because a shared rootfs means the Settings "Install Packages" action and a Kai Build agent install could otherwise reach <code>dpkg</code> at the same moment and both fail on its lock.</p>
+<p>Kai Build itself is never re-pointed by a switch. Its Linux is wherever Debian lives, whether or not the chat sandbox is currently sharing it, so a running project terminal is unaffected by anything the Settings picker does.</p>
+<h3 id="per-conversation-shell-sessions">Per-conversation shell sessions</h3>
+<p>Each chat conversation gets its own long-running <code>bash</code> process. The agent's shell tool routes through the conversation's shell, so working directory, exported environment variables, and any in-shell state carry from one tool call to the next within that chat — the way they do in any normal terminal. State does <strong>not</strong> leak across chats: <code>cd /tmp</code> in conversation A leaves conversation B sitting wherever it was. The in-app Terminal tab also has its own dedicated scratch shell, separate from any chat.</p>
+<p><code>/root</code> and the rest of the rootfs are still shared on disk across all sessions, so files an agent writes in one chat are visible to every other chat and to the Terminal tab. Only live shell state (cwd, exports, background <code>&amp;</code> jobs, ssh-agent connections) is per-session.</p>
+<p>So <code>cd /tmp</code> followed by <code>pwd</code> in the same chat returns <code>/tmp</code>. The assistant does not need to chain <code>cd dir &amp;&amp; command</code> unless it specifically wants the directory change to be one-shot.</p>
+<p>A shell is created lazily on first use and lives for the duration of the app process. When a conversation is deleted, its shell is closed. Sandbox reset closes every live shell.</p>
+<p>The bash <em>process</em> itself dies with the app — cwd and exported env do not survive. The visible <em>transcript</em> of the current chat's session is kept in memory with a hard cap of 500 lines per session, and persisted to the conversation (capped at roughly 10,000 characters of trimmed output — about a screen and a half of scrollback) so re-opening an old chat after a restart still shows the tail of what was on screen, even though running another command starts a fresh shell. Persistence is debounced (~500 ms) so rapid output bursts coalesce into a single write rather than thrashing storage.</p>
+<h3 id="terminal-tab-session-picker">Terminal tab session picker</h3>
+<p>The in-app Terminal tab shows two chips at the top whenever a chat is open: <strong>Session</strong> for the current chat's shell, and <strong>Temporary</strong> for the user's scratch shell. <strong>Session</strong> sits first and is auto-selected when opening the terminal from a chat, so the user immediately sees what the agent is operating on; the visible terminal also scrolls to the most recent output (including any transcript restored from disk). <strong>Temporary</strong> drops to the standalone scratch shell that isn't tied to any chat — its transcript is in-memory only and clears when the app process dies. With no chat active, only the <strong>Temporary</strong> chip is shown (and the chip row collapses entirely when there's nothing to switch between).</p>
+<p>The agent's shell tool, package-manager operations from the Packages tab, and the Terminal scratch session each route to a distinct shell. A long-running install in the Packages UI no longer blocks the chat tool from running.</p>
+<h3 id="pre-installed-tooling">Pre-installed tooling</h3>
+<p>Packages split into two tiers, and each distribution names its own.</p>
+<p><strong>Base</strong> — installed as the last step of setup, with no separate action and no way to opt out. The install is not considered finished until they are in, so an interrupted setup can never present itself as ready. On Alpine that is just <code>bash</code>: every persistent shell session (the agent's shell tool, the Terminal tab, the Packages tab's own commands) is literally an <code>exec bash</code> process, so the sandbox cannot function without it. On Debian it is the wider set every coding project needs — bash, ca-certificates, curl, wget, git, nano, less, unzip, python3, tar and coreutils — because that install doubles as Kai Build's.</p>
+<p><strong>Optional</strong> — <code>jq</code>, <code>nodejs</code>, a Python package installer, plus remote-server tooling: <code>openssh-client</code> (provides <code>ssh</code>/<code>scp</code>/<code>sftp</code>), <code>lftp</code> (FTP and FTPS) and <code>rsync</code>. Alpine adds <code>curl</code>, <code>wget</code>, <code>git</code> and <code>python3</code> here since they are not in its base. These install only when the user taps <strong>Install Packages</strong> in Settings — a deliberate, separate action, never automatic.</p>
+<p>Anything beyond the two tiers is one install away via the Packages tab. The tab never offers to uninstall a base package: those rows simply have no uninstall action.</p>
+<p><code>~/.ssh</code> lives under <code>/root</code>, which is durable app storage either way, so SSH keys, <code>known_hosts</code>, and SSH config survive restarts.</p>
+<h3 id="where-root-lives">Where <code>/root</code> lives</h3>
+<p>New installs keep <code>/root</code> <strong>on the rootfs</strong>, in app-internal storage, which is the only place Android reliably allows executing a file — that is what lets coding agents installed under <code>~/.local/bin</code> actually run. Only <code>/root/projects</code> is bound in from external app files, so project code stays reachable over USB/MTP.</p>
+<p>Files anywhere in the tree are still openable: <code>open_file</code> and the in-app browser hand them to other apps through <code>FileProvider</code>, which is configured for both storage areas. What this layout gives up is browsing <code>/root</code> directly from a desktop file manager.</p>
+<p>Sandboxes installed before the two Linux stacks merged keep the old arrangement — the whole of <code>/root</code> bound in from external storage — because relocating a user's files behind their back is not worth the tidiness. Their file browser still shows <code>/root</code> in the right place; it is grafted onto the listing rather than read out of the rootfs.</p>
+<h3 id="ssh-host-configuration">SSH host configuration</h3>
+<p>After the package install completes, Kai seeds <code>~/.ssh/config</code> with a <code>Host *</code> defaults block: server keepalive (<code>ServerAliveInterval 30</code>, <code>ServerAliveCountMax 3</code>) so long-lived ssh tunnels and sftp sessions don't get killed by NAT timeouts, and <code>StrictHostKeyChecking accept-new</code> so the first connection to a host writes its key into <code>known_hosts</code> automatically without a <code>yes/no</code> prompt this shell can't answer (subsequent connections still reject <em>changed</em> keys — sane TOFU). The seeding step is idempotent and only writes if the defaults block is missing.</p>
+<p>The agent has a dedicated <strong>Configure SSH Host</strong> tool that registers a named host alias (alias, hostname, optional user/port/identity file) by upserting a <code>Host</code> block into <code>~/.ssh/config</code>, optionally appending a line to <code>~/.ssh/known_hosts</code>. After registration, the agent drives ssh through the regular shell tool — <code>ssh myalias 'remote-cmd'</code>, <code>scp file myalias:</code>, etc. — with no flags. The tool never writes or uploads private keys; the user has to place those under <code>~/.ssh</code> separately. Repeated calls for the same alias replace the prior block in place, so configuration stays clean.</p>
+<p>Password-only remotes are reachable too but openssh inside the sandbox can't answer interactive password prompts on its own (no PTY; ssh reads from <code>/dev/tty</code>, not stdin). The documented path is installing <code>sshpass</code> once (<code>apk add</code> or <code>apt-get install</code>, per the installed distribution), then invoke as <code>sshpass -p '&lt;password&gt;' ssh &lt;alias&gt;</code> (or <code>-f &lt;password-file&gt;</code> to keep the password off the command line). The host alias config still applies — sshpass only supplies the password and fakes a PTY internally. Both tool descriptions point the agent at this pattern so it surfaces during normal SSH workflows.</p>
+<p><strong>No connection multiplexing.</strong> openssh's ControlMaster feature is intentionally not enabled. The mux protocol creates its control socket via the <code>link()</code> syscall (atomic create-or-fail), and Android's kernel-level <code>protected_hardlinks</code> policy plus SELinux for the <code>untrusted_app</code> domain refuses <code>link()</code> from app processes regardless of file ownership or mode. <code>proot</code> can't translate around it because the check enforces against the real Android uid. The verified symptom when ControlMaster was tried: <code>muxserver_listen: link mux listener … Permission denied</code> on every ssh invocation. Each ssh call therefore does a full TCP+auth handshake; there is no held-connection optimization in this sandbox. The alias config alone still removes per-call flag repetition, which is the real ergonomics win.</p>
+<h3 id="one-shot-escape-hatch">One-shot escape hatch</h3>
+<p>The assistant's shell tool accepts a <code>fresh: true</code> argument that runs the command in a brand-new short-lived <code>proot</code> instead of the persistent shell. State changes in that one-shot shell are discarded when it exits. The persistent session is the default; <code>fresh</code> is only there for the rare case where isolation matters.</p>
+<h3 id="background-processes">Background processes</h3>
+<p><code>background: true</code> on the shell tool detaches the command into its own short-lived <code>proot</code> and returns a <code>session_id</code>. Background jobs do not share state with the persistent shell. The companion <code>manage_process</code> tool reports status, output, and lets the assistant kill them.</p>
+<h3 id="cancellation">Cancellation</h3>
+<p>Hitting <strong>Cancel</strong> in the Terminal — or any cancel signal coming from the chat — sends <code>SIGINT</code> to the running command (technically: every direct child of the persistent bash, delivered from a sibling proot, since Kai has no PTY to drive line discipline). If the process ignores <code>SIGINT</code>, the cancel escalates to <code>SIGTERM</code> then <code>SIGKILL</code>. If even that fails, the whole shell is reset; the next command transparently restarts a fresh bash. At most a single command loses session state.</p>
+<h3 id="self-healing">Self-healing</h3>
+<p>The shell session can break — the user types <code>exit</code>, a command crashes bash, the framing channel desyncs, or a per-call timeout expires with the shell still wedged. In every case the next command lazily starts a new shell. Working directory and exported env are lost in that one event; the system stays usable.</p>
+<h2 id="behavior">Behavior</h2>
+<ul>
+<li><strong>Tool availability follows install state</strong>: the assistant's sandbox tools (shell command, <code>manage_process</code>, and the SSH-host config tool) are advertised to the model only when the sandbox is actually installed (Ready) <em>and</em> the sandbox toggle is on. Before the sandbox is installed they are not sent at all — there is no point offering tools that can only return "not installed," and the enable/disable toggle is itself hidden until install completes. Once installed, the switch on the distribution's card is the on/off control.</li>
+<li><strong>Switching distribution mid-life</strong>: selecting the other distribution in the Settings card re-points the shell integration at that distribution's install without touching either one. When it is already there the card is showing the new system — its size, its packages, its Terminal — within a moment; when it is not, the card offers to install it and the previous one is still on disk, one tap away. The agent's sandbox tools follow: they are withdrawn while the selected distribution has no install and come back describing the new distribution's package manager once it does.</li>
+<li><strong>Copying files between the two</strong>: the offer appears on the card only when the other install actually has something the selected one lacks, so it is a statement of fact rather than a standing button. The count and size are measured off the main thread and patched into the card when they land, never blocking the first paint or a switch. During the copy the card shows a running <code>n/total</code>, and afterwards the offer is gone because a second look finds nothing left.</li>
+<li><strong>First run</strong>: Settings → Tools → Linux Sandbox picks a distribution and downloads its rootfs — a few MB for Alpine, around 150 MB for Debian, varying by architecture. After extraction the package index is refreshed (Alpine walks its mirror list rewriting <code>repositories</code> until one answers; Debian has a single index) and the base packages install automatically — no further action needed. The sandbox reaches Ready at that point, with the optional package set not yet installed; the Settings card shows a separate <strong>Install Packages</strong> button for those until the user taps it. The whole flow surfaces progress in the Settings sheet.</li>
+<li><strong>The status line is translated</strong>: every word the card shows about the install — not installed, downloading, extracting, configuring, installing base packages, installing a named package, copying files with its running count, ready, and each way any of those can fail — is a translated string, in all the languages the app ships. The install itself runs outside the UI, so it reports which step it is on and the card is what puts that into words. Only the underlying error text an OS call or a download mirror hands back stays as it arrived, inside a translated sentence; when there is none, the sentence says so rather than trailing off. The same goes for the Terminal, whose "sandbox is not ready" and failed-command notices are translated too, while real command output is not.</li>
+<li><strong>State across the app</strong>: each chat conversation has its own shell, and the Terminal tab has another. Files in <code>/root</code> and the rest of the rootfs are shared between them; live shell state (cwd, exports) is not. The Packages UI uses a separate "system" shell so its operations don't interfere with chats.</li>
+<li><strong>Network access</strong>: outbound IP works (DNS is configured against <code>8.8.8.8</code> / <code>8.8.4.4</code>). SSH/SFTP/FTP/HTTP all work; the user's Wi-Fi/mobile-data permission applies as normal.</li>
+<li><strong>File visibility</strong>: the whole filesystem, <code>/root</code> included, is the rootfs in app-internal storage; <code>/root/projects</code> and <code>/tmp</code> are bound in from elsewhere. Files the agent produces can be opened with <code>open_file</code> via Android's <code>FileProvider</code>, which is configured for both areas.</li>
+<li><strong>Tapping a file opens it here unless its name says otherwise</strong>: the browser hands a file to another app only for the extensions nothing good comes of showing as text — images, video, audio, documents, archives, compiled binaries, databases, fonts. Everything else opens in the built-in editor, including files with no extension at all (<code>id_rsa</code>, <code>Makefile</code>, <code>known_hosts</code>) and extensions no list would ever cover (<code>.pub</code>, <code>.service</code>, <code>.rules</code>), which is most of what a Linux tree is made of. The editor then decides from the bytes rather than the name: valid UTF-8 becomes an editable buffer, anything else gets the "not text" card with its two ways out. Guessing "text" wrong costs one tap; guessing "binary" wrong used to mean the file could not be read in the app at all.</li>
+<li><strong>Open as text, on any file</strong>: the row menu offers it next to "Open with app", so an extension the browser routes elsewhere — or one Android grabs — can still be read here. It goes through the same byte check, so a real binary lands on the "not text" card rather than pretending to be a document.</li>
+<li><strong>Handing a file to another app picks the right one</strong>: whether the file is opened with the row menu or handed over by the agent, the app offered is chosen from the extension. Android's own extension table is corrected where it does not fit a Linux sandbox — most visibly for <code>.apk</code>, which it does not know at all, so tapping one now offers to install it (FOSS builds only; see <a href="../tools/">tools.md</a>). Extensions Android has never heard of fall back to plain text when they look like source or config, which is most of what the sandbox produces.</li>
+<li><strong>Installed skills live here</strong>: skills (see <a href="../skills/">skills.md</a>) are stored as folders under <code>~/skills/&lt;id&gt;/</code> in the sandbox home — the sandbox is their single source of truth, which is why the Skills UI is Android-only and requires the sandbox to be installed first.</li>
+<li><strong>Tapping a sandbox-file link in chat</strong>: when the model links to a sandbox file (e.g. a <code>file:///root/out.gif</code> markdown link), tapping it opens the file through the same <code>FileProvider</code> path rather than the platform URL handler. Handing a raw <code>file://</code> URI to Android's <code>startActivity</code> throws <code>FileUriExposedException</code>, so a global URI handler intercepts <code>file:</code> and absolute-path links and routes them to <code>open_file</code>; all other links (http/https/…) pass through unchanged.</li>
+<li><strong>Limits</strong>: each shell call's stdout and stderr are individually capped at 15 000 characters; pipe through <code>head</code> / <code>tail</code> / <code>grep</code> for larger output. The default per-call timeout is 30 s and the maximum is 60 s.</li>
+<li><strong>Active-shell indicator</strong>: each time a chat starts running a shell command via the agent's shell tool, the rounded background of the sandbox icon button in the chat top bar flashes once in the primary color (snap on, ~800ms fade out) so the user can see at a glance that the assistant kicked off a sandbox command.</li>
+<li><strong>Inline sandbox view</strong>: the chat top-bar terminal icon toggles an inline sandbox surface (Android only) with sub-tabs — <strong>Terminal</strong> (interactive shell, default), <strong>Files</strong> (browse <code>/root</code>, open via FileProvider or a built-in text editor with Save), and <strong>Packages</strong> (search/install/uninstall/upgrade through the installed distribution's package manager; base packages cannot be uninstalled). Package search re-ranks hits so name matches come first: exact name, name prefix (typing <code>fast</code> surfaces <code>fastfetch</code> before packages that only mention "fast" in a description), then hyphen/underscore segment prefixes, then name contains, then description-only hits.</li>
+<li><strong>The file browser is shared with Kai Build</strong>: the same browser — listing, breadcrumbs, editor, rename/delete, open-with — is pointed at whichever Linux environment the surface belongs to. Both browse their environment from the filesystem root and differ only in where they open: the home folder here, the open project in Kai Build. The two never share a position or an open file.</li>
+<li><strong>Bringing a file in from the phone</strong>: the Files tab has an import action that copies a file picked from device storage into the directory currently on screen. Before this the only route into the sandbox was the agent's shell. The copy is streamed rather than buffered, so importing something large does not risk the app's memory, and an existing name is never overwritten — the incoming file is suffixed (<code>report-1.pdf</code>) instead. The action is offered only while the listing is showing, since it targets the visible directory; a busy indicator replaces it for the duration and the listing picks up the new file when it lands.</li>
+<li><strong>Why a file won't open in the editor</strong>: the editor distinguishes the reasons rather than lumping them together. A file past the editor's size cap (512 KB) says so and reports its size, offering only to hand it to another app — a truncated buffer is not something that can be edited back safely. A file that is not valid UTF-8 can be force-opened, which decodes it with replacement characters for viewing and marks the buffer read-only; saving is withheld there, because writing those replacement characters back would destroy the file's real bytes. Anything the sandbox cannot read at all says that plainly. A NUL byte counts as "not text" before a decode is even attempted — it is legal UTF-8 and effectively never appears in real text.</li>
+<li><strong>The file browser refreshes itself</strong>: the agent writes to the sandbox through the shell, so the browser cannot assume its listing is still current. Every time the Files tab becomes visible — selecting the sub-tab, opening the sandbox surface, or returning to the app from the background — the directory the user left off in is listed again, and re-entering a directory visited earlier lists it fresh rather than reusing what was shown before. Leaving the tab does not send the browser home: it stays where it was, and only the first open (or a surface that changed which folder it opens on) goes to the starting directory. The refresh is silent: entries stay on screen while it runs, and when the directory turns out to be unchanged nothing is redrawn, so the list never jumps or loses its scroll position. A file open in the built-in editor is also re-read, but only while the buffer has no unsaved edits — pending edits always win, which prevents a later Save from overwriting what the agent wrote.</li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<ul>
+<li><strong>No PTY → fullscreen TUIs do not work.</strong> <code>vim</code>, <code>less</code>, <code>nano</code>, anything ncurses-based, <code>cbonsai</code> in animated mode, and any <code>ssh -t host fullscreen-cmd</code> will either refuse to start ("inappropriate ioctl for device" / "stdout is not a tty") or spam escape codes that don't render. Use the non-interactive variants: <code>cat</code>/redirected editors, <code>ssh user@host 'remote-cmd'</code> without <code>-t</code>. A proper PTY layer was prototyped and reverted — the build-out tradeoffs (terminal emulator complexity, IME interaction, scrollback) didn't pencil out for v1.</li>
+<li><strong>Process inspectors (<code>top</code>, <code>htop</code>) cannot see system-wide processes.</strong> Android's <code>/proc</code> mount is <code>hidepid=2</code>, so <code>/proc/&lt;pid&gt;/</code> for processes owned by other UIDs is not visible. <code>proot</code> rewrites paths but can't bypass kernel UID enforcement. There is no fix without root. For workload monitoring inside the sandbox itself, use <code>ps</code>, <code>ps -p $$</code>, or <code>cat /proc/self/status</code>.</li>
+<li><strong>Subprocess stdout buffering.</strong> <code>python3</code> / <code>node</code> / etc. fully buffer stdout when stdin is a pipe — output looks "stuck" until the buffer fills or the process exits. Use <code>python3 -u</code> or <code>stdbuf -o0 &lt;cmd&gt;</code> for interactive testing.</li>
+<li><strong>App backgrounding can end the session.</strong> When Android kills the app process to reclaim memory, every <code>proot</code> (and therefore every bash) dies with it. On the next foreground use shells restart cleanly per conversation, but cwd, exported env, and any open SSH/SFTP connections are gone. The visible transcript of each chat's shell is persisted (trimmed tail) so the user still sees what was on screen, but live shell <em>state</em> is not. There is no foreground service holding sessions alive — the tradeoff for not asking for that permission.</li>
+<li><strong>Memory cost of multiple sessions.</strong> Each live shell is a <code>proot+bash</code> pair (tens of MB resident). Running many concurrent chats with shell-tool usage will accumulate sessions. There is no soft cap yet — closing a conversation drops its shell, sandbox reset drops them all.</li>
+<li><strong>Cancel without a PTY is best-effort.</strong> A child that ignores <code>SIGINT</code>/<code>SIGTERM</code> forces a session reset; the user loses session state for that one command.</li>
+<li><strong>Stray output from backgrounded jobs</strong> (<code>sleep 60 &amp;</code> then "Done" later) can attach itself to whatever command is running when the kernel finally reports the exit. Matches normal terminal behavior.</li>
+<li><strong>iOS / desktop / web</strong>: no sandbox. Stubs are no-ops — calls return empty results (or are simply unsupported) until those platforms get their own runtime.</li>
+</ul>
+<h2 id="key-files">Key Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/sandbox/LinuxSandboxManager.kt</code></td>
+<td>Owns the sandbox's install marker (distro + where <code>/root</code> lives), the optional-package install, and the session-keyed map of live persistent shells. <code>selectDistro()</code> re-points it at the other distribution's install, dropping live shells and touching neither rootfs; <code>surveyMigration()</code> / <code>migrateHome()</code> are how files follow the user across. Seeds new per-chat shells from the conversation's persisted transcript and pipes transcript snapshots back to <code>ConversationStorage</code> after each command. <code>refreshInstallState()</code> is how it learns Kai Build installed the shared Debian.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/sandbox/SessionShell.kt</code></td>
+<td>Per-session facade over <code>PersistentSandboxShell</code>. Carries the live in-memory transcript, accepts an <code>initialLines</code> seed for restart restoration, and fires an <code>onChange</code> callback after each command so the manager can persist the tail.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/data/ConversationStorage.kt</code></td>
+<td>Conversation persistence. <code>updateShellTranscript(id, lines)</code> trims to ~10,000 chars total and writes the tail back into the conversation JSON.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/sandbox/PersistentSandboxShell.kt</code></td>
+<td>Long-lived bash, sentinel-based command framing, graduated <code>SIGINT</code>/<code>SIGTERM</code>/<code>SIGKILL</code> cancel, self-healing on shell death. One instance per session id.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/SandboxController.kt</code></td>
+<td>Common surface; <code>executeCommand{,Streaming}</code> take a <code>sessionId</code>. <code>SandboxSessions</code> defines the well-known ids: <code>DEFAULT</code>, <code>SYSTEM</code>, <code>TERMINAL</code>. <code>SandboxStatus.label</code> is the install step as a <code>SandboxStatusLabel</code> value for the UI to translate, <code>SandboxStatus.distro</code> carries the selected distribution to every UI and tool, <code>installedDistros</code> says which ones exist on disk, and <code>migration</code> says what the other one still holds. <code>selectDistro()</code> is the switch, <code>migrateHome()</code> the copy.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxStatusText.kt</code></td>
+<td>Turns <code>SandboxStatus.label</code> into the sentence the card shows. The only place the status wording lives, so the Android install path reports steps rather than English.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxPackagesViewModel.kt</code> / <code>SandboxPackagesScreen.kt</code></td>
+<td>Packages tab. Every command and every parser comes from the installed distro's <code>PackageManagerSpec</code>; the UI is the same either way. Gates uninstall against the distro's base packages.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/FileBrowserSource.kt</code></td>
+<td>The browsable-tree contract both Linux environments implement, so the Files UI is not tied to this sandbox.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxFileBrowserViewModel.kt</code></td>
+<td>Files tab state: directory listing, navigation, the built-in text editor, and rename/delete. Owns the refresh-on-visible behavior — re-lists silently, holds the directory the user left off in, skips the state update when nothing changed so the list keeps its scroll, drops a listing that resolves after the user navigated away, and re-reads the open file only while its buffer is clean.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxFileBrowserScreen.kt</code></td>
+<td>Files tab UI, rooted wherever the caller asks: breadcrumb path bar (which never offers a step above that root), keyed entry list, per-entry rename/delete/open menu, and the editor pane. Triggers the refresh whenever the browser resumes.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/SandboxUriHandler.kt</code></td>
+<td><code>UriHandler</code> provided over <code>LocalUriHandler</code> in <code>App.kt</code>; routes <code>file:</code>/absolute-path links to <code>SandboxController.openFile</code>, delegates the rest to the platform handler.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/data/ConversationIdContext.kt</code></td>
+<td><code>ConversationIdElement</code> coroutine-context element that threads the active conversation id from the chat layer down into tool execution without polluting <code>Tool.execute(args)</code>.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/sandbox/ProotExecutor.kt</code></td>
+<td>The chat sandbox's line-oriented view of a rootfs, over the shared <code>ProotLauncher</code>. Returns the map shape the shell tool and background jobs consume.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/linux/LinuxDistro.kt</code></td>
+<td>The two distributions, their base/optional/protected package sets, and which package manager each uses. Also the default (Debian) and what a marker-less install counts as (Alpine).</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/linux/PackageManagerSpec.kt</code>, <code>ApkPackageManager.kt</code>, <code>AptPackageManager.kt</code></td>
+<td>Commands and output parsers per package manager — install/remove/search/list/upgrade, plus what counts as an error and how many packages an upgrade replaced. Pure and unit-tested.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/LinuxPaths.kt</code></td>
+<td>Storage layout for one install: rootfs, tmp, projects bind, proot and libtalloc, and the install marker (including adopting the legacy layouts).</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/LinuxInstalls.kt</code></td>
+<td>Which of the two install directories holds a given distribution, or would hold it, and where each install's <code>/root</code> lives. The single answer both the chat sandbox and Kai Build resolve against, so a distribution has one home and switching never installs over the other one.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/jvmShared/kotlin/com/inspiredandroid/kai/linux/HomeMigration.kt</code></td>
+<td>Surveys and merge-copies one install's home into another: what the destination is missing, what is never worth carrying (bind mounts, shell rc files, caches, agent binaries), and a copy that preserves permissions, keeps symlinks as symlinks, and never overwrites or modifies the source. Pure <code>java.io</code> and unit-tested.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/LinuxInstaller.kt</code></td>
+<td>Download → extract → configure → base packages, for either distribution, cancellable and leaving no partial rootfs. Owns the process-wide package lock the two features share.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/DistroSpec.kt</code></td>
+<td>Per-distribution facts: architecture names, rootfs URLs (Alpine mirror list, Debian LXC index), post-extract fixes, and the proot flags and environment each needs.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/RootfsDownloader.kt</code> / <code>TarExtractor.kt</code></td>
+<td>One download path with mirror fallback, one tar reader handling both <code>.tar.gz</code> and <code>.tar.xz</code>.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/linux/ProotLauncher.kt</code></td>
+<td>proot argv, binds and environment, plus the shared <code>ProotHandle</code> and one-shot <code>execute</code>. Both this sandbox and Kai Build's PTY executor start their processes here.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/jvmShared/kotlin/com/inspiredandroid/kai/linux/GuestPath.kt</code></td>
+<td>Guest path → host file, following the binds, for both file browsers. Rejects traversal and anything resolving outside its root.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/SandboxController.android.kt</code></td>
+<td>Routes <code>executeCommand</code> and <code>executeCommandStreaming</code> through the persistent shell; one-shot fallbacks live alongside.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/tools/ShellCommandTool.kt</code></td>
+<td>The <code>execute_shell_command</code> tool the assistant calls. Description, <code>fresh</code> flag, env/working-dir wrapping.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/tools/SshConfigureHostTool.kt</code></td>
+<td>The <code>ssh_configure_host</code> tool. Validates inputs, calls the config manager, returns an example invocation for the LLM.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/jvmShared/kotlin/com/inspiredandroid/kai/sandbox/SshConfigManager.kt</code></td>
+<td>Pure-JVM writer for <code>~/.ssh/config</code> and <code>~/.ssh/known_hosts</code>. Owns the <code># kai:&lt;marker&gt;:start/end</code> blocks (defaults + per-host) for idempotent upsert, file-mode lockdown, and the relative-to-<code>~/.ssh</code> identity-file resolution.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/tools/ProcessManager.kt</code> / <code>ProcessManagerTool.kt</code></td>
+<td>Background-job lifecycle: detached one-shot proot, in-memory session table, status/kill controls.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxSessionViewModel.kt</code></td>
+<td>Terminal-tab ViewModel: line buffer, run/cancel state, stream draining.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/settings/TerminalSheet.kt</code></td>
+<td>Visible terminal UI with command echo, color-coded streams, and an interactive input row.</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/SandboxController.kt</code> (<code>NoOpSandboxController</code>)</td>
+<td>The single no-op every non-Android target returns; iOS, desktop and wasm each supply only a one-line factory.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

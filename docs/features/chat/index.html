@@ -1,0 +1,1437 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Kai - AI Assistant App">
+      
+      
+      
+        <link rel="canonical" href="https://kai9000.com/docs/features/chat/">
+      
+      
+        <link rel="prev" href="../../getting-started/">
+      
+      
+        <link rel="next" href="../multi-service/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Chat & Conversations - Kai Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chat-conversations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kai Documentation" class="md-header__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kai Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chat & Conversations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kai Documentation" class="md-nav__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kai Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conversation-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Title
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chat-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-sending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message Sending
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cancel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retry-regenerate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retry &amp; Regenerate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-attachments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Attachments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Attachments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PDFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speech-output-tts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speech Output (TTS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI Elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Servers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daemon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daemon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encryption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../settings-export-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../splinterlands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Splinterlands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conversation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conversation-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Title
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Lifecycle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chat-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat History
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-sending" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message Sending
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cancel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retry-regenerate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retry &amp; Regenerate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-attachments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Attachments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Attachments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#images" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Images
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text files
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PDFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#general-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        General behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#speech-output-tts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Speech Output (TTS)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ui-elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UI Elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chat-conversations">Chat &amp; Conversations</h1>
+<p><strong>Last verified:</strong> 2026-09-07</p>
+<p>Kai's chat system manages the message history, conversation persistence, file attachments, and speech output. Conversations are service-independent — switching providers does not affect which conversation is loaded or restored. Multiple conversations are persisted and browsable via a history sheet.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="conversation">Conversation</h3>
+<p>A persisted chat session containing an id (UUID), message list, timestamps (<code>createdAt</code>, <code>updatedAt</code>), a title, and a type (<code>chat</code>, <code>heartbeat</code>, or <code>interactive</code>). Conversations are stored in a local database (browser builds use the settings store) and restored across app launches.</p>
+<h3 id="history">History</h3>
+<p>The in-memory message list that drives the UI. Each entry has a role: USER, ASSISTANT, TOOL, or TOOL_EXECUTING. History is the source of truth during a session; it is written to a Conversation on save.</p>
+<h3 id="conversation-title">Conversation Title</h3>
+<p>Auto-derived from the first user message when a conversation is saved for the first time. Truncated to ~50 characters at a word boundary. Once set, titles are not updated.</p>
+<h2 id="conversation-lifecycle">Conversation Lifecycle</h2>
+<ul>
+<li>The "current conversation" pointer is persisted across launches: opening the app restores whichever conversation was last active, including an empty new chat the user explicitly started</li>
+<li>If the persisted pointer references a conversation that no longer exists (or is null because the user started a new chat), the app opens to an empty new chat</li>
+<li>"New Chat" clears history, unsets the current conversation pointer, and persists the empty state — so an unused new chat survives an app restart</li>
+<li>A new conversation ID (UUID) is generated on first successful save (after the first assistant response) and immediately becomes the persisted current pointer</li>
+<li>Conversations are saved after each assistant response</li>
+<li>Only the most recent 20 exchanges are persisted per chat conversation; heartbeat conversations have a separate, larger cap of 50 messages so longer automation runs are not truncated as aggressively</li>
+<li>Multiple conversations are persisted — starting a new chat preserves previous conversations</li>
+<li>Conversations are service-independent — switching services does not affect which conversation is loaded</li>
+<li>Interactive vs normal chat mode is persisted alongside the current pointer, so an empty interactive chat also survives a restart</li>
+<li>On the first launch after upgrading from a build that did not persist the current-conversation pointer, a one-time migration pins the most recently updated conversation as the current pointer so the user resumes where they left off</li>
+<li>On Android, sharing plain text into Kai from another app (the system share sheet) starts a new conversation and puts the shared text in the input field, unsent. The previous conversation stays in history. The user can edit the text or add an instruction, then send as usual. Opening Kai from the launcher or the assist gesture is unchanged; assist still starts an empty new chat</li>
+</ul>
+<h2 id="chat-history">Chat History</h2>
+<ul>
+<li>A history icon appears in the top bar when saved conversations other than the current one exist</li>
+<li>Tapping it opens a bottom sheet listing all chat conversations sorted by last updated (newest first)</li>
+<li>Each item shows the title and formatted date</li>
+<li>Non-interactive conversations are outlined with a primary-colored border; interactive-mode conversations get an animated gradient border. The active conversation's title is rendered in the primary color (inactive titles use onBackground)</li>
+<li>Tapping an item loads that conversation and dismisses the sheet</li>
+<li>Each item has a delete button that defers deletion with a snackbar "Undo" option (~4 seconds) before the conversation is permanently removed. The snackbar appears inside the history sheet so it remains visible while the sheet is open, and the sheet stays open so multiple conversations can be deleted in sequence</li>
+<li>Deleting the active conversation clears the chat</li>
+<li>Heartbeat conversations are included in the history list with a "Heartbeat" label badge, and can also be accessed via the heartbeat banner</li>
+</ul>
+<h2 id="message-sending">Message Sending</h2>
+<ul>
+<li>User message is added to history, then an API call is made via the fallback chain</li>
+<li>Tool calls are executed inline (TOOL_EXECUTING shown during execution, TOOL result stored after)</li>
+<li>On success, the conversation is saved</li>
+<li>On failure, an error is displayed with a retry button</li>
+<li><strong>Free rate-limit upsell:</strong> when the user has <strong>no configured services</strong> (only Free FAST/EXPERT) and the request fails with a rate-limit, quota-exhausted, or Free proxy capacity error (e.g. “All free providers failed”), the chat shows a special panel instead of the generic error. It explains that Free is rate-limited and shows compact provider chips (icon + name) for free-usage providers (Groq, Cerebras, Gemini, OpenRouter, Ollama Cloud) in a flow layout; tapping a chip opens that provider’s API-key page in the browser. A retry control remains available. The panel is not shown if any non-Free service is already configured.</li>
+</ul>
+<h2 id="cancel">Cancel</h2>
+<ul>
+<li>While a request is in progress, a stop button replaces the send button in the input field</li>
+<li>Clicking stop cancels the ongoing API request and any in-flight tool executions</li>
+<li>After cancellation, the loading state clears and the send button reappears when typing</li>
+</ul>
+<h2 id="retry-regenerate">Retry &amp; Regenerate</h2>
+<ul>
+<li><strong>Retry</strong> resends the current prompt</li>
+<li><strong>Regenerate</strong> removes all messages after the last user message, then resends</li>
+</ul>
+<h2 id="file-attachments">File Attachments</h2>
+<p>Multiple files can be attached to a single prompt. Each file is added one at a time via the file picker or drag-and-drop, and appears as a chip below the input. Clicking a chip removes that specific file from the queue. All queued files are cleared after the prompt is sent. Three categories of files are supported:</p>
+<h3 id="images">Images</h3>
+<ul>
+<li>Attach via file picker or drag-and-drop</li>
+<li>Compressed to JPEG and Base64-encoded</li>
+<li>Maximum raw input size: 50 MB; maximum size after compression: 15 MB — rejected with a size error if exceeded</li>
+<li>Sent as <code>image_url</code> (OpenAI-compatible), <code>image</code> block (Anthropic), or <code>inline_data</code> (Gemini)</li>
+<li>Not offered on the built-in Free service — its proxy fans out to text-only fallback models that reject multimodal content</li>
+<li>Shown as a preview thumbnail (max 200dp wide) inside the user message bubble</li>
+<li>Clicking the thumbnail opens a full-screen viewer with pinch-to-zoom, double-tap to toggle zoom, pan when zoomed, and a close button in the top-right (also dismissable via the Android back button or by tapping the backdrop; desktop has no keyboard shortcut for dismissal)</li>
+</ul>
+<h3 id="text-files">Text files</h3>
+<ul>
+<li>Supports <code>.txt</code>, <code>.md</code>, <code>.json</code>, <code>.csv</code>, <code>.xml</code>, <code>.yaml</code>, <code>.html</code>, <code>.css</code>, <code>.js</code>, <code>.ts</code>, <code>.kt</code>, <code>.py</code>, <code>.rs</code>, <code>.go</code>, <code>.c</code>, <code>.cpp</code>, <code>.swift</code>, <code>.sh</code>, <code>.sql</code>, <code>.toml</code>, <code>.ini</code>, <code>.log</code>, <code>.gradle</code>, and more</li>
+<li>Maximum size: 200 KB per file</li>
+<li>Content is decoded at send time and concatenated into the user message with a filename header per file</li>
+<li>Works with all providers (content is inlined as text)</li>
+<li>Shown as a filename chip in the user message bubble</li>
+</ul>
+<h3 id="pdfs">PDFs</h3>
+<ul>
+<li>Base64-encoded without compression</li>
+<li>Maximum size: 20 MB — rejected with a size error if exceeded</li>
+<li>PDF attachments are advertised only by services with native document support: Anthropic, Gemini, OpenAI, and OpenRouter. The file picker offers PDF on those services only</li>
+<li>Sent as a <code>document</code> block (Anthropic) or <code>inline_data</code> (Gemini). On the OpenAI-compatible wire path (OpenAI, OpenRouter, and other OpenAI-compatible services), PDF binaries are currently dropped from the request body — only image parts are encoded as <code>image_url</code> — so a PDF attach on OpenAI/OpenRouter is accepted by the UI but not transmitted to the model</li>
+<li>Shown as a filename chip in the user message bubble</li>
+</ul>
+<h3 id="general-behavior">General behavior</h3>
+<ul>
+<li>The attachment button is shown whenever the active service supports file attachments (text files work with all remote models); it is hidden when the active service runs on-device, since on-device services do not support attachments</li>
+<li>Unsupported file types (e.g., <code>.zip</code>) show an error message</li>
+<li>Files exceeding the per-category size limit show a size error; size is checked by stat before the file is read, so multi-gigabyte attachments are rejected without allocating memory for the full contents</li>
+<li>Long filenames in chips are truncated with an ellipsis while preserving the extension</li>
+<li>File attachments persist across conversation save/restore via an <code>attachments</code> list on each message; older conversations saved with a single-file schema are migrated on load. An attachment large enough to push its message past the storage cap is dropped from the saved copy (see <a href="#conversation-storage">Conversation Storage</a>) — the message text stays</li>
+</ul>
+<h2 id="speech-output-tts">Speech Output (TTS)</h2>
+<ul>
+<li>Toggle in the top bar enables auto-play of new assistant messages</li>
+<li>Per-message play button on assistant messages</li>
+<li>Markdown is stripped before speaking</li>
+<li>Speech uses the engine the user selected in the platform's system speech settings, so third-party engines are honoured; on Android, Google's engine is only used as a fallback when the system default cannot start</li>
+<li>The engine's own default voice is kept as-is. Kai only picks a different voice when the default one does not speak the system language, in which case the first voice matching that language is selected</li>
+</ul>
+<h2 id="conversation-storage">Conversation Storage</h2>
+<ul>
+<li>On Android, iOS, and desktop, conversations live in a local SQLite database in app-private storage: one row per conversation plus one row per message, so saving a turn writes only the affected conversation instead of re-serializing the whole history</li>
+<li>The browser build has no persistent database and keeps the full conversation list as a JSON blob in the settings store (see <a href="../encryption/">encryption.md</a>)</li>
+<li>Conversations are upserted — updating a conversation replaces the existing entry by ID, new conversations are appended; the list loads ordered by creation time</li>
+<li>Each conversation also retains a rolling tail of its sandbox shell transcript (last ~10,000 characters) so that follow-up commands in a resumed conversation see the prior shell context; transcript updates write only that field</li>
+<li>Migration chain, run once on first load: the legacy encrypted <code>conversations.enc</code> file (XOR with a 32-byte random key) migrates into the settings-store blob; a settings-store blob found on a database-capable platform is imported into the database and removed. Settings import reuses the same path — imported conversations are staged in the settings store and absorbed into the database on the next load, replacing its content</li>
+<li>The database structure is versioned and lives on user devices: any future change to its tables or columns requires an accompanying migration step so existing installs upgrade in place (message contents are stored as JSON and tolerate unknown fields, so message-level additions do not need one)</li>
+<li>A stored message is capped at roughly one megabyte, because Android reads database rows through a fixed-size window and a larger row would abort the whole load and crash the app on every launch. A message past the cap is stored without its file attachments; if it is still too large, its text is kept only up to a fixed head length. The in-memory message the model sees during the ongoing turn is untouched — only the persisted copy shrinks</li>
+<li>Messages already stored above that cap by an earlier version are skipped when the conversation loads, so a database that used to crash the app opens with the rest of its history intact</li>
+</ul>
+<h2 id="ui-elements">UI Elements</h2>
+<ul>
+<li><strong>Top bar</strong>: New Chat, Chat History, a Sandbox toggle (Android only, shown between History and TTS when the sandbox feature is available on the device), TTS toggle, Settings (on mobile; on non-mobile, Settings is in the navigation tab bar)</li>
+<li><strong>Scroll to bottom</strong>: a small floating action button (down arrow) appears when the user has scrolled up past the latest messages; tapping it animates back to the bottom</li>
+<li><strong>Messages</strong>: user (right-aligned, with optional image preview), assistant (Markdown-rendered + action buttons), tool executing (spinner), loading indicator, error with retry (or free-provider suggestions panel when Free is rate-limited with no services configured). When the fallback chain answered with an alternate service rather than the user's selected one, a small "Answered by …" label is shown under the assistant message naming the service that produced the response</li>
+<li><strong>Input</strong>: text field, send/stop button, attachment button, file chip</li>
+<li><strong>Empty state</strong>: animated logo + welcome message</li>
+<li><strong>Drag-and-drop</strong>: supported for file attachments</li>
+<li><strong>History sheet</strong>: bottom sheet listing saved conversations with title, date, active highlight, and delete</li>
+</ul>
+<h2 id="key-files">Key Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/Conversation.kt</code></td>
+<td>Conversation and message data classes, type constants</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/ConversationStorage.kt</code></td>
+<td>In-memory conversation flow, transcript trimming, legacy migration</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/ConversationPersistence.kt</code></td>
+<td>SQL and settings-blob persistence backends, staged-import handling</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/sqldelight/com/inspiredandroid/kai/db/conversation.sq</code></td>
+<td>Conversation and message table schema and queries</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/FileClassification.kt</code></td>
+<td>File category enum, MIME/extension classifier, size constants, file exceptions</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/RemoteDataRepository.kt</code></td>
+<td>History management, conversation save/restore/delete, title derivation, message sending</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/ChatViewModel.kt</code></td>
+<td>Chat UI state, send/retry/regenerate/cancel/loadConversation/deleteConversation actions</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/ChatScreen.kt</code></td>
+<td>Chat UI composables, history sheet and heartbeat banner wiring</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/ChatHistorySheet.kt</code></td>
+<td>Bottom sheet listing saved conversations</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/HeartbeatBanner.kt</code></td>
+<td>Dismissable banner for heartbeat notifications</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/TopBar.kt</code></td>
+<td>Top bar with new chat, history, TTS, and settings icons</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/QuestionInput.kt</code></td>
+<td>Text input with send/stop button</td>
+</tr>
+<tr>
+<td><code>androidApp/src/main/AndroidManifest.xml</code></td>
+<td>Share-sheet registration for plain text (<code>ACTION_SEND</code>)</td>
+</tr>
+<tr>
+<td><code>androidApp/src/main/kotlin/.../MainActivity.kt</code></td>
+<td>Reads shared text from <code>ACTION_SEND</code> and hands it to chat</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

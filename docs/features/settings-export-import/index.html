@@ -1,0 +1,1212 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Kai - AI Assistant App">
+      
+      
+      
+        <link rel="canonical" href="https://kai9000.com/docs/features/settings-export-import/">
+      
+      
+        <link rel="prev" href="../encryption/">
+      
+      
+        <link rel="next" href="../splinterlands/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Settings Export & Import - Kai Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#settings-export-import" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kai Documentation" class="md-header__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kai Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Settings Export & Import
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kai Documentation" class="md-nav__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kai Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Servers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daemon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daemon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encryption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Sections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-included" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings Included
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#excluded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Excluded
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../splinterlands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Splinterlands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Behavior
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Behavior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#export" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Export
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Import Sections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-included" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings Included
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#excluded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Excluded
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="settings-export-import">Settings Export / Import</h1>
+<p><strong>Last verified:</strong> 2026-08-05</p>
+<p>Users can backup and restore all Kai settings via a human-readable JSON file. The feature is available under <strong>Settings &gt; General</strong> at the bottom of the page.</p>
+<h2 id="behavior">Behavior</h2>
+<h3 id="export">Export</h3>
+<ul>
+<li>Tapping <strong>Export</strong> opens an <strong>Export Preview Dialog</strong> that lists each settings section currently holding real user data, with item counts where applicable (e.g. "Services (2)", "Memory (5)"). All sections are checked by default; the user can untick any section to leave it out of the file.</li>
+<li>A section is only listed when it actually has data. Pure feature-toggle flags (e.g. SMS turned off, Splinterlands without a configured account, an empty MCP server list) do not appear in the dialog. Specifically:</li>
+<li>SERVICES — only if at least one service is configured</li>
+<li>SOUL — only if soul text is non-empty</li>
+<li>MEMORY / SCHEDULING / CONVERSATIONS — only if at least one entry exists</li>
+<li>HEARTBEAT — only if a custom prompt, config, or log entries exist</li>
+<li>EMAIL — only if at least one account is configured</li>
+<li>SMS — only if SMS receive or send is enabled</li>
+<li>SPLINTERLANDS — only if an account is configured</li>
+<li>MCP — only if at least one server is configured</li>
+<li>TOOLS — when a full export includes <code>tool_overrides</code>. The exporter writes the current enabled flag for every platform tool id (not only user-changed overrides), so Tools almost always appears whenever any tools exist on the platform</li>
+<li>Confirming the dialog opens a native file-save dialog and writes <code>kai-settings.json</code> containing only the selected sections (plus a <code>"version": 1</code> field for forward-compatibility).</li>
+<li>Cancelling the dialog discards the export without writing a file.</li>
+<li>Sections listed under <strong>Excluded</strong> below are never exported.</li>
+</ul>
+<h3 id="import">Import</h3>
+<ul>
+<li>Tapping <strong>Import</strong> opens a native file picker filtered to <code>.json</code> files.</li>
+<li>After the file is selected and parsed, an <strong>Import Preview Dialog</strong> appears.</li>
+<li>The dialog detects which sections are present in the JSON and shows a checkbox for each one (all enabled by default), with item counts where applicable (e.g. "Services (2)", "Memory (5)").</li>
+<li>A Replace/Merge toggle controls what happens to unselected sections:</li>
+<li><strong>Replace</strong> (default): Unselected sections reset to their defaults.</li>
+<li><strong>Merge</strong>: Only apply selected sections; all other settings stay unchanged.</li>
+<li>Clicking <strong>Import</strong> in the dialog applies the selected sections.</li>
+<li>Each settings section is imported independently. If one section contains malformed data, the remaining sections are still imported and the error is counted.</li>
+<li>Unknown keys are silently ignored, so older exports can be imported into newer app versions.</li>
+<li>Scheduled tasks and memories with missing or invalid fields are auto-filled with sensible defaults (e.g. generated UUIDs for missing IDs, <code>PENDING</code> for invalid task status, <code>GENERAL</code> for invalid memory category). This ensures items are preserved even if the JSON was hand-edited or exported from a different version.</li>
+</ul>
+<h2 id="import-sections">Import Sections</h2>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Display Name</th>
+<th>JSON keys detected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SERVICES</td>
+<td>Services</td>
+<td><code>configured_services</code>, <code>current_service_id</code>, <code>free_fallback_enabled</code>, <code>instance_settings</code></td>
+</tr>
+<tr>
+<td>SOUL</td>
+<td>Soul</td>
+<td><code>soul_text</code></td>
+</tr>
+<tr>
+<td>MEMORY</td>
+<td>Memory</td>
+<td><code>memory_enabled</code>, <code>agent_memories</code></td>
+</tr>
+<tr>
+<td>SCHEDULING</td>
+<td>Scheduling</td>
+<td><code>scheduling_enabled</code>, <code>scheduled_tasks</code></td>
+</tr>
+<tr>
+<td>HEARTBEAT</td>
+<td>Heartbeat</td>
+<td><code>heartbeat_config</code>, <code>heartbeat_prompt</code>, <code>heartbeat_log</code></td>
+</tr>
+<tr>
+<td>EMAIL</td>
+<td>Email</td>
+<td><code>email_enabled</code>, <code>email_accounts</code></td>
+</tr>
+<tr>
+<td>TOOLS</td>
+<td>Tools</td>
+<td><code>tool_overrides</code></td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>MCP Servers</td>
+<td><code>mcp_servers</code></td>
+</tr>
+<tr>
+<td>CONVERSATIONS</td>
+<td>Conversations</td>
+<td><code>conversations</code></td>
+</tr>
+<tr>
+<td>SPLINTERLANDS</td>
+<td>Splinterlands</td>
+<td><code>splinterlands_enabled</code>, <code>splinterlands_account</code></td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>SMS</td>
+<td><code>sms_enabled</code>, <code>sms_poll_interval</code>, <code>sms_send_enabled</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="settings-included">Settings Included</h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Keys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Services</td>
+<td><code>configured_services</code>, <code>current_service_id</code>, <code>free_fallback_enabled</code>, per-instance <code>api_key</code> / <code>model_id</code> / <code>base_url</code> / optional <code>use_custom_model</code> / <code>custom_model_id</code></td>
+</tr>
+<tr>
+<td>Soul</td>
+<td><code>soul_text</code></td>
+</tr>
+<tr>
+<td>Memory</td>
+<td><code>memory_enabled</code>, <code>agent_memories</code></td>
+</tr>
+<tr>
+<td>Scheduling</td>
+<td><code>scheduling_enabled</code>, <code>scheduled_tasks</code></td>
+</tr>
+<tr>
+<td>Heartbeat</td>
+<td><code>heartbeat_config</code>, <code>heartbeat_prompt</code>, <code>heartbeat_log</code></td>
+</tr>
+<tr>
+<td>Email</td>
+<td><code>email_enabled</code>, <code>email_accounts</code>, per-account passwords and sync state, <code>email_poll_interval</code></td>
+</tr>
+<tr>
+<td>Tools</td>
+<td>Per-tool enabled flags under <code>tool_overrides</code> (current value for every known platform tool id)</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td><code>mcp_servers</code></td>
+</tr>
+<tr>
+<td>Conversations</td>
+<td><code>conversations</code> (array of conversation objects with messages)</td>
+</tr>
+<tr>
+<td>Splinterlands</td>
+<td><code>splinterlands_enabled</code>, <code>splinterlands_account</code>, <code>splinterlands_instance_ids</code>, <code>splinterlands_battle_log</code></td>
+</tr>
+<tr>
+<td>SMS</td>
+<td><code>sms_enabled</code>, <code>sms_poll_interval</code>, <code>sms_send_enabled</code> only (pending queue, sync state, and drafts are <strong>not</strong> included in export/import)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="excluded">Excluded</h2>
+<ul>
+<li><code>daemon_enabled</code> (platform-specific, should not transfer between devices)</li>
+<li><code>app_opens</code> (analytics counter)</li>
+<li><code>encryption_key</code> (security-sensitive)</li>
+<li><code>ui_scale</code> (platform-specific, desktop may differ from mobile)</li>
+<li>Migration flags</li>
+</ul>
+<h2 id="key-files">Key Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composeApp/.../data/AppSettings.kt</code></td>
+<td><code>ImportSection</code> enum, <code>detectImportSections()</code> / <code>detectExportableSections()</code></td>
+</tr>
+<tr>
+<td><code>composeApp/.../data/AppSettingsImportExport.kt</code></td>
+<td><code>exportToJson()</code> / <code>importFromJson()</code> core logic (selective <code>Set&lt;ImportSection&gt;</code>), <code>sanitizeScheduledTasks()</code> / <code>sanitizeMemories()</code> helpers</td>
+</tr>
+<tr>
+<td><code>composeApp/.../data/DataRepository.kt</code></td>
+<td>Interface methods (<code>exportSettingsToJson(sections)</code>, <code>getExportPreview()</code>, <code>importSettingsFromJson(...)</code>)</td>
+</tr>
+<tr>
+<td><code>composeApp/.../data/RemoteDataRepository.kt</code></td>
+<td>Wires AppSettings to platform tool IDs, serializes JSON, runs <code>detectExportableSections</code> over a full export to drive the export preview</td>
+</tr>
+<tr>
+<td><code>composeApp/.../ui/settings/SettingsActions.kt</code></td>
+<td>Callbacks (<code>onExportSettings</code>, <code>onPrepareExport</code>, <code>onImportSettings</code>)</td>
+</tr>
+<tr>
+<td><code>composeApp/.../ui/settings/SettingsViewModel.kt</code></td>
+<td>Delegates to repository, rebuilds UI state after import, and reloads conversations so imported chats appear without a restart</td>
+</tr>
+<tr>
+<td><code>composeApp/.../ui/settings/GeneralSettings.kt</code></td>
+<td>Hosts the Export/Import card in the General tab</td>
+</tr>
+<tr>
+<td><code>composeApp/.../ui/settings/ExportImportSection.kt</code></td>
+<td>Export/Import card with FileKit dialogs, <code>ExportPreviewDialog</code>, <code>ImportPreviewDialog</code></td>
+</tr>
+<tr>
+<td><code>composeApp/.../testutil/FakeDataRepository.kt</code></td>
+<td>Test stubs</td>
+</tr>
+<tr>
+<td><code>composeApp/.../data/AppSettingsExportImportTest.kt</code></td>
+<td>Unit tests including v1 snapshot test</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

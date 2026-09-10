@@ -1,0 +1,1655 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Kai - AI Assistant App">
+      
+      
+      
+        <link rel="canonical" href="https://kai9000.com/docs/features/multi-service/">
+      
+      
+        <link rel="prev" href="../chat/">
+      
+      
+        <link rel="next" href="../tools/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Multi-Service - Kai Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#multi-service" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kai Documentation" class="md-header__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kai Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Multi-Service
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kai Documentation" class="md-nav__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kai Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Free Tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback Chain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openai-responses-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAI Responses API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-header-opencode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session Header (OpenCode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connection Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-network-servers-android" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Network Servers (Android)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Selection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-openai-compatible-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom model (OpenAI-Compatible API)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Cards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chat-screen-service-toggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat Screen Service Toggle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attachments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attachments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Servers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../heartbeat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daemon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daemon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encryption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../settings-export-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../splinterlands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Splinterlands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#service-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Service Instance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#free-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Free Tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallback-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallback Chain
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="API Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#openai-responses-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenAI Responses API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#session-header-opencode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Session Header (OpenCode)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supported-services" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Services
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connection-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connection Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#local-network-servers-android" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Network Servers (Android)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Selection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Model Selection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-model-openai-compatible-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom model (OpenAI-Compatible API)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-cards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Cards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chat-screen-service-toggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chat Screen Service Toggle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attachments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attachments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="multi-service">Multi-Service</h1>
+<p><strong>Last verified:</strong> 2026-09-07</p>
+<p>Kai supports 29 LLM providers (plus a built-in Free tier). Each provider uses one of three API formats: <strong>OpenAI-compatible</strong> (most services), <strong>Gemini native</strong>, or <strong>Anthropic native</strong> -- plus <strong>LiteRT on-device</strong> for local inference. A handful of OpenAI models additionally require OpenAI's <strong>Responses API</strong>; Kai switches to it per model, transparently. Users can configure multiple service instances, reorder them, and Kai automatically falls back through the chain on failure.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="service">Service</h3>
+<p>A supported LLM provider. Each service is defined by:</p>
+<ul>
+<li>A unique name and ID</li>
+<li>Whether it requires an API key</li>
+<li>Which API format it uses (OpenAI-compatible, Gemini native, or Anthropic native)</li>
+<li>Links to the provider's API-key management page</li>
+</ul>
+<h3 id="service-instance">Service Instance</h3>
+<p>A configured connection to a service. Users can add multiple instances of the same service (e.g. two OpenAI accounts with different keys). Each instance stores its own:</p>
+<ul>
+<li>API key</li>
+<li>Selected model</li>
+<li>Base URL (relevant for the OpenAI-Compatible API service)</li>
+</ul>
+<h3 id="free-tier">Free Tier</h3>
+<p>A built-in service that requires no API key. Free is never shown in the service picker — it is used as:</p>
+<ul>
+<li>The sole service when no other services are configured</li>
+<li>A last-resort fallback when "Use as fallback" is enabled (default)</li>
+</ul>
+<p>When Free is the only path and the user hits Free FAST/EXPERT rate or quota limits, chat shows a free-provider signup panel (Groq, Cerebras, Gemini, OpenRouter, Ollama Cloud) so they can open an API-key page and continue with a personal free tier. See <a href="../chat/">chat.md</a>.</p>
+<h2 id="fallback-chain">Fallback Chain</h2>
+<ol>
+<li>Configured instances are tried in the order the user arranged them</li>
+<li>Only instances with valid API keys are considered</li>
+<li>If no instances are configured, the Free tier is used as the only service</li>
+<li>If instances exist and "Use as fallback" is enabled (default), the Free tier is appended as the last resort</li>
+<li>Each individual API request retries up to 2 times with increasing delays before the service is considered failed. During a tool-use loop, each request inside the loop retries independently — a failure mid-loop never replays the loop (and its tool executions) from the start. On-device (Local Model) attempts are not retried, since their failures are deterministic rather than transient</li>
+<li>On failure, the next instance in the chain is tried; if all fail, the last error is shown</li>
+<li>If a fallback succeeds, the response indicates which service answered</li>
+<li>While the chain is being walked, the thinking indicator shows per-attempt status — the name of the service currently being tried, or the reason the previous one failed before moving on — so silent fallbacks are visible to the user</li>
+<li>Entries whose context window can't fit the current chat history are skipped during the walk</li>
+<li>On-device (Local Model) failures are not silently absorbed — they short-circuit the fallback chain so the user sees the actual error rather than being quietly bumped to a cloud service</li>
+<li>On-device entries are also never used as fallback targets: a local model is only tried when it is the primary (first) service in the chain. A cloud-service failure never silently starts a local model load</li>
+<li>Certain non-retryable errors (notably Anthropic's "insufficient credits" and quota-exhausted responses from OpenAI-compatible providers) skip further <strong>per-service</strong> retries and fail that service immediately; the fallback chain still continues to the next instance. Only on-device (Local Model) failures short-circuit the entire chain</li>
+</ol>
+<h2 id="api-formats">API Formats</h2>
+<p>Most services use the <strong>OpenAI-compatible</strong> chat completions format. <strong>Gemini</strong> uses Google's native Generative Language API. <strong>Anthropic</strong> uses its own Messages API with <code>x-api-key</code> header authentication and a different request/response structure. <strong>LiteRT</strong> runs inference on-device using Google's LiteRT LM SDK -- no HTTP, no API key, fully offline.</p>
+<p>The <strong>OpenAI-Compatible API</strong> service supports a custom base URL, defaulting to <code>localhost:11434/v1</code> for local Ollama setups. The base URL should include the version path segment (e.g., <code>http://localhost:11434/v1</code> or <code>https://my-provider.com/api/v1</code>), following the OpenAI SDK convention. Kai appends only <code>/chat/completions</code>, <code>/responses</code> or <code>/models</code> to this base URL.</p>
+<h3 id="openai-responses-api">OpenAI Responses API</h3>
+<p>OpenAI rejects function tools on chat completions for the GPT-5.6 family (Sol, Terra, Luna), because those models reason by default and that combination is only supported on the Responses API. Any tool-enabled chat -- which is most of Kai -- therefore failed outright on those models.</p>
+<p>Kai recognises the affected model ids and sends their requests to the Responses API instead. The switch is automatic and per model: no setting, no separate service entry, and every other OpenAI model stays on chat completions. It applies only when the request actually reaches OpenAI -- either the OpenAI service, or the OpenAI-Compatible service with a base URL pointing at <code>api.openai.com</code>. Aggregators that resell the same models translate to the Responses API on their own side and keep receiving chat completions.</p>
+<p>Everything ahead of the wire call is shared with the chat-completions path: system prompt placement, attachment handling, tool-call pairing, and context trimming. Only the payload shape differs -- messages become input items, tool calls become <code>function_call</code> items, tool results become <code>function_call_output</code> items, and images move from a nested <code>image_url</code> object to a flat string.</p>
+<p>Two deliberate limits:</p>
+<ul>
+<li><strong>Responses are not stored</strong> (<code>store: false</code>), so OpenAI retains nothing server-side and Kai replays the full conversation on each request rather than chaining response ids.</li>
+<li><strong>Reasoning items are not replayed.</strong> OpenAI recommends echoing back the reasoning that preceded a tool call, but replaying one whose following item was dropped by context trimming is a hard error. Kai trades a re-reasoned tool round-trip for a request that cannot fail that way. Reasoning summaries, when the account is eligible to receive them, are shown in the usual "Thinking" section.</li>
+</ul>
+<p>To add a newly affected model family, extend <code>RESPONSES_API_MODELS</code> in <code>ModelCapabilities.kt</code>.</p>
+<h3 id="session-header-opencode">Session Header (OpenCode)</h3>
+<p>OpenCode Zen identifies the client behind a request by an <code>x-opencode-session</code> header and rejects requests that arrive without one. Kai sends the current conversation id as that session id, so one chat -- however many turns, tool round-trips or bailout retries it takes -- reads as a single session upstream, and separate chats read as separate sessions. Requests that belong to no conversation (fetching the model list, connection validation) carry a session id generated once per app process instead.</p>
+<p>The id is Kai's own random conversation identifier; nothing about the user or the machine is derived from it. No other provider is sent the header.</p>
+<h2 id="supported-services">Supported Services</h2>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th><code>id</code></th>
+<th>Requires API Key</th>
+<th>API Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td><code>free</code></td>
+<td>No</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td><strong>Atlas Cloud</strong></td>
+<td><code>atlascloud</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Gemini</td>
+<td><code>gemini</code></td>
+<td>Yes</td>
+<td>Gemini native</td>
+</tr>
+<tr>
+<td>Anthropic</td>
+<td><code>anthropic</code></td>
+<td>Yes</td>
+<td>Anthropic native</td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td><code>openai</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td><code>deepseek</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Mistral</td>
+<td><code>mistral</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>xAI</td>
+<td><code>xai</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>OpenRouter</td>
+<td><code>openrouter</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>GroqCloud</td>
+<td><code>groqcloud</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>NVIDIA</td>
+<td><code>nvidia</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Cerebras</td>
+<td><code>cerebras</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Ollama Cloud</td>
+<td><code>ollamacloud</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>LongCat</td>
+<td><code>longcat</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible (ships with a curated default model list; also exposes a <code>/models</code> endpoint used during validation)</td>
+</tr>
+<tr>
+<td>Together AI</td>
+<td><code>together</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Hugging Face</td>
+<td><code>huggingface</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Venice AI</td>
+<td><code>venice</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Moonshot AI</td>
+<td><code>moonshot</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Z.AI</td>
+<td><code>zai</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Z.AI Coding Plan</td>
+<td><code>zai-coding-plan</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>MiniMax</td>
+<td><code>minimax</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>AIHubMix</td>
+<td><code>aihubmix</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Deep Infra</td>
+<td><code>deepinfra</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Fireworks AI</td>
+<td><code>fireworksai</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>OpenCode</td>
+<td><code>opencode</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible (every request carries an <code>x-opencode-session</code> header — see <a href="#session-header-opencode">Session Header</a>)</td>
+</tr>
+<tr>
+<td>Public AI</td>
+<td><code>publicai</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>AI Horde</td>
+<td><code>aihorde</code></td>
+<td>Yes (anonymous key <code>0000000000</code> allowed at lowest priority)</td>
+<td>OpenAI-compatible (via <a href="https://oai.aihorde.net/">oai.aihorde.net</a>; model list is the set of text models with online volunteer workers — availability and latency vary)</td>
+</tr>
+<tr>
+<td>Perplexity</td>
+<td><code>perplexity</code></td>
+<td>Yes</td>
+<td>OpenAI-compatible (Sonar; ships with a curated default model list — no authenticated <code>/models</code> endpoint for Sonar; connection validation probes the chat endpoint with an incomplete body to check the API key)</td>
+</tr>
+<tr>
+<td>OpenAI-Compatible API</td>
+<td><code>openai-compatible</code></td>
+<td>No (optional)</td>
+<td>OpenAI-compatible</td>
+</tr>
+<tr>
+<td>Local Model</td>
+<td><code>litert</code></td>
+<td>No</td>
+<td>On-device (LiteRT LM)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="connection-validation">Connection Validation</h2>
+<p>When the user enters or changes an API key (or base URL), the app validates the connection after an 800 ms debounce and shows a status indicator: <strong>checking</strong>, <strong>connected</strong>, <strong>invalid key</strong>, <strong>quota exhausted</strong>, <strong>rate limited</strong>, <strong>connection failed</strong>, or <strong>local network access denied</strong>. Validation also runs for all services when the settings screen opens. Services validate by fetching their model list — Gemini, Anthropic, and OpenAI-compatible services (including LongCat) each call their respective models endpoint. <strong>Perplexity</strong> is an exception: Sonar has no authenticated models list, so validation probes the chat endpoint with an incomplete body to verify the API key, then loads the curated Sonar model list. On a successful connection, the available model list is refreshed.</p>
+<h3 id="local-network-servers-android">Local Network Servers (Android)</h3>
+<p>Android 17+ blocks all traffic to local network hosts unless the user grants the local network permission. When a service's base URL points at a LAN host (private IP range, <code>.local</code> name, or a bare hostname — loopback is exempt), the app requests the permission before validating the connection and before sending a chat message. If the user denies it, the connection status shows "local network access denied" with an "Open settings" button that jumps straight to the app's system settings page, and chat shows an actionable error instead of a silent failure. When the user returns to the app after granting the permission there, the denied connection re-validates automatically (without ever re-prompting). Other platforms don't gate local network access, so the check is a no-op there.</p>
+<h2 id="model-selection">Model Selection</h2>
+<p>When a connection is validated and models are fetched, the app auto-selects a model if none is chosen — first checking for a per-service default model (e.g. LongCat defaults to "LongCat-Flash-Lite", Perplexity defaults to "sonar-pro"), then preferring "kimi-k2.5" if available, otherwise the first model in the list. Services filter their model lists:
+- OpenAI shows only chat-oriented models (prefix filter)
+- GroqCloud shows only models marked as active
+- Together AI filters by <code>type == "chat"</code> to exclude non-chat models (embedding, code, etc.)
+- Other services show all non-retired models</p>
+<p>If a stored list-selection model id is not in the fetched list, it is kept and shown as selected rather than overwritten by auto-select.</p>
+<h3 id="custom-model-openai-compatible-api">Custom model (OpenAI-Compatible API)</h3>
+<p>The <strong>OpenAI-Compatible API</strong> config card keeps the normal model dropdown (when a list is available) and adds a <strong>Custom model</strong> checkbox below it. When checked, a free-text field appears for a model id the server accepts even if <code>/models</code> never returns it (e.g. a free tier omitted from the list). List selection and custom id are stored separately; chat uses the custom id only while the checkbox is on. Toggling the checkbox off restores the list selection without losing the typed id.</p>
+<h3 id="model-cards">Model Cards</h3>
+<p>The model picker modal shows each candidate as a card with consistent metadata regardless of provider:</p>
+<ul>
+<li><strong>Title</strong> (top left) — a human-readable display name from the curated catalog or the provider's API; falls back to the raw model id only when no display name is available</li>
+<li><strong>Free badge</strong> — a green "Free" label next to the title when the model is on that provider's free tier according to the curated free-tier catalog (currently <strong>Ollama Cloud</strong> and <strong>OpenRouter</strong> only). Free-ness is per service, not global.</li>
+<li><strong>Arena score</strong> (top right) — LMArena Elo rating as colored text, gradient from green (&gt;= 1400) through lime/yellow to orange (&lt; 1250)</li>
+<li><strong>Detail line</strong> (below the title) — release date, parameter count, and context window joined into a single muted line separated by <code>·</code> (e.g. <code>Mar 2025 · 70B · 200K ctx</code>); any missing field is simply omitted from the line</li>
+</ul>
+<p>The card representing the currently selected model is highlighted with a filled accent background so users can identify their current choice at a glance when reopening the picker.</p>
+<p>The modal includes sort chips (Date, Score, Ctx) below the search field. Tapping a chip switches which field is active; all sorts are descending (highest or most recent first), with no ascending option. Default sort is by score. When the current service list includes any free-tier model, a <strong>Free</strong> filter chip also appears: selected, it shows only free-tier models while the active sort still applies; if the filtered list is empty, a short empty message is shown. The Free chip is hidden for services with no free-tier catalog entries.</p>
+<p>Context window and release date come from two sources, merged by the mapping layer: a bundled curated catalog of well-known models, and whatever the provider's own models endpoint returns (e.g. OpenAI-compat <code>context_window</code> and <code>created</code>, Anthropic <code>created_at</code>). The curated catalog wins; provider-supplied values are used only as a fallback when the catalog has no entry for that model. The catalog is hand-maintained to correct inconsistencies in what providers report. Models not present in the catalog still render — they just use whatever the API provided, and any unknown fields are hidden.</p>
+<p>Free-tier membership is a separate curated list (not derived from live pricing APIs at runtime). Runtime ids live in the free-tier catalog in code; curation policy, provenance, and a mirrored snapshot live in the OKF knowledge bundle under <code>docs/knowledge/free-tier/</code>. Both are refreshed together with the <code>update-free-tier-models</code> skill.</p>
+<h2 id="chat-screen-service-toggle">Chat Screen Service Toggle</h2>
+<p>The chat screen service toggle lists two distinct Free entries — <strong>Free FAST</strong> and <strong>Free EXPERT</strong> — followed by every configured non-Free service (including on-device and models that do not support tools). When this list contains more than one entry, a circular service icon button appears to the right of the chat input, next to the send/stop button. Because the two Free modes alone already count as two entries, the toggle can appear even when no non-Free services are configured. The icon represents the current primary service (each service has its own simplified vector icon). Tapping it opens a dropdown listing those services with their icons, names, and model IDs; the current primary is highlighted with a primary container background. The dropdown is height-capped to the screen and becomes scrollable when the list is long enough to overflow, so every entry stays reachable.</p>
+<p>In <strong>Interactive UI mode</strong>, the same control is filtered to services whose selected model supports tool use (agentic flows), and on-device services are excluded so the user cannot switch to a model that cannot produce kai-ui.</p>
+<p>Selecting a non-Free entry reorders the configured list so the chosen service becomes first (primary). Selecting a Free entry (FAST or EXPERT) instead flips an "is Free primary" flag and records the chosen Free mode — Free can be promoted to primary independently of the configured fallback order, without rearranging the non-Free chain. The fallback chain picks up the new state automatically. The fallback walker also skips any entry whose context window can't fit the current chat history, so very long conversations may transparently move past services that would otherwise be eligible.</p>
+<h2 id="attachments">Attachments</h2>
+<p>Image attachments are broadly supported across cloud services, gated on <strong>two levels</strong>. The built-in <strong>Free</strong> tier is text-only at the service level — its proxy fans out to a chain that includes text-only fallback models, so it never accepts images regardless of the nominal model. Beyond that, image support is <strong>per-model</strong>: <strong>DeepSeek</strong> has no vision models, so images are dropped for it everywhere (including when it's reached through an aggregator), and services that host both text-only and vision models in one catalog (e.g. <strong>Z.AI</strong>, where the text GLM models sit next to the multimodal GLM-V variants) accept images only when the selected model is vision-capable. When the active service or model can't take images, images are dropped from the request — and the file picker stops offering image types — so a turn that includes an image still goes through as text. Unknown models are assumed image-capable, since most modern flagship models are multimodal. PDF attachments are advertised only by services with native document support — currently Anthropic, Gemini, OpenAI, and OpenRouter. Anthropic and Gemini encode PDFs natively in the request; the OpenAI-compatible wire path currently drops PDF binaries (images still go through as <code>image_url</code>), so a PDF chosen while OpenAI or OpenRouter is active is accepted by the UI but not sent to the model. The on-device Local Model hides file attachment affordances entirely; users running purely locally don't see attachment buttons.</p>
+<h2 id="settings-ui">Settings UI</h2>
+<p>Users manage services through the settings screen:
+- <strong>Add</strong> — pick from the list of available services (can add the same service multiple times); the OpenAI-Compatible API and the on-device Local Model are pinned to the top of the picker, followed by the highlighted featured provider Atlas Cloud, with the remaining providers sorted alphabetically
+- <strong>Remove</strong> — delete an instance and its stored credentials; deletion is deferred with a snackbar "Undo" option (~4 seconds) before the service is permanently removed
+- <strong>Reorder</strong> — drag to change priority (first = primary, rest = fallbacks)
+- <strong>Configure</strong> — per-instance API key, model selection, base URL (OpenAI-Compatible only; optional custom model id via checkbox)
+- <strong>Free fallback toggle</strong> — controls whether Free is appended as last resort
+- <strong>Sponsors</strong> — the Free tier card lists all GitHub sponsors in a single grid, with active sponsors first followed by past sponsors</p>
+<h2 id="key-files">Key Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/Service.kt</code></td>
+<td>Service definitions, all provider metadata</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/ModelCatalog.kt</code></td>
+<td>Curated context window / release date / Arena Elo for well-known models</td>
+</tr>
+<tr>
+<td><code>docs/knowledge/model-catalog/</code></td>
+<td>OKF bundle: Arena Elo matching policy, attested snapshot, refresh playbook</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/FreeTierModels.kt</code></td>
+<td>Runtime free-tier model ids per service (Ollama Cloud, OpenRouter)</td>
+</tr>
+<tr>
+<td><code>docs/knowledge/free-tier/</code></td>
+<td>OKF bundle: free-tier policy, snapshot, sources, refresh playbook</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/FreeProviderSuggestions.kt</code></td>
+<td>Providers recommended in chat when Free is rate-limited with no services configured</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/ModelTransformations.kt</code></td>
+<td>Maps provider model DTOs to <code>SettingsModel</code>, merges with catalog and free-tier flags</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/AppSettings.kt</code></td>
+<td>Service instance storage, credential persistence, migration</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/RemoteDataRepository.kt</code></td>
+<td>Fallback chain, request orchestration</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../network/Requests.kt</code></td>
+<td>HTTP clients for all API formats</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/ModelCapabilities.kt</code></td>
+<td>Per-model gates: tool support, image support, Responses API routing</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/providers/OpenAIResponsesInput.kt</code></td>
+<td>Translates chat-completions messages into Responses API input items</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../network/dtos/openairesponses/</code></td>
+<td>OpenAI Responses API DTOs</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../network/dtos/anthropic/</code></td>
+<td>Anthropic Messages API DTOs</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/settings/SettingsViewModel.kt</code></td>
+<td>Connection validation, service management UI logic</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../tools/PermissionController.kt</code></td>
+<td>Runtime permission requests, including the local network gate for LAN server URLs (Android 17+)</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../tools/LocalNetworkUrl.kt</code></td>
+<td>Detects LAN base URLs that need the local network permission</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/ChatScreen.kt</code></td>
+<td>Chat screen, renders ServiceSelector</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/ServiceSelector.kt</code></td>
+<td>Compact service toggle dropdown</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/ChatViewModel.kt</code></td>
+<td>Wires service selection and reordering</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

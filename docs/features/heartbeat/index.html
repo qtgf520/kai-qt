@@ -1,0 +1,1302 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for Kai - AI Assistant App">
+      
+      
+      
+        <link rel="canonical" href="https://kai9000.com/docs/features/heartbeat/">
+      
+      
+        <link rel="prev" href="../memories/">
+      
+      
+        <link rel="next" href="../tasks/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Heartbeat - Kai Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#heartbeat" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Kai Documentation" class="md-header__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Kai Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Heartbeat
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Kai Documentation" class="md-nav__button md-logo" aria-label="Kai Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Kai Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Features
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Features
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../chat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chat & Conversations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi-service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multi-Service
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tools/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mcp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MCP Servers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dynamic-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dynamic UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../memories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Memories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Heartbeat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-hours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Active Hours
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promotion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promotion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#response-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt Building
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heartbeat-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tasks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tasks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../daemon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daemon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../encryption/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Encryption
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../settings-export-import/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Settings Export & Import
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../splinterlands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Splinterlands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#heartbeat_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#active-hours" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Active Hours
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#promotion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promotion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#execution-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execution Flow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#response-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response Handling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-building" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prompt Building
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heartbeat-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Heartbeat Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promote-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promote Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Settings UI
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ai-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AI Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Files
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="heartbeat">Heartbeat</h1>
+<p><strong>Last verified:</strong> 2026-08-03</p>
+<blockquote>
+<p>Heartbeat is user-controlled (on/off toggle, interval, active hours live in the settings UI). The AI cannot enable, disable, or reschedule it. To customise <em>what happens on each heartbeat</em>, the AI creates heartbeat-triggered scheduled tasks via <code>schedule_task</code> with <code>on_heartbeat: true</code> — these are <code>HEARTBEAT</code>-trigger tasks (see <a href="../tasks/">tasks.md</a>) and their prompts are appended to every heartbeat run under <code>## Heartbeat Additions</code>. Each addition is a first-class task the user can see, edit, and cancel.</p>
+</blockquote>
+<p>Kai's heartbeat feature enables periodic automatic self-checks. The AI reviews pending tasks, email status, newly arrived emails, and learned memories on a configurable interval, surfacing anything that needs attention without requiring user interaction.</p>
+<h2 id="concepts">Concepts</h2>
+<h3 id="heartbeat_1">Heartbeat</h3>
+<p>A silent, scheduled prompt sent to the AI during active hours. If nothing needs attention, the AI responds with "HEARTBEAT_OK" and the user sees nothing. If something requires follow-up, the response appears as an assistant message in the chat.</p>
+<h3 id="active-hours">Active Hours</h3>
+<p>A configurable time window (default 8:00–22:00) during which heartbeats are allowed to fire. Outside this window, heartbeats are skipped regardless of interval.</p>
+<h3 id="promotion">Promotion</h3>
+<p>A mechanism for graduating well-established memories into the permanent soul/system prompt. Memories that have been reinforced 5 or more times become promotion candidates and are surfaced during heartbeat checks for the AI to evaluate.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Heartbeat configuration is stored as a serialized JSON object in app settings. Values are only editable from the settings UI — there is no AI tool that can flip them:</p>
+<ul>
+<li><strong>Enabled</strong>: true</li>
+<li><strong>Interval</strong>: 30 minutes between heartbeats (UI slider offers 5m, 10m, 15m, 30m, 45m, 1h, 2h, 4h)</li>
+<li><strong>Active hours start</strong>: 8 (hour, 24h format; UI range slider covers 0–23)</li>
+<li><strong>Active hours end</strong>: 22 (hour, 24h format; UI range slider covers 0–24, where 24 renders as 0:00 and means end-of-day)</li>
+<li><strong>Model</strong>: optional override for which service+model to use for heartbeats. When not set, the default path prefers the first configured <strong>remote</strong> service, then falls back to the first on-device (LiteRT) instance if no remote is configured. Useful for selecting a cheaper or faster model for background checks</li>
+</ul>
+<p>UI validation rules:</p>
+<ul>
+<li>Interval must be at least 5 minutes</li>
+<li>Active hours start must be 0–23; end must be 0–24 (24 = midnight next day = full-day coverage)</li>
+</ul>
+<h2 id="execution-flow">Execution Flow</h2>
+<ol>
+<li>The task scheduler polls every 60 seconds</li>
+<li>On each poll, it checks: is the overall scheduling-enabled toggle on (the tasks setting that gates all scheduled work)? Is heartbeat enabled? Is the current hour within active hours? Has the configured interval elapsed since the last heartbeat?</li>
+<li>If all conditions are met and no other API call is in progress, a heartbeat prompt is built and sent via <code>askWithTools</code> (which includes the full tool-calling loop)</li>
+<li>The last heartbeat timestamp is updated and a log entry is recorded</li>
+</ol>
+<p>When the overall scheduling-enabled toggle is off, heartbeats do not run regardless of the heartbeat toggle, interval, or active hours.</p>
+<h2 id="response-handling">Response Handling</h2>
+<ul>
+<li>If the AI response contains "HEARTBEAT_OK", nothing is shown to the user</li>
+<li>Any other response is saved into a dedicated heartbeat conversation (type <code>heartbeat</code>) via <code>addAssistantMessage</code></li>
+<li>A dismissable banner appears at the top of the chat when the heartbeat has something to report</li>
+<li><strong>Android push notification</strong>: when the heartbeat produces a non-OK report <em>and</em> the app is not currently in the foreground, a push notification fires. Foreground state is tracked via <code>ProcessLifecycleOwner</code> in <code>KaiApplication</code> and mirrored to <code>TaskScheduler.appInForeground</code>. Tapping the notification launches/foregrounds the app and deep-links into the heartbeat conversation via the <code>EXTRA_OPEN_HEARTBEAT</code> intent extra; <code>ChatViewModel</code> consumes the signal through <code>DataRepository.openHeartbeatRequested</code> and calls <code>loadConversation</code> on the heartbeat conversation id. The notification uses a fixed id so a fresh report replaces the previous unread one instead of stacking. The notification body is the heartbeat response with markdown formatting stripped and truncated to 240 characters at a word boundary (so the preview never breaks mid-word or shows raw markdown syntax). Desktop/iOS/web no-op (banner-only).</li>
+<li>Tapping the banner loads the heartbeat conversation so the user can read the report and reply</li>
+<li>The X button dismisses the banner without navigating</li>
+<li>Heartbeat conversations are included in the chat history list with a "Heartbeat" label badge, and can also be accessed via the banner</li>
+<li>The heartbeat prompt is sent as a standalone message (not including user chat history as context)</li>
+<li>If the API call fails, a failure entry is recorded in the heartbeat log</li>
+</ul>
+<h2 id="prompt-building">Prompt Building</h2>
+<p>The heartbeat prompt is assembled by the pure function <code>buildHeartbeatPrompt</code> (in <code>HeartbeatPromptBuilder.kt</code>). Each conditional section is covered by <code>HeartbeatPromptBuilderTest</code>. Sources:</p>
+<ol>
+<li><strong>Custom prompt</strong> — user-defined text from settings, or the default prompt if empty. The default instructs the AI to review memories and tasks, respond "HEARTBEAT_OK" if nothing needs attention, or address anything that does</li>
+<li><strong>Previous heartbeat results</strong> — the last 3 responses from the heartbeat conversation, so the AI can track trends, avoid repeating notifications, and detect persistent issues (e.g. "email still unread since last check")</li>
+<li><strong>Pending tasks</strong> — all tasks with status PENDING are listed with their description, id, scheduled time, and cron expression (if recurring)</li>
+<li><strong>Email status</strong> — if email is enabled and accounts exist, each account's email address, unread count, and last sync time are included</li>
+<li><strong>New emails</strong> — headers (subject, from, preview) for emails polled since the last heartbeat pickup. Emails are fetched in the background by the email poll loop and buffered in a pending queue (capped at 100, FIFO). The heartbeat consumes the queue: everything the heartbeat saw is removed from the queue after a successful run, while emails that arrive during the heartbeat call remain for the next run. After consumption the heartbeat also advances each account's delivery watermark, so a follow-up <code>check_email</code> call from the user won't re-surface the same messages — Kai tracks read/unread internally and ignores the provider's <code>\Seen</code> flag</li>
+<li><strong>New SMS</strong> — SMS messages received since the last heartbeat. Consumed analogously to emails: buffered as they arrive, surfaced once under <code>## New SMS</code>, and cleared from the pending queue after a successful run so the next heartbeat only sees newer arrivals</li>
+<li><strong>New notifications</strong> — Android notifications captured since the last heartbeat, capped at 20 newest-first. Consumed analogously to emails: buffered as they arrive, surfaced once under <code>## New Notifications</code>, and cleared from the pending queue after a successful run so the next heartbeat only sees newer arrivals</li>
+<li><strong>Promotion candidates</strong> — memories with 5 or more hits are listed with their key, hit count, category, and content, along with a suggestion to use the <code>promote_learning</code> tool</li>
+</ol>
+<p>For the full contract of every prompt variation in Kai (chat remote/local, heartbeat, Splinterlands) see <a href="../system-prompts/">system-prompts.md</a>.</p>
+<h2 id="heartbeat-log">Heartbeat Log</h2>
+<ul>
+<li>Stores up to 5 most recent heartbeat entries</li>
+<li>Each entry records success/failure, a timestamp, and an optional error message</li>
+<li>Displayed in the settings UI under the heartbeat section</li>
+<li>Entries show an OK/FAIL indicator and a formatted local timestamp</li>
+<li>Failed entries display the error message (single line, ellipsized) below the timestamp in the error color</li>
+</ul>
+<h2 id="promote-learning">Promote Learning</h2>
+<p>When a memory has been reinforced 5 or more times, it becomes a promotion candidate. The <code>promote_learning</code> tool:</p>
+<ol>
+<li>Looks up the memory by key</li>
+<li>Appends the provided <code>soul_addition</code> text to the soul/system prompt</li>
+<li>Removes the original memory from the memory store</li>
+<li>Returns confirmation with the promoted key and hit count</li>
+</ol>
+<p>This allows well-established patterns to graduate from ephemeral memory into permanent AI behavior.</p>
+<h2 id="settings-ui">Settings UI</h2>
+<p>The heartbeat section in settings contains:</p>
+<ul>
+<li><strong>Toggle</strong> — enables or disables heartbeat with a switch</li>
+<li><strong>Interval display</strong> — shows the current interval in minutes in the section description</li>
+<li><strong>Interval slider</strong> — a snap-to-preset slider with positions for 5m, 10m, 15m, 30m, 45m, 1h, 2h, 4h. Displays the formatted value (e.g. "15m", "2h") next to the label</li>
+<li><strong>Active hours range slider</strong> — a dual-thumb range slider spanning 0–24 (24-hour clock). Displays "H:00 – H:00" next to the label (unpadded hours); the upper-bound value 24 renders as 0:00 to indicate full-day coverage</li>
+<li><strong>Model picker</strong> — a dropdown button showing the selected service+model, or "Default" when no override is set. Opens a dropdown menu listing all configured services with their icons and model IDs. Selecting "Default" clears the override and uses the remote-first default above. If the previously selected service is removed, heartbeat falls back to that default automatically</li>
+<li><strong>Custom prompt editor</strong> — a text field (max 4000 characters) for editing the heartbeat prompt, with a save button that appears when changes are detected. Shows the default prompt text when no custom prompt is set. A character counter (X/4000) is displayed in the editor as the user types</li>
+<li><strong>Reset to default</strong> — when a custom heartbeat prompt is set, a reset button appears in the custom-prompt section header. Tapping it opens a confirmation dialog; confirming clears the custom prompt and restores the default</li>
+<li><strong>Log display</strong> — when log entries exist, shows a "Recent" label followed by each entry with an OK/FAIL indicator and timestamp</li>
+<li><strong>Manual refresh</strong> — a refresh icon next to the "Recent" label runs a heartbeat immediately, bypassing the active-hours window and the interval-due check. Only fires while heartbeat is enabled and scheduling is on; the icon shows a progress spinner during the call</li>
+</ul>
+<h2 id="ai-tools">AI Tools</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>promote_learning</code></td>
+<td>Promote a reinforced memory into the soul/system prompt</td>
+</tr>
+</tbody>
+</table>
+<p>Standing additions to heartbeat behaviour are created with <code>schedule_task(on_heartbeat=true)</code> — see <a href="../tasks/#heartbeat-triggered-tasks">tasks.md</a>. Those prompts are appended to the main heartbeat self-check, not replaced.</p>
+<h2 id="key-files">Key Files</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/HeartbeatManager.kt</code></td>
+<td>Config, log management, wrapper that gathers inputs for the pure prompt builder</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/SettingsJson.kt</code></td>
+<td>Shared settings-backed JSON persistence: decode-or-default, encode-and-write, locked read-modify-write</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/HeartbeatPromptBuilder.kt</code></td>
+<td>Pure heartbeat prompt assembly (sections, caps)</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../tools/HeartbeatTools.kt</code></td>
+<td>AI tool definitions for heartbeat and promotion</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/TaskScheduler.kt</code></td>
+<td>Poll loop that triggers heartbeat checks</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/AppSettings.kt</code></td>
+<td>Persisted heartbeat config, prompt, and log storage</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../data/RemoteDataRepository.kt</code></td>
+<td>Heartbeat conversation creation, unread flag management; default model selection for <code>askWithTools</code></td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/chat/composables/HeartbeatBanner.kt</code></td>
+<td>Dismissable notification banner UI</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/settings/HeartbeatSection.kt</code></td>
+<td>Heartbeat settings UI section</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../ui/settings/SettingsScreen.kt</code></td>
+<td>Hosts the Agent tab that includes the heartbeat section</td>
+</tr>
+<tr>
+<td><code>composeApp/src/commonMain/.../Platform.kt</code></td>
+<td><code>expect fun sendHeartbeatNotification</code> — push notification for background heartbeat reports</td>
+</tr>
+<tr>
+<td><code>composeApp/src/androidMain/.../HeartbeatNotifier.android.kt</code></td>
+<td>Android actual + <code>EXTRA_OPEN_HEARTBEAT</code> deep-link constant</td>
+</tr>
+<tr>
+<td><code>androidApp/src/main/kotlin/.../MainActivity.kt</code></td>
+<td>Reads <code>EXTRA_OPEN_HEARTBEAT</code> in <code>onCreate</code>/<code>onNewIntent</code> and calls <code>DataRepository.requestOpenHeartbeat</code></td>
+</tr>
+<tr>
+<td><code>androidApp/src/main/kotlin/.../KaiApplication.kt</code></td>
+<td>Tracks foreground via <code>ProcessLifecycleOwner</code> and mirrors it to <code>TaskScheduler.appInForeground</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "search.highlight", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
