@@ -1,0 +1,128 @@
+package com.qtkai.zhong.tools
+
+import com.qtkai.zhong.network.tools.ParameterSchema
+import com.qtkai.zhong.network.tools.Tool
+import com.qtkai.zhong.network.tools.ToolInfo
+import com.qtkai.zhong.network.tools.ToolSchema
+import kai.composeapp.generated.resources.Res
+import kai.composeapp.generated.resources.tool_android_directory_description
+import kai.composeapp.generated.resources.tool_android_directory_name
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import java.io.File
+import kotlin.io.path.createDirectories
+import kotlin.io.path.deleteIfExists
+import kotlin.io.path.readText
+import kotlin.io.path.writeText
+
+/**
+ * Tool that allows the AI to read and write files on the Android device's storage.
+ * Requires MANAGE_EXTERNAL_STORAGE permission for full access.
+ * Accessible paths: /storage/emulated/0/ and subdirectories.
+ */
+object AndroidDirectoryTool : Tool {
+    @Serializable
+    data class AndroidDirectoryArgs(
+        val action: String = "read",
+        val path: String = "/storage/emulated/0/",
+        val content: String? = null,
+        val recursive: Boolean = false
+    )
+
+    override val info: ToolInfo = ToolInfo(
+        name = Res.string.tool_android_directory_name,
+        description = Res.string.tool_android_directory_description,
+        parameters = ToolSchema(
+            type = "object",
+            properties = JsonObject(mapOf(
+                "action" to ParameterSchema(
+                    type = "string",
+                    description = "Action to perform: 'read', 'write', 'list', 'delete', 'mkdir'",
+                    enum = listOf("read", "write", "list", "delete", "mkdir")
+                ),
+                "path" to ParameterSchema(
+                    type = "string",
+                    description = "File or directory path (e.g., /storage/emulated/0/Documents/)"
+                ),
+                "content" to ParameterSchema(
+                    type = "string",
+                    description = "Content to write (required for 'write' action)"
+                ),
+                "recursive" to ParameterSchema(
+                    type = "boolean",
+                    description = "List directories recursively (default: false)"
+                )
+            )),
+            required = listOf("action", "path")
+        )
+    )
+
+    override suspend fun execute(args: String): String {
+        return try {
+            val json = Json { ignoreUnknownKeys = true }
+            val decoded = json.decodeFromString<AndroidDirectoryArgs>(args)
+            when (decoded.action) {
+                "read" -> readFile(decoded.path)
+                "write" -> writeFile(decoded.path, decoded.content ?: "")
+                "list" -> listDirectory(decoded.path, decoded.recursive)
+                "delete" -> deleteFile(decoded.path)
+                "mkdir" -> createDir(decoded.path)
+                else -> "Unknown action: ${decoded.action}"
+            }
+        } catch (e: Exception) {
+            "Error: ${e.message}"
+        }
+    }
+
+    private fun readFile(path: String): String {
+        val file = File(path)
+        if (!file.exists()) return "File not found: $path"
+        if (file.isDirectory) return "Is a directory, use 'list' action"
+        if (!file.canRead()) return "Permission denied: $path"
+        return file.readText()
+    }
+
+    private fun writeFile(path: String, content: String): String {
+        val file = File(path)
+        file.parentFile?.let { if (!it.exists()) it.mkdirs() }
+        file.writeText(content)
+        return "Written ${content.length} bytes to $path"
+    }
+
+    private fun listDirectory(path: String, recursive: Boolean): String {
+        val dir = File(path)
+        if (!dir.exists() || !dir.isDirectory) return "Not a directory: $path"
+        if (!dir.canRead()) return "Permission denied: $path"
+        val entries = if (recursive) {
+            buildList {
+                dir.walkTopDown().forEach { if (it.isFile) add(it.relativeTo(dir).toString()) }
+            }
+        } else {
+            dir.listFiles()?.map { it.name }?.toList() ?: emptyList()
+        }
+        return entries.joinToString("\n")
+    }
+
+    private fun deleteFile(path: String): String {
+        val file = File(path)
+        if (!file.exists()) return "File not found: $path"
+        if (!file.canWrite()) return "Permission denied: $path"
+        if (file.isDirectory) {
+            file.listFiles()?.forEach { it.delete() }
+            file.delete()
+        } else {
+            file.delete()
+        }
+        return "Deleted: $path"
+    }
+
+    private fun createDir(path: String): String {
+        val dir = File(path)
+        if (dir.exists()) return "Directory already exists: $path"
+        if (!dir.mkdirs()) return "Failed to create directory: $path"
+        return "Created directory: $path"
+    }
+}
