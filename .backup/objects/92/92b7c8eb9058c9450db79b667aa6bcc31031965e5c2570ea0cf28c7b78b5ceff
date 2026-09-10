@@ -38,9 +38,6 @@ import com.qtkai.zhong.ui.sandbox.SandboxSessionViewModel
 import com.qtkai.zhong.ui.settings.SandboxViewModel
 import com.qtkai.zhong.ui.settings.SettingsViewModel
 import com.qtkai.zhong.ui.settings.SplinterlandsViewModel
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -52,14 +49,6 @@ val KAI_BUILD_FILES = named("kaiBuildFiles")
 fun permissionQualifier(permission: AppPermission) = named(permission.name)
 
 val appModule = module {
-    // Process-lifetime scope for background tasks that must survive screen/ViewModel
-    // teardown — chat requests, tool calls, scheduled tasks. Decoupled from any
-    // ViewModel's scope so leaving the chat never cancels in-flight work.
-    single<CoroutineScope> {
-        CoroutineScope(
-            SupervisorJob() + getBackgroundDispatcher() + CoroutineName("KaiAppScope"),
-        )
-    }
     AppPermission.entries.forEach { permission ->
         single(permissionQualifier(permission)) { PermissionController(permission) }
     }

@@ -224,7 +224,7 @@ class ChatViewModel(
 
         val (strippedQuestion, activeSkillId) = parseSkillInvocation(question)
 
-        currentJob = appScope.launch(backgroundDispatcher) {
+        currentJob = viewModelScope.launch(backgroundDispatcher) {
             _state.update {
                 it.copy(
                     isLoading = true,

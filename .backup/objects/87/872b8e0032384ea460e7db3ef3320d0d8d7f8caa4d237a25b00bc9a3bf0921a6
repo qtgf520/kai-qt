@@ -29,10 +29,7 @@ import kai.composeapp.generated.resources.litert_no_model_warning
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.ensureActive
@@ -224,7 +221,7 @@ class ChatViewModel(
 
         val (strippedQuestion, activeSkillId) = parseSkillInvocation(question)
 
-        currentJob = appScope.launch(backgroundDispatcher) {
+        currentJob = viewModelScope.launch(backgroundDispatcher) {
             _state.update {
                 it.copy(
                     isLoading = true,
