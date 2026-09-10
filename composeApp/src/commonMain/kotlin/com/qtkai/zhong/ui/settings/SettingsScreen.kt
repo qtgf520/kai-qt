@@ -462,7 +462,7 @@ private fun BottomInfo() {
                 .clip(CircleShape)
                 .size(24.dp)
                 .clickable(onClick = {
-                    uriHandler.openUri("https://github.com/SimonSchubert/Kai")
+                    uriHandler.openUri("https://github.com/qtgf520/kai-qt")
                 })
                 .handCursor(),
             painter = painterResource(Res.drawable.github_mark),

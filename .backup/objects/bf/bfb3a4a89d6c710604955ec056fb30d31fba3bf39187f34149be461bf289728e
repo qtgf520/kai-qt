@@ -252,7 +252,7 @@ internal fun FreeSettings(
 
             TextButton(
                 onClick = {
-                    uriHandler.openUri("https://github.com/qtgf520/kai-qt")
+                    uriHandler.openUri("https://schubert-simon.de")
                 },
                 Modifier
                     .handCursor(),
