@@ -30,7 +30,7 @@ Read `composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/mcp/PopularMcpSer
 
 For every current row, POST Streamable HTTP like the app client (`McpClient`):
 
-1. `initialize` — protocol `2024-11-05`, empty capabilities, `clientInfo` name `Kai 9000`.
+1. `initialize` — protocol `2024-11-05`, empty capabilities, `clientInfo` name `Kai2 9000`.
 2. `notifications/initialized`.
 3. `tools/list`.
 
