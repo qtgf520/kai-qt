@@ -1031,7 +1031,7 @@
 </ul>
 <h2 id="notification">Notification</h2>
 <ul>
-<li><strong>Channel</strong>: "Kai 9000 Background Service" with low importance</li>
+<li><strong>Channel</strong>: "Kai2 9000 Background Service" with low importance</li>
 <li><strong>Content</strong>: "Daemon is running" with a sync icon</li>
 <li><strong>Tap action</strong>: Opens the app's main screen</li>
 <li>The notification is required by Android for foreground services and cannot be hidden</li>
@@ -1044,7 +1044,7 @@
 </ul>
 <p>No wake locks or battery optimization exemptions are requested. The service relies on Android's standard process management with <code>START_STICKY</code> for restart behavior.</p>
 <h2 id="settings-ui">Settings UI</h2>
-<p>A toggle labeled "Daemon Mode" appears in the General tab of settings, only on Android. The description reads: "Keep Kai 9000 running in the background so scheduled tasks execute even when the app is not in the foreground." Toggling it starts or stops the foreground service and persists the preference. On Android 13+, turning the toggle on also requests the notification permission, since the foreground service's persistent notification cannot be displayed without it.</p>
+<p>A toggle labeled "Daemon Mode" appears in the General tab of settings, only on Android. The description reads: "Keep Kai2 9000 running in the background so scheduled tasks execute even when the app is not in the foreground." Toggling it starts or stops the foreground service and persists the preference. On Android 13+, turning the toggle on also requests the notification permission, since the foreground service's persistent notification cannot be displayed without it.</p>
 <h2 id="key-files">Key Files</h2>
 <table>
 <thead>
