@@ -902,7 +902,7 @@ private fun ChatModeScreen(
                                                 ToolPipelineMessage(
                                                     toolName = history.toolName ?: "tool",
                                                     status = "done",
-                                                    result = history.content.take(500),
+                                                    result = history.content,
                                                 )
                                             }
                                         }
