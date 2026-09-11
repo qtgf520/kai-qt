@@ -21,11 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -556,8 +553,7 @@ private fun ConfiguredServiceCardContent(
                                 value = nameDraft,
                                 onValueChange = { nameDraft = it },
                                 modifier = Modifier.weight(1f),
-                                label = { Text(entry.service.displayName) },
-                                singleLine = true,
+                                placeholder = { Text(entry.service.displayName) },
                             )
                             IconButton(
                                 onClick = {

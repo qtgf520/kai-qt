@@ -400,11 +400,6 @@ class SettingsViewModel(
         }
     }
 
-    private fun onRenameService(instanceId: String, displayName: String?) {
-        dataRepository.renameServiceInstance(instanceId, displayName)
-        refreshServiceList()
-    }
-
     private fun refreshInstanceModels(instanceId: String) {
         val entry = _state.value.configuredServices.find { it.instanceId == instanceId } ?: return
         val models = dataRepository.getInstanceModels(instanceId, entry.service).value

@@ -21,11 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
@@ -547,74 +544,11 @@ private fun ConfiguredServiceCardContent(
 
                 // Service name and model
                 Column(modifier = Modifier.weight(1f)) {
-                    var editingName by remember { mutableStateOf(false) }
-                    var nameDraft by remember { mutableStateOf("") }
-                    val displayTitle = entry.displayName?.takeIf { it.isNotBlank() } ?: entry.service.displayName
-                    if (editingName) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            KaiClearableTextField(
-                                value = nameDraft,
-                                onValueChange = { nameDraft = it },
-                                modifier = Modifier.weight(1f),
-                                label = { Text(entry.service.displayName) },
-                                singleLine = true,
-                            )
-                            IconButton(
-                                onClick = {
-                                    onRenameService(nameDraft.trim().takeIf { it.isNotBlank() })
-                                    editingName = false
-                                },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Check,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
-                                )
-                            }
-                            IconButton(
-                                onClick = {
-                                    onRenameService(null)
-                                    editingName = false
-                                },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.Clear,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                            }
-                        }
-                    } else {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = displayTitle,
-                                style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.onBackground,
-                            )
-                            if (entry.displayName != null) {
-                                Spacer(Modifier.width(6.dp))
-                                Text(
-                                    text = "(${entry.service.displayName})",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                )
-                            }
-                            Spacer(Modifier.width(6.dp))
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Rename",
-                                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier
-                                    .size(14.dp)
-                                    .clickable {
-                                        nameDraft = entry.displayName.orEmpty()
-                                        editingName = true
-                                    },
-                            )
-                        }
-                    }
+                    Text(
+                        text = entry.service.displayName,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
                     val displayModelId = when {
                         entry.useCustomModel && entry.customModelId.isNotBlank() -> entry.customModelId
                         entry.selectedModel != null -> entry.selectedModel.id

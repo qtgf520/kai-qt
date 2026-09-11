@@ -57,9 +57,7 @@ fun AppSettings.getConfiguredServiceInstances(): List<ServiceInstance> {
                 ServiceInstance(
                     instanceId = element["instanceId"]?.jsonPrimitive?.content ?: "",
                     serviceId = element["serviceId"]?.jsonPrimitive?.content ?: "",
-                    displayName = element["displayName"]?.let { json ->
-                        json.jsonPrimitive.content.takeIf { it.isNotBlank() && it != "null" }
-                    },
+                    displayName = element["displayName"]?.jsonPrimitive?.contentOrNull,
                 )
             } else {
                 val id = element.jsonPrimitive.content

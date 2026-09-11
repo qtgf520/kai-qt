@@ -79,7 +79,6 @@ data class SettingsActions(
             onAddService = {},
             onRemoveService = {},
             onReorderServices = {},
-            onRenameService = { _, _ -> },
             onExpandService = {},
             onChangeApiKey = { _, _ -> },
             onChangeBaseUrl = { _, _ -> },

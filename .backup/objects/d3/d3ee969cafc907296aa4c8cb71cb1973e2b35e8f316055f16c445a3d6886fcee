@@ -146,7 +146,6 @@ class SettingsViewModel(
         onAddService = ::onAddService,
         onRemoveService = ::onRemoveService,
         onReorderServices = ::onReorderServices,
-        onRenameService = ::onRenameService,
         onExpandService = ::onExpandService,
         onChangeApiKey = ::onChangeApiKey,
         onChangeBaseUrl = ::onChangeBaseUrl,
@@ -398,11 +397,6 @@ class SettingsViewModel(
         if (instanceId != null) {
             refreshInstanceModels(instanceId)
         }
-    }
-
-    private fun onRenameService(instanceId: String, displayName: String?) {
-        dataRepository.renameServiceInstance(instanceId, displayName)
-        refreshServiceList()
     }
 
     private fun refreshInstanceModels(instanceId: String) {

@@ -65,18 +65,13 @@ import kai.composeapp.generated.resources.Res
 import kai.composeapp.generated.resources.default_soul
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.offsetAt
@@ -262,15 +257,6 @@ class RemoteDataRepository(
         appSettings.setConfiguredServiceInstances(current)
         appSettings.removeInstanceSettings(instanceId)
         modelsByInstance.remove(instanceId)
-    }
-
-    override fun renameServiceInstance(instanceId: String, displayName: String?) {
-        val current = appSettings.getConfiguredServiceInstances().toMutableList()
-        val idx = current.indexOfFirst { it.instanceId == instanceId }
-        if (idx < 0) return
-        val trimmed = displayName?.trim()?.takeIf { it.isNotBlank() }
-        current[idx] = current[idx].copy(displayName = trimmed)
-        appSettings.setConfiguredServiceInstances(current)
     }
 
     override fun reorderConfiguredServices(orderedInstanceIds: List<String>) {
@@ -974,7 +960,7 @@ class RemoteDataRepository(
         // user sees the pipeline as it happens (thinking → tool calls → results), not
         // all at once when the turn finishes. Only mirrors while the user is still on
         // this conversation — after a switch, rows belong to the snapshot conversation.
-        val mirrorJob = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+        val mirrorJob = CoroutineScope(SupervisorJob() + getBackgroundDispatcher())
             .launch {
                 turnHistory.drop(1).collect { snapshot ->
                     if (_currentConversationId.value == turnConversationId) {

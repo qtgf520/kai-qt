@@ -556,8 +556,7 @@ private fun ConfiguredServiceCardContent(
                                 value = nameDraft,
                                 onValueChange = { nameDraft = it },
                                 modifier = Modifier.weight(1f),
-                                label = { Text(entry.service.displayName) },
-                                singleLine = true,
+                                placeholder = { Text(entry.service.displayName) },
                             )
                             IconButton(
                                 onClick = {
