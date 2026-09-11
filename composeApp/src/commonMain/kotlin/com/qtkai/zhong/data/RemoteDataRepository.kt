@@ -292,7 +292,8 @@ class RemoteDataRepository(
         ServiceEntry(
             instanceId = instance.instanceId,
             serviceId = service.id,
-            serviceName = service.displayName,
+            // Use the user's custom display name when set; fall back to the provider default.
+            serviceName = instance.displayName?.takeIf { it.isNotBlank() } ?: service.displayName,
             modelId = modelId,
             icon = service.icon,
         )

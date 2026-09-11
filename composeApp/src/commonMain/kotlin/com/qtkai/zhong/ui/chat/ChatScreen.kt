@@ -849,6 +849,8 @@ private fun ChatModeScreen(
                                                         },
                                                         onRegenerate = if (isLastAssistant) uiState.actions.regenerate else null,
                                                         isInteractive = isLastAssistant && !uiState.isLoading && frozen == null,
+                                                        // [REQ] Typewriter reveal for the latest in-flight assistant message
+                                                        isStreaming = isLastAssistant && uiState.isLoading,
                                                         onUiCallback = { event, data ->
                                                             uiState.actions.submitUiCallback(event, data)
                                                         },

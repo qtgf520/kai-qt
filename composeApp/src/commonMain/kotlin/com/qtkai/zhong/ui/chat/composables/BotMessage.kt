@@ -29,6 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -65,6 +66,7 @@ import kai.composeapp.generated.resources.ic_volume_up
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nl.marc_apps.tts.TextToSpeechInstance
 import nl.marc_apps.tts.errors.TextToSpeechSynthesisInterruptedError
@@ -84,8 +86,25 @@ internal fun BotMessage(
     reasoningSegments: ImmutableList<String> = persistentListOf(),
     // [REQ-5.4] Optional delete action for this message.
     onDelete: (() -> Unit)? = null,
+    // [REQ] When true, reveal the message text with a typewriter effect (streaming look).
+    isStreaming: Boolean = false,
 ) {
-    val document = remember(message) { parseMarkdown(message) }
+    // Typewriter: progressively reveal `message` while isStreaming, then snap to full.
+    var visibleChars by remember(message, isStreaming) { mutableStateOf(if (isStreaming) 0 else message.length) }
+    LaunchedEffect(message, isStreaming) {
+        if (!isStreaming) {
+            visibleChars = message.length
+            return@LaunchedEffect
+        }
+        // Reveal progressively — chunks of ~8 chars every 12ms for a natural stream feel.
+        while (visibleChars < message.length) {
+            val step = if (visibleChars < 200) 8 else 24
+            visibleChars = (visibleChars + step).coerceAtMost(message.length)
+            delay(12)
+        }
+    }
+    val revealedMessage = if (visibleChars >= message.length) message else message.take(visibleChars)
+    val document = remember(revealedMessage) { parseMarkdown(revealedMessage) }
     var isEditing by remember(frozen) { mutableStateOf(false) }
     val effectiveFrozen = if (isEditing && frozen != null) frozen.copy(pressedEvent = null) else frozen
     val effectiveInteractive = if (frozen != null) (onResubmit != null && isEditing) else isInteractive
@@ -222,7 +241,12 @@ private fun ReasoningBlockquote(
     segments: ImmutableList<String>,
     modifier: Modifier = Modifier,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    // Auto-expand whenever there is real thinking content so the user can see what
+    // the AI reasoned about — they can still collapse it manually. Empty/placeholder
+    // segments (e.g. the live "thinking…" row) stay collapsed.
+    var expanded by remember(segments.isEmpty()) {
+        mutableStateOf(segments.isNotEmpty())
+    }
     // Preview always reflects the MOST RECENT thinking segment so the user gets a
     // visual update each time a new reasoning phase starts, without expanding.
     val preview = remember(segments) {

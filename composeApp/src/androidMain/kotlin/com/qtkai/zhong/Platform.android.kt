@@ -28,6 +28,7 @@ import com.qtkai.zhong.sms.SmsReader
 import com.qtkai.zhong.sms.SmsSender
 import com.qtkai.zhong.sms.declaresReadSms
 import com.qtkai.zhong.tools.AppPermission
+import com.qtkai.zhong.tools.AndroidDirectoryTool
 import com.qtkai.zhong.tools.CalendarRepository
 import com.qtkai.zhong.tools.CommonTools
 import com.qtkai.zhong.tools.CreateCalendarEventTool
@@ -178,6 +179,7 @@ actual fun getPlatformToolDefinitions(): List<ToolInfo> = CommonTools.commonTool
         ShellCommandTool.toolInfo,
         ProcessManagerTool.toolInfo,
         SshConfigureHostTool.toolInfo,
+        AndroidDirectoryTool.toolInfo, // 系统文件目录读写（/storage/emulated/0/）
         ImageGenerationTool.toolInfo, // [REQ-12]
     )
 
@@ -233,6 +235,11 @@ actual fun getAvailableTools(): List<Tool> {
                     getModel = { appSettings.getImageGenModel() },
                 ),
             )
+        }
+        // 系统文件目录读写工具：/storage/emulated/0/ 树。
+        // 此前只定义了对象却从未注册，AI 在工具列表里根本看不到它，所以"无法访问系统文件"。
+        if (appSettings.isToolEnabled(AndroidDirectoryTool.ID)) {
+            add(AndroidDirectoryTool)
         }
 
         // SMS read tools: triple-gated. `isSmsSupported` is only true on FOSS builds

@@ -13,6 +13,12 @@ import java.io.File
  * Accessible paths: /storage/emulated/0/ and subdirectories.
  */
 object AndroidDirectoryTool : Tool {
+    const val ID = "android_directory"
+    val toolInfo = com.qtkai.zhong.network.tools.ToolInfo(
+        id = ID,
+        name = "Android Directory",
+        description = "Read, write, list, delete, or create files and directories in /storage/emulated/0/ (system storage).",
+    )
     @Serializable
     data class AndroidDirectoryArgs(
         val action: String = "read",
