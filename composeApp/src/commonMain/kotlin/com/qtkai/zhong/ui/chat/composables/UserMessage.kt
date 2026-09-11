@@ -59,6 +59,7 @@ internal fun UserMessage(
     val showFullScreen = LocalShowFullScreenImage.current
     // Local draft while editing — initialized from the message text.
     var draft by remember(message, isEditing) { mutableStateOf(message) }
+
     SelectionContainer {
         Row(Modifier.padding(16.dp)) {
             Spacer(Modifier.weight(1f))
@@ -118,7 +119,9 @@ internal fun UserMessage(
                     if (message.isNotEmpty()) {
                         Spacer(Modifier.height(8.dp))
                     }
-if (isEditing) {
+                }
+
+                if (isEditing) {
                     // [REQ-5.2] In-place edit: text field + save/cancel
                     KaiOutlinedTextField(
                         value = draft,
@@ -176,7 +179,6 @@ if (isEditing) {
                             )
                         }
                     }
-                }
                 }
             }
         }
