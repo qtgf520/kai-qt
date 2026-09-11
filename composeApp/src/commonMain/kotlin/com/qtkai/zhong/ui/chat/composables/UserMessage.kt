@@ -66,10 +66,10 @@ internal fun UserMessage(
             Column(
                 modifier = Modifier
                     .background(
-                        MaterialTheme.colorScheme.onBackground.copy(alpha = 0.15f),
-                        RoundedCornerShape(8.dp),
+                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f),
+                        RoundedCornerShape(16.dp),
                     )
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
                 horizontalAlignment = Alignment.End,
             ) {
                 val images = attachments.filter { it.mimeType.startsWith("image/") }
@@ -152,7 +152,7 @@ internal fun UserMessage(
                     if (message.isNotEmpty()) {
                         Text(
                             text = message,
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -160,7 +160,7 @@ internal fun UserMessage(
                             Text(
                                 text = "编辑",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
                                 modifier = Modifier
                                     .handCursor()
                                     .clickable { onEdit() }
@@ -171,7 +171,7 @@ internal fun UserMessage(
                             Text(
                                 text = "删除",
                                 style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f),
                                 modifier = Modifier
                                     .handCursor()
                                     .clickable { onDelete() }
