@@ -1170,7 +1170,17 @@ class RemoteDataRepository(
                 }
                 val sessionId = activeConversationId()
                 val response = retryApiCall {
-                    requests.openAICompatibleChat(service, credentials, msgs, tools, sessionId = sessionId).getOrThrow()
+                    requests.openAICompatibleChat(
+                        service,
+                        credentials,
+                        msgs,
+                        tools,
+                        sessionId = sessionId,
+                        // [REQ-3] Streaming toggle from settings
+                        streamingEnabled = isStreamingEnabled(),
+                        // [REQ-2] Reasoning effort from settings (only when set)
+                        reasoningEffort = getReasoningEffort(),
+                    ).getOrThrow()
                 }
                 val message = response.choices.firstOrNull()?.message ?: throw OpenAICompatibleEmptyResponseException()
                 var calls = message.toolCalls.orEmpty().map { tc ->
@@ -2006,6 +2016,20 @@ class RemoteDataRepository(
 
     override fun setDynamicUiEnabled(enabled: Boolean) {
         appSettings.setDynamicUiEnabled(enabled)
+    }
+
+    // [REQ-3] Streaming output toggle
+    override fun isStreamingEnabled(): Boolean = appSettings.isStreamingEnabled()
+
+    override fun setStreamingEnabled(enabled: Boolean) {
+        appSettings.setStreamingEnabled(enabled)
+    }
+
+    // [REQ-2] Reasoning effort (thinking strength)
+    override fun getReasoningEffort(): String = appSettings.getReasoningEffort()
+
+    override fun setReasoningEffort(effort: String) {
+        appSettings.setReasoningEffort(effort)
     }
 
     override fun getThemeMode(): ThemeMode = appSettings.getThemeMode()

@@ -82,6 +82,8 @@ class SettingsViewModel(
         tools = dataRepository.getToolDefinitions().toImmutableList(),
         soulText = dataRepository.getSoulText(),
         isDynamicUiEnabled = dataRepository.isDynamicUiEnabled(),
+        isStreamingEnabled = dataRepository.isStreamingEnabled(), // [REQ-3]
+        reasoningEffort = dataRepository.getReasoningEffort(), // [REQ-2]
         themeMode = dataRepository.getThemeMode(),
         isMemoryEnabled = dataRepository.isMemoryEnabled(),
         memories = dataRepository.getMemories().toImmutableList(),
@@ -156,6 +158,8 @@ class SettingsViewModel(
         onToggleTool = ::onToggleTool,
         onSaveSoul = ::onSaveSoul,
         onToggleDynamicUi = ::onToggleDynamicUi,
+        onToggleStreaming = ::onToggleStreaming, // [REQ-3]
+        onChangeReasoningEffort = ::onChangeReasoningEffort, // [REQ-2]
         onChangeThemeMode = ::onChangeThemeMode,
         onToggleMemory = ::onToggleMemory,
         onDeleteMemory = ::onDeleteMemory,
@@ -503,6 +507,18 @@ class SettingsViewModel(
     private fun onToggleDynamicUi(enabled: Boolean) {
         dataRepository.setDynamicUiEnabled(enabled)
         _state.update { it.copy(isDynamicUiEnabled = enabled) }
+    }
+
+    // [REQ-3] Streaming output toggle
+    private fun onToggleStreaming(enabled: Boolean) {
+        dataRepository.setStreamingEnabled(enabled)
+        _state.update { it.copy(isStreamingEnabled = enabled) }
+    }
+
+    // [REQ-2] Reasoning effort (thinking strength)
+    private fun onChangeReasoningEffort(effort: String) {
+        dataRepository.setReasoningEffort(effort)
+        _state.update { it.copy(reasoningEffort = effort) }
     }
 
     private fun onChangeThemeMode(mode: ThemeMode) {

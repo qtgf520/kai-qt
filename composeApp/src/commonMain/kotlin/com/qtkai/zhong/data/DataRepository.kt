@@ -117,6 +117,14 @@ interface DataRepository {
     fun isDynamicUiEnabled(): Boolean
     fun setDynamicUiEnabled(enabled: Boolean)
 
+    // [REQ-3] Streaming output toggle
+    fun isStreamingEnabled(): Boolean
+    fun setStreamingEnabled(enabled: Boolean)
+
+    // [REQ-2] Reasoning effort (thinking strength)
+    fun getReasoningEffort(): String
+    fun setReasoningEffort(effort: String)
+
     // Theme mode
     fun getThemeMode(): ThemeMode
     fun setThemeMode(mode: ThemeMode)

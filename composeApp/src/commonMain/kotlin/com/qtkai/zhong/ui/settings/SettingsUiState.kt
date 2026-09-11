@@ -71,6 +71,8 @@ data class SettingsUiState(
     val tools: ImmutableList<ToolInfo> = persistentListOf(),
     val soulText: String = "",
     val isDynamicUiEnabled: Boolean = true,
+    val isStreamingEnabled: Boolean = true, // [REQ-3]
+    val reasoningEffort: String = "", // [REQ-2] minimal/low/medium/high/xhigh, empty = provider default
     val themeMode: ThemeMode = ThemeMode.System,
     val isMemoryEnabled: Boolean = true,
     val memories: ImmutableList<MemoryEntry> = persistentListOf(),

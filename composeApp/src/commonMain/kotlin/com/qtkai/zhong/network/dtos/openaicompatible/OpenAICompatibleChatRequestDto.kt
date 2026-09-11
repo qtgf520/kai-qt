@@ -9,6 +9,11 @@ data class OpenAICompatibleChatRequestDto(
     val messages: List<Message>,
     val model: String? = null,
     val tools: List<Tool>? = null,
+    // [REQ-3] Streaming output: false → wait for the full response, render whole.
+    val stream: Boolean? = null,
+    // [REQ-2] Reasoning effort / thinking depth for reasoning-capable models.
+    @SerialName("reasoning_effort")
+    val reasoningEffort: String? = null,
 ) {
     @Serializable
     data class Message(

@@ -61,6 +61,20 @@ internal fun GeneralContent(uiState: SettingsUiState, actions: SettingsActions) 
                     onToggleDynamicUi = actions.onToggleDynamicUi,
                 )
             }
+            // [REQ-3] Streaming output toggle
+            SettingsCard {
+                StreamingToggle(
+                    isStreamingEnabled = uiState.isStreamingEnabled,
+                    onToggleStreaming = actions.onToggleStreaming,
+                )
+            }
+            // [REQ-2] Reasoning effort picker
+            SettingsCard {
+                ReasoningEffortPicker(
+                    reasoningEffort = uiState.reasoningEffort,
+                    onChangeReasoningEffort = actions.onChangeReasoningEffort,
+                )
+            }
             SettingsCard {
                 ThemeModePicker(
                     themeMode = uiState.themeMode,
@@ -115,6 +129,116 @@ private fun DynamicUiToggle(
             checked = isDynamicUiEnabled,
             onCheckedChange = onToggleDynamicUi,
         )
+    }
+}
+
+// [REQ-3] Streaming output toggle
+@Composable
+private fun StreamingToggle(
+    isStreamingEnabled: Boolean,
+    onToggleStreaming: (Boolean) -> Unit,
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        ToggleableHeadline(
+            title = "流式输出",
+            description = "开启时逐字显示回复；关闭时等待完整响应一次性返回",
+            checked = isStreamingEnabled,
+            onCheckedChange = onToggleStreaming,
+        )
+    }
+}
+
+// [REQ-2] Reasoning effort (thinking strength) picker
+@Composable
+private fun ReasoningEffortPicker(
+    reasoningEffort: String,
+    onChangeReasoningEffort: (String) -> Unit,
+) {
+    val options = listOf(
+        "" to "跟随模型默认",
+        "minimal" to "低",
+        "low" to "中低",
+        "medium" to "中",
+        "high" to "高",
+        "xhigh" to "最高",
+    )
+    val selectedLabel = options.first { it.first == reasoningEffort }.second
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "思考强度",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onBackground,
+        )
+        Text(
+            text = "控制推理模型的思考深度（DeepSeek-R1 / o1 / Gemini Thinking 等）",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(top = 4.dp, bottom = 12.dp),
+        )
+        Box(modifier = Modifier.fillMaxWidth()) {
+            KaiOutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                value = selectedLabel,
+                onValueChange = {},
+                readOnly = true,
+                trailingIcon = {
+                    Icon(
+                        modifier = Modifier.handCursor(),
+                        imageVector = vectorResource(Res.drawable.ic_arrow_drop_down),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                    )
+                },
+            )
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .handCursor()
+                    .clickable { expanded = true },
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+                shape = RoundedCornerShape(16.dp),
+            ) {
+                options.forEach { (effort, label) ->
+                    val isSelected = effort == reasoningEffort
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = label,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = if (isSelected) {
+                                    MaterialTheme.colorScheme.onPrimaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.onSurface
+                                },
+                            )
+                        },
+                        onClick = {
+                            expanded = false
+                            onChangeReasoningEffort(effort)
+                        },
+                        modifier = Modifier
+                            .handCursor()
+                            .then(
+                                if (isSelected) {
+                                    Modifier
+                                        .padding(horizontal = 4.dp)
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primaryContainer,
+                                            shape = RoundedCornerShape(12.dp),
+                                        )
+                                } else {
+                                    Modifier
+                                },
+                            ),
+                    )
+                }
+            }
+        }
     }
 }
 

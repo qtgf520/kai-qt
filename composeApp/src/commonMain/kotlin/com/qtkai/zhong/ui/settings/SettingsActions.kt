@@ -24,6 +24,8 @@ data class SettingsActions(
     val onToggleTool: (String, Boolean) -> Unit,
     val onSaveSoul: (String) -> Unit,
     val onToggleDynamicUi: (Boolean) -> Unit,
+    val onToggleStreaming: (Boolean) -> Unit, // [REQ-3]
+    val onChangeReasoningEffort: (String) -> Unit, // [REQ-2]
     val onChangeThemeMode: (ThemeMode) -> Unit,
     val onToggleMemory: (Boolean) -> Unit,
     val onDeleteMemory: (String) -> Unit,
@@ -89,6 +91,8 @@ data class SettingsActions(
             onToggleTool = { _, _ -> },
             onSaveSoul = {},
             onToggleDynamicUi = {},
+            onToggleStreaming = {}, // [REQ-3]
+            onChangeReasoningEffort = {}, // [REQ-2]
             onChangeThemeMode = {},
             onToggleMemory = {},
             onDeleteMemory = {},

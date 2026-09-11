@@ -285,6 +285,21 @@ class AppSettings(internal val settings: Settings) {
         settings.putBoolean(KEY_DYNAMIC_UI_ENABLED, enabled)
     }
 
+    // [REQ-3] Streaming output toggle — when off, requests use stream=false and render whole.
+    fun isStreamingEnabled(): Boolean = settings.getBoolean(KEY_STREAMING_ENABLED, true)
+
+    fun setStreamingEnabled(enabled: Boolean) {
+        settings.putBoolean(KEY_STREAMING_ENABLED, enabled)
+    }
+
+    // [REQ-2] Reasoning effort (thinking strength): minimal / low / medium / high / xhigh.
+    // Empty string = unset (provider default). Only applied to reasoning-capable models.
+    fun getReasoningEffort(): String = settings.getString(KEY_REASONING_EFFORT, "")
+
+    fun setReasoningEffort(effort: String) {
+        settings.putString(KEY_REASONING_EFFORT, effort)
+    }
+
     private val _themeModeFlow = MutableStateFlow(loadInitialThemeMode())
     val themeModeFlow: StateFlow<ThemeMode> = _themeModeFlow
 
@@ -569,6 +584,8 @@ class AppSettings(internal val settings: Settings) {
         const val KEY_SCHEDULED_TASKS = "scheduled_tasks"
         const val KEY_SCHEDULING_ENABLED = "scheduling_enabled"
         const val KEY_DYNAMIC_UI_ENABLED = "dynamic_ui_enabled"
+        const val KEY_STREAMING_ENABLED = "streaming_enabled" // [REQ-3]
+        const val KEY_REASONING_EFFORT = "reasoning_effort" // [REQ-2]
         const val KEY_OLED_MODE_ENABLED = "oled_mode_enabled"
         const val KEY_THEME_MODE = "theme_mode"
         const val KEY_DAEMON_ENABLED = "daemon_enabled"

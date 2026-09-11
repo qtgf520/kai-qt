@@ -236,6 +236,10 @@ class Requests {
         customHeaders: Map<String, String> = emptyMap(),
         sessionId: String? = null,
         requestTimeoutMs: Long? = null,
+        // [REQ-3] When false, request stream=false (full response at once).
+        streamingEnabled: Boolean = true,
+        // [REQ-2] Reasoning effort passthrough (minimal/low/medium/high/xhigh).
+        reasoningEffort: String? = null,
     ): Result<OpenAICompatibleChatResponseDto> = try {
         val apiKey = getApiKeyOrThrow(service, credentials)
         val model = credentials.modelId.ifEmpty { null }
@@ -252,6 +256,8 @@ class Requests {
                         messages = messages,
                         model = model,
                         tools = tools.toRequestTools { it.toRequestTool() },
+                        stream = if (streamingEnabled) null else false,
+                        reasoningEffort = reasoningEffort?.takeIf { it.isNotBlank() },
                     ),
                 )
             }
