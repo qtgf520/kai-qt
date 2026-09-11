@@ -32,4 +32,4 @@ fastlane/README.md
 .grok/
 backup_*/
 DEV_GUIDE.md
-qitong.jks
+qitong.jks.backup/
