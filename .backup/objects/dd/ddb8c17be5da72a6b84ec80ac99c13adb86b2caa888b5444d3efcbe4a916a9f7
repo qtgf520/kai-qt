@@ -944,18 +944,10 @@ class RemoteDataRepository(
 
         compactHistoryIfNeeded()
 
+        val messages = chatHistory.value
         val systemPrompt = getActiveSystemPrompt()
 
         val fallbackEntries = getOrderedFallbackEntries().filter { hasValidInstanceApiKey(it.instanceId, it.service) }
-
-        // The rest of this turn runs on a PRIVATE history flow. Tool calls, EXECUTING
-        // indicators and results are written there, so switching to another chat while
-        // the turn is in flight can never leak rows into — or overwrite — a different
-        // conversation. When the turn finishes we merge the private history back into
-        // the global chat ONLY if the user is still viewing this conversation; the
-        // conversation is always saved with the snapshot id regardless.
-        val turnHistory = MutableStateFlow<List<History>>(chatHistory.value)
-        val messages = turnHistory.value
 
         val historyChars = messages.sumOf { it.content.length } + (systemPrompt?.length ?: 0)
 
@@ -984,7 +976,7 @@ class RemoteDataRepository(
                 // Retrying the whole call would re-enter the tool loop against a chat
                 // history already mutated by the failed attempt.
                 val turn = try {
-                    askWithService(entry.service, messages, systemPrompt, entry.instanceId, history = turnHistory)
+                    askWithService(entry.service, messages, systemPrompt, entry.instanceId)
                 } catch (e: Exception) {
                     if (e is kotlinx.coroutines.CancellationException) throw e
                     // On-device services should not silently fall back — surface the error
@@ -1000,7 +992,7 @@ class RemoteDataRepository(
                 if (index > 0) {
                     fallbackServiceName = entry.service.displayName
                 }
-                turnHistory.update {
+                chatHistory.update {
                     it.toMutableList().apply {
                         add(
                             History(
@@ -1012,17 +1004,11 @@ class RemoteDataRepository(
                         )
                     }
                 }
-                // Merge the completed turn back into the visible chat only if the user
-                // is still on this conversation — otherwise the rows belong to the
-                // snapshot conversation and must not touch whatever is now on screen.
-                if (_currentConversationId.value == turnConversationId) {
-                    chatHistory.value = turnHistory.value
-                }
                 // Clear the in-flight marker for this conversation once the turn completes.
                 if (_activeTurnConversationId.value == turnConversationId) {
                     _activeTurnConversationId.value = null
                 }
-                saveCurrentConversation(turnConversationId, turnHistory.value)
+                saveCurrentConversation(turnConversationId)
                 return
             }
 
@@ -1241,7 +1227,6 @@ class RemoteDataRepository(
 
             val toolResults = executeToolCallsInParallel(
                 result.toolCalls.map { Triple(it.id, it.name, it.arguments) },
-                history,
             )
 
             history.update { h ->
