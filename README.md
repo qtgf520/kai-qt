@@ -16,7 +16,7 @@
 
 | 版本 | 下载 |
 |------|------|
-| 最新版 v3.2.3 | [GitHub Releases](https://github.com/qtgf520/kai-qt/releases) |
+| 最新版 v3.2.4 | [GitHub Releases](https://github.com/qtgf520/kai-qt/releases) |
 
 APK 文件: `KaiQt9000-版本号-android.apk`（如 `KaiQt9000-3.2.2-android.apk`）
 
