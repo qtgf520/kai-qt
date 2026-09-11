@@ -247,6 +247,25 @@ private fun ReasoningBlockquote(
     var expanded by remember(segments.isEmpty()) {
         mutableStateOf(segments.isNotEmpty())
     }
+    // Join all thinking segments into one stream; render it with a typewriter reveal
+    // so thinking content appears progressively (like a real reasoning trace) instead
+    // of one big wall of text. New segments that arrive after the reveal finished snap
+    // in instantly rather than re-typing the whole thing.
+    val fullText = remember(segments) { segments.joinToString("\n\n") }
+    var visibleChars by remember(fullText) { mutableStateOf(fullText.length) }
+    val alreadyTyped = remember { mutableStateOf(false) }
+    if (expanded && !alreadyTyped.value && fullText.isNotEmpty()) {
+        LaunchedEffect(fullText) {
+            alreadyTyped.value = true
+            visibleChars = 0
+            while (visibleChars < fullText.length) {
+                val step = if (visibleChars < 200) 8 else 24
+                visibleChars = (visibleChars + step).coerceAtMost(fullText.length)
+                delay(12)
+            }
+        }
+    }
+    val revealedText = if (visibleChars >= fullText.length) fullText else fullText.take(visibleChars)
     // Preview always reflects the MOST RECENT thinking segment so the user gets a
     // visual update each time a new reasoning phase starts, without expanding.
     val preview = remember(segments) {
@@ -256,7 +275,6 @@ private fun ReasoningBlockquote(
             ?.firstOrNull { it.isNotEmpty() }
             .orEmpty()
     }
-
     Column(modifier = modifier) {
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -296,7 +314,11 @@ private fun ReasoningBlockquote(
                 modifier = Modifier.padding(top = 6.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
-                for (segment in segments) {
+                // Render the revealed stream in ONE text block (with the vertical divider
+                // styling), split on double newlines so the typewriter still shows the
+                // progressive reveal while keeping the original segment layout.
+                val revealedSegments = remember(revealedText) { revealedText.split("\n\n") }
+                for (segment in revealedSegments) {
                     Row(modifier = Modifier.height(IntrinsicSize.Min)) {
                         VerticalDivider(
                             thickness = 2.dp,

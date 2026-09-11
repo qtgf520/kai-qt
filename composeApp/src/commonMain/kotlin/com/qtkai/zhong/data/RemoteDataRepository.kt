@@ -2352,15 +2352,24 @@ class RemoteDataRepository(
         // coroutine context — otherwise tool dispatch would inherit `_currentConversationId`
         // (the chat the user is viewing), routing the heartbeat's shell commands into
         // that chat's persistent bash session.
-        return if (conversationIdOverride != null) {
-            withContext(ConversationIdElement(conversationIdOverride)) {
+        // [heartbeat-fix] Free/no-service fallback can return an empty response; instead
+        // of surfacing OpenAICompatibleEmptyResponseException to the heartbeat log, return
+        // a friendly no-op so the run is recorded as healthy.
+        return try {
+            if (conversationIdOverride != null) {
+                withContext(ConversationIdElement(conversationIdOverride)) {
+                    askWithService(service, messages, systemPrompt, targetInstance.instanceId, localHistory).content
+                }
+            } else {
                 askWithService(service, messages, systemPrompt, targetInstance.instanceId, localHistory).content
             }
-        } else {
-            askWithService(service, messages, systemPrompt, targetInstance.instanceId, localHistory).content
+        } catch (e: OpenAICompatibleEmptyResponseException) {
+            // No configured service produced a usable response (e.g. lone Free tier
+            // returned empty). The caller (heartbeat / scheduled task) records this as a
+            // successful no-op run rather than an error — nothing actionable happened.
+            "(heartbeat idle: no model response)"
         }
     }
-
     override suspend fun askSilently(question: String): String {
         val service = currentService()
         val firstInstance = getConfiguredServiceInstances().firstOrNull() ?: return ""
