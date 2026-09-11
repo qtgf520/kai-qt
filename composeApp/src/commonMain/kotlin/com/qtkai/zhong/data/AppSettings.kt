@@ -411,7 +411,21 @@ class AppSettings(internal val settings: Settings) {
         settings.putBoolean(KEY_MCP_REQUIRE_CONFIRMATION, enabled)
     }
 
-    // UI Scale
+    // [REQ-12] Image generation settings (OpenAI-compatible /v1/images/generations)
+    fun getImageGenApiKey(): String = settings.getString(KEY_IMAGE_GEN_API_KEY, "")
+    fun setImageGenApiKey(key: String) {
+        settings.putString(KEY_IMAGE_GEN_API_KEY, key)
+    }
+    fun getImageGenBaseUrl(): String = settings.getString(KEY_IMAGE_GEN_BASE_URL, "")
+    fun setImageGenBaseUrl(url: String) {
+        settings.putString(KEY_IMAGE_GEN_BASE_URL, url)
+    }
+    fun getImageGenModel(): String = settings.getString(KEY_IMAGE_GEN_MODEL, "")
+    fun setImageGenModel(model: String) {
+        settings.putString(KEY_IMAGE_GEN_MODEL, model)
+    }
+
+// UI Scale
     private val _uiScaleFlow = MutableStateFlow(settings.getFloat(KEY_UI_SCALE, defaultUiScale))
     val uiScaleFlow: StateFlow<Float> = _uiScaleFlow
 
@@ -627,6 +641,9 @@ class AppSettings(internal val settings: Settings) {
         const val KEY_UI_SCALE = "ui_scale"
         const val KEY_MCP_SERVERS = "mcp_servers"
         const val KEY_MCP_REQUIRE_CONFIRMATION = "mcp_require_confirmation" // [REQ-9]
+        const val KEY_IMAGE_GEN_API_KEY = "image_gen_api_key" // [REQ-12]
+        const val KEY_IMAGE_GEN_BASE_URL = "image_gen_base_url"
+        const val KEY_IMAGE_GEN_MODEL = "image_gen_model"
         const val KEY_INSTANCE_MIGRATION_COMPLETE = "instance_migration_complete_v1"
         const val KEY_BASE_URL_V1_MIGRATION_COMPLETE = "base_url_v1_migration_complete"
         const val KEY_CUSTOM_MODEL_MIGRATION_COMPLETE = "custom_model_migration_complete_v1"

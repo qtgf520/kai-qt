@@ -233,7 +233,7 @@
 - [x] 9. MCP 确认开关 ✅ 已实现：设置→工具→「MCP 工具需人工确认」开关（默认开），开启时系统提示词注入确认策略，AI 调用 MCP 工具前必须先展示参数并获用户同意（v3.2.3-3）
 - [x] 10. 集成工具 ✅ 已有：web_search/shell/日历/提醒/邮件/通知/文件/定时任务等大量工具，统一 Tool 抽象
 - [ ] 11. Llama.cpp 后端 🔲 规划中：现有 LiteRT/Ollama，需新增 GGUF 加载
-- [ ] 12. 图像/视频生成 🔲 规划中：需接入图像/视频 API
+- [x] 12. 图像/视频生成 ✅ 已实现：新增 `generate_image` 工具（OpenAI 兼容 /v1/images/generations API），可配置 API Key/Base URL/模型，支持 prompt + size 参数（v3.2.5-2）
 - [ ] 13. 云端 TTS 🔲 规划中：现有系统 TTS，需接入云端服务商
 
 > ✅ = 已实现（代码已在） | 🔲 = 规划中（未实现）

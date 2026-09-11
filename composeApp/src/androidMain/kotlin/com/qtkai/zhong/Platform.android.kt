@@ -31,6 +31,7 @@ import com.qtkai.zhong.tools.AppPermission
 import com.qtkai.zhong.tools.CalendarRepository
 import com.qtkai.zhong.tools.CommonTools
 import com.qtkai.zhong.tools.CreateCalendarEventTool
+import com.qtkai.zhong.tools.ImageGenerationTool
 import com.qtkai.zhong.tools.NotificationHelper
 import com.qtkai.zhong.tools.NotificationTools
 import com.qtkai.zhong.tools.OpenFileTool
@@ -177,6 +178,7 @@ actual fun getPlatformToolDefinitions(): List<ToolInfo> = CommonTools.commonTool
         ShellCommandTool.toolInfo,
         ProcessManagerTool.toolInfo,
         SshConfigureHostTool.toolInfo,
+        ImageGenerationTool.toolInfo, // [REQ-12]
     )
 
 actual fun getAvailableTools(): List<Tool> {
@@ -221,6 +223,16 @@ actual fun getAvailableTools(): List<Tool> {
                 add(ProcessManagerTool)
                 add(SshConfigureHostTool)
             }
+        }
+        // [REQ-12] Image generation tool (OpenAI-compatible /v1/images/generations)
+        if (appSettings.isToolEnabled(ImageGenerationTool.toolInfo.id)) {
+            add(
+                ImageGenerationTool(
+                    getApiKey = { appSettings.getImageGenApiKey() },
+                    getBaseUrl = { appSettings.getImageGenBaseUrl() },
+                    getModel = { appSettings.getImageGenModel() },
+                ),
+            )
         }
 
         // SMS read tools: triple-gated. `isSmsSupported` is only true on FOSS builds
