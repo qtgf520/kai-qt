@@ -124,15 +124,6 @@ class ChatViewModel(
         taskScheduler.isLoadingCheck = { _state.value.isLoading }
         taskScheduler.start()
 
-        // Track the conversation that currently has an in-flight turn so the UI
-        // (stop button, green dot in history, thinking indicator) stays in sync
-        // even after switching chats and back.
-        viewModelScope.launch {
-            dataRepository.activeTurnConversationId.collect { activeId ->
-                _state.update { it.copy(activeTurnConversationId = activeId) }
-            }
-        }
-
         viewModelScope.launch {
             dataRepository.smsDrafts.collect { drafts ->
                 _state.update { it.copy(smsDrafts = drafts.toImmutableList()) }

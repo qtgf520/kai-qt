@@ -868,10 +868,6 @@ class RemoteDataRepository(
         // tool calls stay bound to this conversation (no cross-talk, nothing
         // lost) — see saveCurrentConversation() and the tool-executor binding.
         val turnConversationId = _currentConversationId.value
-        // Mark this conversation as having an in-flight turn. The UI listens to
-        // this to keep the stop button and "thinking" indicator visible even after
-        // the user switches to another chat and back.
-        _activeTurnConversationId.value = turnConversationId
         // Process every attached file: classify, compress/encode, and build an Attachment.
         // readBytes() is suspend, so this happens before the StateFlow.update block.
         val attachments = files.map { file ->
@@ -1004,11 +1000,7 @@ class RemoteDataRepository(
                         )
                     }
                 }
-                // Clear the in-flight marker for this conversation once the turn completes.
-                if (_activeTurnConversationId.value == turnConversationId) {
-                    _activeTurnConversationId.value = null
-                }
-                saveCurrentConversation(turnConversationId)
+                saveCurrentConversation()
                 return
             }
 
@@ -1019,11 +1011,6 @@ class RemoteDataRepository(
             }
         } finally {
             _fallbackStatus.value = null
-            // Any exit path — success, all-failed, exception, cancellation — clears
-            // the in-flight marker so the UI stops showing the stop button.
-            if (_activeTurnConversationId.value == turnConversationId) {
-                _activeTurnConversationId.value = null
-            }
         }
     }
 

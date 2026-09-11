@@ -989,7 +989,7 @@ private fun ChatModeScreen(
             actions = uiState.actions,
             onDismiss = { showHistorySheet = false },
             onConversationSelected = { isSandboxOpen = false },
-            activeConversationId = uiState.activeTurnConversationId,
+            activeConversationId = activeTurnConversationId,
         )
     }
 }

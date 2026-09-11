@@ -1019,11 +1019,6 @@ class RemoteDataRepository(
             }
         } finally {
             _fallbackStatus.value = null
-            // Any exit path — success, all-failed, exception, cancellation — clears
-            // the in-flight marker so the UI stops showing the stop button.
-            if (_activeTurnConversationId.value == turnConversationId) {
-                _activeTurnConversationId.value = null
-            }
         }
     }
 
