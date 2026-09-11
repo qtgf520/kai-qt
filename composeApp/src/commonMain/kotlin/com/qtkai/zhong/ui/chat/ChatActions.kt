@@ -25,6 +25,10 @@ data class ChatActions(
     val resubmit: (messageId: String, event: String, data: Map<String, String>) -> Unit,
     // [REQ-5.4] Delete a single message from the conversation.
     val deleteMessage: (messageId: String) -> Unit,
+    // [REQ-5.2] Enter edit mode for a user message.
+    val editMessage: (messageId: String) -> Unit,
+    // [REQ-5.2] Save the edited content and regenerate from there.
+    val saveEditedMessage: (messageId: String, newContent: String) -> Unit,
     val enterInteractiveMode: () -> Unit,
     val exitInteractiveMode: () -> Unit,
     val goBackInteractiveMode: () -> Unit,

@@ -129,6 +129,7 @@ class SettingsViewModel(
         uiScale = dataRepository.getUiScale(),
         showUiScale = currentPlatform is Platform.Desktop,
         mcpServers = buildMcpServerEntries().toImmutableList(),
+        isMcpRequireConfirmation = dataRepository.isMcpRequireConfirmation(), // [REQ-9]
         skills = dataRepository.getInstalledSkills().toImmutableList(),
         localAvailableModels = dataRepository.getLocalAvailableModels().toImmutableList(),
         localImportedModels = dataRepository.getLocalImportedModels().toImmutableList(),
@@ -191,6 +192,7 @@ class SettingsViewModel(
         onAddMcpServer = ::onAddMcpServer,
         onRemoveMcpServer = ::onRemoveMcpServer,
         onToggleMcpServer = ::onToggleMcpServer,
+        onToggleMcpConfirmation = ::onToggleMcpConfirmation, // [REQ-9]
         onRefreshMcpServer = ::onRefreshMcpServer,
         onShowAddMcpServerDialog = ::onShowAddMcpServerDialog,
         onAddPopularMcpServer = ::onAddPopularMcpServer,
@@ -919,6 +921,12 @@ class SettingsViewModel(
                 connectMcpServerWithStatus(serverId)
             }
         }
+    }
+
+    // [REQ-9] MCP tool confirmation gate
+    private fun onToggleMcpConfirmation(enabled: Boolean) {
+        dataRepository.setMcpRequireConfirmation(enabled)
+        _state.update { it.copy(isMcpRequireConfirmation = enabled) }
     }
 
     private fun onRefreshMcpServer(serverId: String) {

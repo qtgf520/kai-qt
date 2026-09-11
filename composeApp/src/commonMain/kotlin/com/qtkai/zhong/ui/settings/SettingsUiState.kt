@@ -115,6 +115,8 @@ data class SettingsUiState(
     val showUiScale: Boolean = false,
     val mcpServers: ImmutableList<McpServerUiState> = persistentListOf(),
     val showAddMcpServerDialog: Boolean = false,
+    // [REQ-9] MCP tool confirmation gate (default on)
+    val isMcpRequireConfirmation: Boolean = true,
     val skills: ImmutableList<SkillManifest> = persistentListOf(),
     val showAddSkillDialog: Boolean = false,
     val isInstallingSkill: Boolean = false,

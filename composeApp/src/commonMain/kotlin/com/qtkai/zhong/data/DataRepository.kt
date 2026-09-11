@@ -75,6 +75,10 @@ interface DataRepository {
 
     // [REQ-5.4] Remove a single message (and its paired tool rows) from the conversation.
     fun deleteMessage(messageId: String)
+
+    // [REQ-5.2] Replace a user message's content and drop everything after it,
+    // so the conversation can be regenerated from the edited prompt.
+    fun updateMessage(messageId: String, newContent: String)
     fun restoreCurrentConversation()
 
     // Tool management
@@ -90,6 +94,10 @@ interface DataRepository {
     fun getMcpToolsForServer(serverId: String): List<ToolInfo>
     fun isMcpServerConnected(serverId: String): Boolean
     suspend fun connectEnabledMcpServers()
+
+    // [REQ-9] MCP tool confirmation gate
+    fun isMcpRequireConfirmation(): Boolean
+    fun setMcpRequireConfirmation(enabled: Boolean)
 
     // Skills (stored in the Linux sandbox at ~/skills/<id>/; Android-only)
     fun getInstalledSkills(): List<SkillManifest>

@@ -1858,6 +1858,24 @@ class RemoteDataRepository(
         }
     }
 
+    // [REQ-5.2] Replace a user message and drop everything after it, then persist.
+    override fun updateMessage(messageId: String, newContent: String) {
+        chatHistory.update { history ->
+            val index = history.indexOfFirst { it.id == messageId }
+            if (index < 0 || newContent.isBlank()) return@update history
+            val updated = history.toMutableList().apply {
+                this[index] = this[index].copy(content = newContent)
+            }
+            // Drop all messages after the edited one (the old answer + tool rows).
+            updated.take(index + 1)
+        }
+        _currentConversationId.value?.let { convId ->
+            CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
+                saveCurrentConversation(convId)
+            }
+        }
+    }
+
     override fun restoreCurrentConversation() {
         // One-time migration for existing users: pin the latest conversation as the new
         // "current" pointer so the upgrade is non-disruptive.
@@ -1915,6 +1933,13 @@ class RemoteDataRepository(
     override fun getMcpToolsForServer(serverId: String): List<ToolInfo> = mcpServerManager.getToolsForServer(serverId)
 
     override fun isMcpServerConnected(serverId: String): Boolean = mcpServerManager.isConnected(serverId)
+
+    // [REQ-9] MCP tool confirmation gate
+    override fun isMcpRequireConfirmation(): Boolean = appSettings.isMcpRequireConfirmation()
+
+    override fun setMcpRequireConfirmation(enabled: Boolean) {
+        appSettings.setMcpRequireConfirmation(enabled)
+    }
 
     override suspend fun connectEnabledMcpServers() {
         mcpServerManager.connectEnabledServers()
@@ -2037,7 +2062,21 @@ class RemoteDataRepository(
             runtime = runtime,
             uiMode = uiMode,
             activeSkill = activeSkill,
-        ).ifEmpty { null }
+        // [REQ-9] When MCP confirmation is enabled, instruct the model to get
+        // explicit user approval before executing MCP tools.
+        ).let { base ->
+            if (base.isNullOrEmpty() || !isMcpRequireConfirmation()) {
+                base
+            } else {
+                base + "\n\n## MCP Tool Confirmation Policy\n" +
+                    "Before calling any MCP tool (external server tools such as file writes, " +
+                    "command execution, message sending, or any side-effecting operation), " +
+                    "present the tool name and its full arguments in the chat and obtain the " +
+                    "user's explicit approval (e.g. \"yes, run it\" / \"go ahead\") on the same " +
+                    "turn BEFORE executing. Never call a side-effecting MCP tool without explicit " +
+                    "user confirmation."
+            }
+        }.ifEmpty { null }
     }
 
     override fun isDynamicUiEnabled(): Boolean = appSettings.isDynamicUiEnabled()

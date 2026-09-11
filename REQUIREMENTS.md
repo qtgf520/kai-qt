@@ -230,7 +230,7 @@
 - [x] 6. 上下文压缩 ✅ 已有：`compactHistoryIfNeeded`（70% 阈值自动摘要 + 保留最近 4 轮）
 - [x] 7. Skill 功能 ✅ 已有：完整 skills 包（SkillManager/Registry/Marketplaces/前端 SkillsSection）
 - [x] 8. MCP 编辑 ✅ 已有：完整 mcp 包（McpServerManager/Client + 设置页 McpSection 增删改启停）
-- [ ] 9. MCP 确认开关 🔲 规划中：系统提示词已含发送前确认策略，需通用确认 UI
+- [x] 9. MCP 确认开关 ✅ 已实现：设置→工具→「MCP 工具需人工确认」开关（默认开），开启时系统提示词注入确认策略，AI 调用 MCP 工具前必须先展示参数并获用户同意（v3.2.3-3）
 - [x] 10. 集成工具 ✅ 已有：web_search/shell/日历/提醒/邮件/通知/文件/定时任务等大量工具，统一 Tool 抽象
 - [ ] 11. Llama.cpp 后端 🔲 规划中：现有 LiteRT/Ollama，需新增 GGUF 加载
 - [ ] 12. 图像/视频生成 🔲 规划中：需接入图像/视频 API

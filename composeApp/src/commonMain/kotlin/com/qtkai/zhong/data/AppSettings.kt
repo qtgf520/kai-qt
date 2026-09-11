@@ -403,6 +403,14 @@ class AppSettings(internal val settings: Settings) {
         settings.putString(KEY_MCP_SERVERS, json)
     }
 
+    // [REQ-9] MCP tool confirmation gate — when enabled, MCP tools require the
+    // user's explicit go-ahead before execution (enforced via system prompt policy).
+    fun isMcpRequireConfirmation(): Boolean = settings.getBoolean(KEY_MCP_REQUIRE_CONFIRMATION, true)
+
+    fun setMcpRequireConfirmation(enabled: Boolean) {
+        settings.putBoolean(KEY_MCP_REQUIRE_CONFIRMATION, enabled)
+    }
+
     // UI Scale
     private val _uiScaleFlow = MutableStateFlow(settings.getFloat(KEY_UI_SCALE, defaultUiScale))
     val uiScaleFlow: StateFlow<Float> = _uiScaleFlow
@@ -618,6 +626,7 @@ class AppSettings(internal val settings: Settings) {
         const val KEY_SERVICES_MIGRATION_COMPLETE = "services_migration_complete_v1"
         const val KEY_UI_SCALE = "ui_scale"
         const val KEY_MCP_SERVERS = "mcp_servers"
+        const val KEY_MCP_REQUIRE_CONFIRMATION = "mcp_require_confirmation" // [REQ-9]
         const val KEY_INSTANCE_MIGRATION_COMPLETE = "instance_migration_complete_v1"
         const val KEY_BASE_URL_V1_MIGRATION_COMPLETE = "base_url_v1_migration_complete"
         const val KEY_CUSTOM_MODEL_MIGRATION_COMPLETE = "custom_model_migration_complete_v1"

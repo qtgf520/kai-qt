@@ -72,6 +72,8 @@ data class ChatUiState(
     val history: ImmutableList<History> = persistentListOf(),
     val isSpeechOutputEnabled: Boolean = false,
     val isLoading: Boolean = false,
+    // [REQ-5.2] The user message currently being edited in-place, if any.
+    val editingMessageId: String? = null,
     val error: UiError? = null,
     val showFreeProviderSuggestions: Boolean = false,
     val warning: StringResource? = null,

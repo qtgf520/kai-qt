@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,7 +21,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +32,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.qtkai.zhong.data.Attachment
 import com.qtkai.zhong.decodeToImageBitmap
+import com.qtkai.zhong.ui.KaiOutlinedTextField
 import com.qtkai.zhong.ui.components.LocalShowFullScreenImage
 import com.qtkai.zhong.ui.handCursor
 import kai.composeapp.generated.resources.Res
@@ -45,8 +50,15 @@ internal fun UserMessage(
     attachments: ImmutableList<Attachment> = persistentListOf(),
     // [REQ-5.4] Optional delete action for this message.
     onDelete: (() -> Unit)? = null,
+    // [REQ-5.2] In-place edit support.
+    isEditing: Boolean = false,
+    onEdit: (() -> Unit)? = null,
+    onSaveEdit: ((String) -> Unit)? = null,
+    onCancelEdit: (() -> Unit)? = null,
 ) {
     val showFullScreen = LocalShowFullScreenImage.current
+    // Local draft while editing — initialized from the message text.
+    var draft by remember(message, isEditing) { mutableStateOf(message) }
     SelectionContainer {
         Row(Modifier.padding(16.dp)) {
             Spacer(Modifier.weight(1f))
@@ -106,24 +118,65 @@ internal fun UserMessage(
                     if (message.isNotEmpty()) {
                         Spacer(Modifier.height(8.dp))
                     }
-                }
-                if (message.isNotEmpty()) {
-                    Text(
-                        text = message,
-                        color = MaterialTheme.colorScheme.onBackground,
+if (isEditing) {
+                    // [REQ-5.2] In-place edit: text field + save/cancel
+                    KaiOutlinedTextField(
+                        value = draft,
+                        onValueChange = { draft = it },
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                     )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text(
+                            text = "取消",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .handCursor()
+                                .clickable { onCancelEdit?.invoke() }
+                                .padding(4.dp),
+                        )
+                        Text(
+                            text = "保存并重新生成",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier
+                                .handCursor()
+                                .clickable { onSaveEdit?.invoke(draft) }
+                                .padding(4.dp),
+                        )
+                    }
+                } else {
+                    if (message.isNotEmpty()) {
+                        Text(
+                            text = message,
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        if (onEdit != null) {
+                            Text(
+                                text = "编辑",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                modifier = Modifier
+                                    .handCursor()
+                                    .clickable { onEdit() }
+                                    .padding(4.dp),
+                            )
+                        }
+                        if (onDelete != null) {
+                            Text(
+                                text = "删除",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                                modifier = Modifier
+                                    .handCursor()
+                                    .clickable { onDelete() }
+                                    .padding(4.dp),
+                            )
+                        }
+                    }
                 }
-                if (onDelete != null) {
-                    Spacer(Modifier.height(4.dp))
-                    Text(
-                        text = "删除",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
-                        modifier = Modifier
-                            .handCursor()
-                            .clickable { onDelete() }
-                            .padding(4.dp),
-                    )
                 }
             }
         }

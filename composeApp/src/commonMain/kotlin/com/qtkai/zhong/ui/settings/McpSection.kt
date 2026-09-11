@@ -87,6 +87,9 @@ internal fun McpServersSection(
     showAddDialog: Boolean,
     onShowAddDialog: (Boolean) -> Unit,
     onAddPopularMcpServer: (PopularMcpServer) -> Unit,
+    // [REQ-9] MCP tool confirmation gate
+    isMcpRequireConfirmation: Boolean = true,
+    onToggleMcpConfirmation: (Boolean) -> Unit = {},
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -101,7 +104,30 @@ internal fun McpServersSection(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
 
+        // [REQ-9] Confirmation gate toggle
         Spacer(Modifier.height(12.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "MCP 工具需人工确认",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
+                Text(
+                    text = "开启时，AI 调用 MCP 工具（写文件/执行命令/发消息等）前必须先展示参数并获得你的同意",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+            Switch(
+                checked = isMcpRequireConfirmation,
+                onCheckedChange = onToggleMcpConfirmation,
+            )
+        }
+        Spacer(Modifier.height(4.dp))
 
         for (server in mcpServers) {
             McpServerCard(

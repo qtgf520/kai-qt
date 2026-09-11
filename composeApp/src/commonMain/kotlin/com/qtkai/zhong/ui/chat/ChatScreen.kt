@@ -824,6 +824,13 @@ private fun ChatModeScreen(
                                                         attachments = history.attachments,
                                                         // [REQ-5.4] Delete this message
                                                         onDelete = { uiState.actions.deleteMessage(history.id) },
+                                                        // [REQ-5.2] In-place edit + regenerate
+                                                        isEditing = uiState.editingMessageId == history.id,
+                                                        onEdit = { uiState.actions.editMessage(history.id) },
+                                                        onSaveEdit = { newContent ->
+                                                            uiState.actions.saveEditedMessage(history.id, newContent)
+                                                        },
+                                                        onCancelEdit = { uiState.actions.editMessage("") },
                                                     )
                                                 }
                                             }

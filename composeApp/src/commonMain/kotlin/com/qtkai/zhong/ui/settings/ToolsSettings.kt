@@ -47,6 +47,9 @@ internal fun ToolsContent(
     showAddMcpServerDialog: Boolean,
     onShowAddMcpServerDialog: (Boolean) -> Unit,
     onAddPopularMcpServer: (PopularMcpServer) -> Unit,
+    // [REQ-9] MCP tool confirmation gate
+    isMcpRequireConfirmation: Boolean = true,
+    onToggleMcpConfirmation: (Boolean) -> Unit = {},
     skills: ImmutableList<SkillManifest>,
     onUninstallSkill: (String) -> Unit,
     showAddSkillDialog: Boolean,
@@ -74,6 +77,8 @@ internal fun ToolsContent(
             showAddDialog = showAddMcpServerDialog,
             onShowAddDialog = onShowAddMcpServerDialog,
             onAddPopularMcpServer = onAddPopularMcpServer,
+            isMcpRequireConfirmation = isMcpRequireConfirmation, // [REQ-9]
+            onToggleMcpConfirmation = onToggleMcpConfirmation,
         )
 
         // Skills section — sandbox-backed, so Android only.

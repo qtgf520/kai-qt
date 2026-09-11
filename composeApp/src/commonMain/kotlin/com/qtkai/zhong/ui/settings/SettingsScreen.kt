@@ -286,6 +286,9 @@ fun SettingsScreenContent(
                                     showAddMcpServerDialog = filteredUiState.showAddMcpServerDialog,
                                     onShowAddMcpServerDialog = actions.onShowAddMcpServerDialog,
                                     onAddPopularMcpServer = actions.onAddPopularMcpServer,
+                                    // [REQ-9] MCP tool confirmation gate
+                                    isMcpRequireConfirmation = filteredUiState.isMcpRequireConfirmation,
+                                    onToggleMcpConfirmation = actions.onToggleMcpConfirmation,
                                     skills = filteredUiState.skills,
                                     onUninstallSkill = actions.onUninstallSkill,
                                     showAddSkillDialog = filteredUiState.showAddSkillDialog,

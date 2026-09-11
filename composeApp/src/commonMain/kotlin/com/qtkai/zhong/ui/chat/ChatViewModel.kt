@@ -77,6 +77,8 @@ class ChatViewModel(
         submitUiCallback = ::submitUiCallback,
         resubmit = ::resubmit,
         deleteMessage = ::deleteMessage,
+        editMessage = ::editMessage,
+        saveEditedMessage = ::saveEditedMessage,
         enterInteractiveMode = ::enterInteractiveMode,
         exitInteractiveMode = ::exitInteractiveMode,
         goBackInteractiveMode = ::goBackInteractiveMode,
@@ -597,6 +599,32 @@ class ChatViewModel(
     // [REQ-5.4] Delete a single message from the conversation.
     private fun deleteMessage(messageId: String) {
         dataRepository.deleteMessage(messageId)
+    }
+
+    // [REQ-5.2] Enter edit mode for a user message.
+    private fun editMessage(messageId: String) {
+        _state.update { it.copy(editingMessageId = messageId) }
+    }
+
+    // [REQ-5.2] Save the edited message, drop the old answer, and regenerate.
+    private fun saveEditedMessage(messageId: String, newContent: String) {
+        _state.update { it.copy(editingMessageId = null) }
+        if (newContent.isBlank() || _state.value.isLoading) return
+        dataRepository.updateMessage(messageId, newContent)
+        // ask is suspend — run it on the app scope so the regenerate survives
+        // screen switches and persists back to this conversation.
+        currentJob = appScope.launch(backgroundDispatcher) {
+            _state.update { it.copy(isLoading = true, error = null, showFreeProviderSuggestions = false) }
+            try {
+                dataRepository.ask(newContent, emptyList())
+                _state.update { it.copy(isLoading = false) }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                _state.update {
+                    it.copy(error = e.toUiError(), isLoading = false, showFreeProviderSuggestions = false)
+                }
+            }
+        }
     }
 
     private fun goBackInteractiveMode() {

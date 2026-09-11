@@ -57,6 +57,8 @@ data class SettingsActions(
     val onAddMcpServer: (String, String, Map<String, String>) -> Unit,
     val onRemoveMcpServer: (String) -> Unit,
     val onToggleMcpServer: (String, Boolean) -> Unit,
+    // [REQ-9] MCP tool confirmation gate toggle
+    val onToggleMcpConfirmation: (Boolean) -> Unit,
     val onRefreshMcpServer: (String) -> Unit,
     val onShowAddMcpServerDialog: (Boolean) -> Unit,
     val onAddPopularMcpServer: (PopularMcpServer) -> Unit,
@@ -124,6 +126,7 @@ data class SettingsActions(
             onAddMcpServer = { _, _, _ -> },
             onRemoveMcpServer = {},
             onToggleMcpServer = { _, _ -> },
+            onToggleMcpConfirmation = {}, // [REQ-9]
             onRefreshMcpServer = {},
             onShowAddMcpServerDialog = {},
             onAddPopularMcpServer = {},
