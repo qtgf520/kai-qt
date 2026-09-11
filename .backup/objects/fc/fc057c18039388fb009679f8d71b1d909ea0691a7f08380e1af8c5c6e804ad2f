@@ -76,7 +76,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.TimeZone
@@ -1107,11 +1106,6 @@ class RemoteDataRepository(
         } finally {
             _fallbackStatus.value = null
             mirrorJob.cancel()
-            // Stop the live thinking typewriter and drop the placeholder bubble on
-            // every exit path (success, failure, cancellation) so no fake reasoning
-            // row lingers in the conversation.
-            revealJob.cancel()
-            clearThinkingPlaceholder()
             // Any exit path — success, all-failed, exception, cancellation — clears
             // the in-flight marker so the UI stops showing the stop button.
             if (_activeTurnConversationId.value == turnConversationId) {
