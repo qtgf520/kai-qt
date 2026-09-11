@@ -33,3 +33,4 @@ fastlane/README.md
 backup_*/
 DEV_GUIDE.md
 qitong.jks.backup/
+.backup/
