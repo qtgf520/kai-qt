@@ -55,6 +55,7 @@ import kai.composeapp.generated.resources.bot_message_thinking_expand_content_de
 import kai.composeapp.generated.resources.bot_message_thinking_label
 import kai.composeapp.generated.resources.chat_cancel_edit_content_description
 import kai.composeapp.generated.resources.chat_edit_submission_content_description
+import kai.composeapp.generated.resources.ic_close
 import kai.composeapp.generated.resources.ic_copy
 import kai.composeapp.generated.resources.ic_flag
 import kai.composeapp.generated.resources.ic_refresh
@@ -80,6 +81,8 @@ internal fun BotMessage(
     frozen: FrozenSubmission? = null,
     onResubmit: ((event: String, data: Map<String, String>) -> Unit)? = null,
     reasoningSegments: ImmutableList<String> = persistentListOf(),
+    // [REQ-5.4] Optional delete action for this message.
+    onDelete: (() -> Unit)? = null,
 ) {
     val document = remember(message) { parseMarkdown(message) }
     var isEditing by remember(frozen) { mutableStateOf(false) }
@@ -193,6 +196,13 @@ internal fun BotMessage(
                 iconResource = Res.drawable.ic_refresh,
                 contentDescription = stringResource(Res.string.bot_message_regenerate_content_description),
                 onClick = onRegenerate,
+            )
+        }
+        if (onDelete != null) {
+            SmallIconButton(
+                iconResource = Res.drawable.ic_close,
+                contentDescription = "删除此消息",
+                onClick = onDelete,
             )
         }
         Spacer(Modifier.weight(1f))

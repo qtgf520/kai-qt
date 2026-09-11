@@ -226,7 +226,7 @@
 - [x] 5.1 重新生成 ✅ 已有：BotMessage `onRegenerate` 按钮，保留上下文重新请求
 - [ ] 5.2 修改消息 🔲 规划中：需要 ChatViewModel 编辑 action
 - [x] 5.3 复制消息 ✅ 已有：BotMessage 复制按钮（含代码块复制）
-- [ ] 5.4 删除消息 🔲 规划中：需要 ChatViewModel 删除 action
+- [x] 5.4 删除消息 ✅ 已实现：每条消息操作栏「删除」按钮（AI 消息 × 图标 / 用户消息文字），删除单条及其配套工具行，自动保存（v3.2.3-2）
 - [x] 6. 上下文压缩 ✅ 已有：`compactHistoryIfNeeded`（70% 阈值自动摘要 + 保留最近 4 轮）
 - [x] 7. Skill 功能 ✅ 已有：完整 skills 包（SkillManager/Registry/Marketplaces/前端 SkillsSection）
 - [x] 8. MCP 编辑 ✅ 已有：完整 mcp 包（McpServerManager/Client + 设置页 McpSection 增删改启停）

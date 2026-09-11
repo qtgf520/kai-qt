@@ -72,6 +72,9 @@ interface DataRepository {
     fun regenerate()
     fun popLastExchange()
     fun truncateFrom(messageId: String)
+
+    // [REQ-5.4] Remove a single message (and its paired tool rows) from the conversation.
+    fun deleteMessage(messageId: String)
     fun restoreCurrentConversation()
 
     // Tool management

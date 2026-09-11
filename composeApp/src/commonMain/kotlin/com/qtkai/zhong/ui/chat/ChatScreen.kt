@@ -822,6 +822,8 @@ private fun ChatModeScreen(
                                                     UserMessage(
                                                         message = history.content,
                                                         attachments = history.attachments,
+                                                        // [REQ-5.4] Delete this message
+                                                        onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
                                                 }
                                             }
@@ -850,6 +852,8 @@ private fun ChatModeScreen(
                                                             null
                                                         },
                                                         reasoningSegments = reasoningSegmentsByAssistantId[history.id] ?: persistentListOf(),
+                                                        // [REQ-5.4] Delete this message
+                                                        onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
                                                     if (history.fallbackServiceName != null) {
                                                         androidx.compose.material3.Text(

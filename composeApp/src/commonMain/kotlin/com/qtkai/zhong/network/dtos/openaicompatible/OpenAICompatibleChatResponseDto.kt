@@ -47,7 +47,10 @@ internal object FlexibleContentSerializer : KSerializer<String> {
 
 @Serializable
 data class OpenAICompatibleChatResponseDto(
-    val choices: List<Choice>,
+    // Nullable: some providers / error bodies omit `choices` (e.g. an empty
+    // heartbeat response, or a non-standard error payload). Callers must treat
+    // null the same as an empty list instead of crashing on deserialization.
+    val choices: List<Choice>? = null,
 ) {
     @Serializable
     data class Choice(val message: Message? = null) {

@@ -43,6 +43,8 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 internal fun UserMessage(
     message: String,
     attachments: ImmutableList<Attachment> = persistentListOf(),
+    // [REQ-5.4] Optional delete action for this message.
+    onDelete: (() -> Unit)? = null,
 ) {
     val showFullScreen = LocalShowFullScreenImage.current
     SelectionContainer {
@@ -109,6 +111,18 @@ internal fun UserMessage(
                     Text(
                         text = message,
                         color = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
+                if (onDelete != null) {
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = "删除",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                        modifier = Modifier
+                            .handCursor()
+                            .clickable { onDelete() }
+                            .padding(4.dp),
                     )
                 }
             }

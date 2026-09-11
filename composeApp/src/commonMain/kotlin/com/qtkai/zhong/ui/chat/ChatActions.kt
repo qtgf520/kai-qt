@@ -23,6 +23,8 @@ data class ChatActions(
     val undoDeleteConversation: () -> Unit,
     val submitUiCallback: (event: String, data: Map<String, String>) -> Unit,
     val resubmit: (messageId: String, event: String, data: Map<String, String>) -> Unit,
+    // [REQ-5.4] Delete a single message from the conversation.
+    val deleteMessage: (messageId: String) -> Unit,
     val enterInteractiveMode: () -> Unit,
     val exitInteractiveMode: () -> Unit,
     val goBackInteractiveMode: () -> Unit,

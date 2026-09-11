@@ -76,6 +76,7 @@ class ChatViewModel(
         undoDeleteConversation = ::undoDeleteConversation,
         submitUiCallback = ::submitUiCallback,
         resubmit = ::resubmit,
+        deleteMessage = ::deleteMessage,
         enterInteractiveMode = ::enterInteractiveMode,
         exitInteractiveMode = ::exitInteractiveMode,
         goBackInteractiveMode = ::goBackInteractiveMode,
@@ -591,6 +592,11 @@ class ChatViewModel(
         if (_state.value.isLoading) return
         dataRepository.truncateFrom(messageId)
         submitUiCallback(event, data)
+    }
+
+    // [REQ-5.4] Delete a single message from the conversation.
+    private fun deleteMessage(messageId: String) {
+        dataRepository.deleteMessage(messageId)
     }
 
     private fun goBackInteractiveMode() {

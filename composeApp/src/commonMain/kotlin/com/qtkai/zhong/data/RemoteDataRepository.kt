@@ -804,7 +804,7 @@ class RemoteDataRepository(
                 val response = call {
                     requests.openAICompatibleChat(service, credentials, openAIMessages, sessionId = sessionId, requestTimeoutMs = requestTimeoutMs).getOrThrow()
                 }
-                val message = response.choices.firstOrNull()?.message
+                val message = response.choices?.firstOrNull()?.message
                 val content = message?.effectiveContent
                 if (content == null && strictEmptyResponse) throw OpenAICompatibleEmptyResponseException()
                 AssistantTurn(content.orEmpty(), message?.reasoningTraceFor(content))
@@ -1182,7 +1182,7 @@ class RemoteDataRepository(
                         reasoningEffort = getReasoningEffort(),
                     ).getOrThrow()
                 }
-                val message = response.choices.firstOrNull()?.message ?: throw OpenAICompatibleEmptyResponseException()
+                val message = response.choices?.firstOrNull()?.message ?: throw OpenAICompatibleEmptyResponseException()
                 var calls = message.toolCalls.orEmpty().map { tc ->
                     ToolCallInfo(id = tc.id, name = tc.function.name, arguments = tc.function.arguments)
                 }
@@ -1418,7 +1418,7 @@ class RemoteDataRepository(
         val response = retryApiCall {
             requests.openAICompatibleChat(service, credentials, bailoutMessages, sessionId = sessionId).getOrThrow()
         }
-        return response.choices.firstOrNull()?.message?.effectiveContent ?: ""
+        return response.choices?.firstOrNull()?.message?.effectiveContent ?: ""
     }
 
     /**
@@ -1827,6 +1827,34 @@ class RemoteDataRepository(
         chatHistory.update { history ->
             val index = history.indexOfFirst { it.id == messageId }
             if (index >= 0) history.take(index) else history
+        }
+    }
+
+    // [REQ-5.4] Delete a single message plus any tool rows belonging to the same turn.
+    // The history is filtered in place, then the conversation is saved so the change
+    // survives a restart.
+    override fun deleteMessage(messageId: String) {
+        chatHistory.update { history ->
+            if (history.none { it.id == messageId }) return@update history
+            val index = history.indexOfFirst { it.id == messageId }
+            // Remove the target message and, for an assistant turn, its paired tool
+            // EXECUTING/TOOL rows that follow it until the next USER message.
+            val end = (index + 1 until history.size)
+                .firstOrNull { history[it].role == History.Role.USER }
+                ?: history.size
+            val nextIndex = if (history[index].role == History.Role.ASSISTANT) {
+                end.coerceAtLeast(index + 1)
+            } else {
+                index + 1
+            }
+            history.filterIndexed { i, _ -> i < index || i >= nextIndex }
+        }
+        _currentConversationId.value?.let { convId ->
+            // saveCurrentConversation is suspend — run it on the shared app scope so
+            // the persistence happens off the UI thread and survives VM teardown.
+            CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
+                saveCurrentConversation(convId)
+            }
         }
     }
 
