@@ -1,3 +1,14 @@
+## v3.2.5 — 2026-09-12 (Kai2 9000 正式版)
+### Features
+- 服务商自定义名称现在会同步到聊天模型选择（getServiceEntries 优先取实例自定义名，空则回退默认名）
+- 打字机流式输出：答案逐字渐进显示（前 200 字符每步 8 字，之后每步 24 字，12ms 间隔），Markdown 渐进渲染
+- 思考内容打字机渐进显示：AI 推理过程不再一次性全出，展开后逐字流出，像真实思考过程
+- 思考区块自动展开：有真实推理内容时自动展开可见（可手动折叠）
+- 新增 android_directory 工具注册：AI 可读/写/列/删 /storage/emulated/0/ 下文件（此前只定义未注册）
+### Fixes
+- 心跳不再报 OpenAICompatibleEmptyResponseException：无配置服务/Free 空响应时返回 no-op 文案，心跳记录为健康运行
+### 备注
+- 短信/通知工具为 foss 变体专属（Play 政策限制敏感权限），playStore 变体不含；需装 foss 完整版使用
 ## v3.2.4 — 2026-09-12 (Kai2 9000 正式版)
 ### Features
 - UI 美化：用户消息气泡改为品牌色圆角卡片（primaryContainer 半透明，16dp 圆角），AI 消息加浅色卡片背景（18dp 圆角），视觉层级更清晰
