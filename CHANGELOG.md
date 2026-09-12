@@ -1,3 +1,12 @@
+## v3.2.7 — 2026-09-12 (Kai2 9000 正式版)
+### Features（本地模型硬跑 + 体验优化）
+- 本地模型（LiteRT Local Model）可直接下载运行：模型下载源改为 hf-mirror.com 国内可达镜像，实测 4.68MB/s 稳定下载，无需 API Key / 联网
+- 内置 5 个本地模型可选：Gemma 4 E2B/E4B/12B、LFM2.5 1.2B、Qwen3 0.6B；支持 .litertlm 文件导入
+- 本地模型开放任务调度工具（schedule_task / list_tasks / cancel_task），可定时提醒、周期任务、取消任务
+- Local Model 界面文案优化：导入引导改为"也可以从本机已有文件导入"；工具提示改为"可调用工具：任务调度、记忆、搜索、终端命令等"
+### Fixes
+- 修复思考区空白 bug：ReasoningBlockquote 动画 key 改 animate（不再因 fullText 更新重置 visibleChars，思考区逐字书写正常）
+
 ## v3.2.6 — 2026-09-12 (Kai2 9000 正式版)
 ### Features（Operit 界面深度对齐）
 - 流式修正：只有思考区逐字书写（1 字/18ms + ▍光标），答案/工具/结果完整显示不逐字
