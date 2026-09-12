@@ -15,6 +15,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <!-- SMS read/send: declared in main manifest so EVERY variant ships the SMS tools.
+         Runtime gate (isSmsSupported) probes merged manifest for READ_SMS. -->
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <!-- Notification listening: declared in main manifest so EVERY variant ships the
+         notification-read tools. Runtime gate (isNotificationsSupported) probes merged
+         manifest for the KaiNotificationListenerService. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <application
         android:name="com.qtkai.zhong.KaiApplication"
@@ -66,6 +74,16 @@
             android:name="com.qtkai.zhong.inference.ModelDownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
+        <!-- Notification listener service so EVERY variant reads notifications -->
+        <service
+            android:name="com.qtkai.zhong.notifications.KaiNotificationListenerService"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
         <uses-native-library android:name="libvndksupport.so" android:required="false"/>
         <uses-native-library android:name="libOpenCL.so" android:required="false"/>
     </application>
