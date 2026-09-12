@@ -16,29 +16,39 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 
 @Composable
-internal fun List<InlineNode>.toAnnotatedString(): AnnotatedString {
+internal fun List<InlineNode>.toAnnotatedString(
+    onLinkClick: ((String) -> Unit)? = null,
+): AnnotatedString {
     val colors = MaterialTheme.colorScheme
-    return buildAnnotatedString { appendInlines(this@toAnnotatedString, colors) }
+    return buildAnnotatedString { appendInlines(this@toAnnotatedString, colors, onLinkClick) }
 }
 
-private fun AnnotatedString.Builder.appendInlines(nodes: List<InlineNode>, colors: ColorScheme) {
-    for (n in nodes) appendInline(n, colors)
+private fun AnnotatedString.Builder.appendInlines(
+    nodes: List<InlineNode>,
+    colors: ColorScheme,
+    onLinkClick: ((String) -> Unit)?,
+) {
+    for (n in nodes) appendInline(n, colors, onLinkClick)
 }
 
-private fun AnnotatedString.Builder.appendInline(node: InlineNode, colors: ColorScheme) {
+private fun AnnotatedString.Builder.appendInline(
+    node: InlineNode,
+    colors: ColorScheme,
+    onLinkClick: ((String) -> Unit)?,
+) {
     when (node) {
         is Text -> append(node.value)
 
         is Strong -> withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
-            appendInlines(node.children, colors)
+            appendInlines(node.children, colors, onLinkClick)
         }
 
         is Emphasis -> withStyle(SpanStyle(fontStyle = FontStyle.Italic)) {
-            appendInlines(node.children, colors)
+            appendInlines(node.children, colors, onLinkClick)
         }
 
         is Strike -> withStyle(SpanStyle(textDecoration = TextDecoration.LineThrough)) {
-            appendInlines(node.children, colors)
+            appendInlines(node.children, colors, onLinkClick)
         }
 
         is InlineCode -> withStyle(
@@ -50,19 +60,31 @@ private fun AnnotatedString.Builder.appendInline(node: InlineNode, colors: Color
             append(node.code)
         }
 
-        is Link -> withLink(
-            LinkAnnotation.Url(
-                url = node.href,
-                styles = TextLinkStyles(
-                    style = SpanStyle(
-                        color = colors.primary,
-                        fontWeight = FontWeight.Bold,
-                        textDecoration = TextDecoration.Underline,
-                    ),
+        is Link -> {
+            val linkStyles = TextLinkStyles(
+                style = SpanStyle(
+                    color = colors.primary,
+                    fontWeight = FontWeight.Bold,
+                    textDecoration = TextDecoration.Underline,
                 ),
-            ),
-        ) {
-            appendInlines(node.children, colors)
+            )
+            if (onLinkClick != null) {
+                withLink(
+                    LinkAnnotation.Clickable(
+                        tag = node.href,
+                        styles = linkStyles,
+                        linkInteractionListener = { onLinkClick(node.href) },
+                    ),
+                ) {
+                    appendInlines(node.children, colors, onLinkClick)
+                }
+            } else {
+                withLink(
+                    LinkAnnotation.Url(url = node.href, styles = linkStyles),
+                ) {
+                    appendInlines(node.children, colors, onLinkClick)
+                }
+            }
         }
 
         is Image -> append(node.alt)

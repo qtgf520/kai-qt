@@ -1,19 +1,21 @@
 package com.qtkai.zhong.ui.markdown
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import com.qtkai.zhong.ui.markdown.math.MathFormula
 import kotlinx.collections.immutable.ImmutableList
-
 /**
  * Render a list of [InlineNode]s. When no [InlineMath] is present this delegates to a plain
  * [Text] — preserving native text selection, word wrapping, and alignment. When math is
@@ -29,39 +31,52 @@ internal fun InlineContent(
     modifier: Modifier = Modifier,
     textAlign: TextAlign = TextAlign.Unspecified,
 ) {
+    // Link-preview dialog (Operit style): clicking a link shows a preview with an
+    // explicit "open" confirmation instead of jumping straight to the browser.
+    var previewUrl by remember { mutableStateOf<String?>(null) }
+    val uriHandler = LocalUriHandler.current
+
     if (!containsMath(inlines)) {
         Text(
-            text = inlines.toAnnotatedString(),
+            text = inlines.toAnnotatedString(onLinkClick = { previewUrl = it }),
             style = style,
             textAlign = textAlign,
             modifier = modifier,
         )
-        return
-    }
-
-    val segments = remember(inlines) { splitAroundMath(inlines) }
-    FlowRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Start,
-        verticalArrangement = Arrangement.Center,
-        // Top-align keeps adjacent text anchored when a math child (e.g. a fraction) is tall,
-        // which in turn keeps list-bullets aligned with their first line of content.
-        itemVerticalAlignment = Alignment.Top,
-    ) {
-        for (seg in segments) {
-            when (seg) {
-                is InlineSegment.TextRun -> Text(
-                    text = seg.nodes.toAnnotatedString().flattenNewlines(),
-                    style = style,
-                    textAlign = textAlign,
-                )
-
-                is InlineSegment.Math -> MathFormula(latex = seg.latex, display = false)
+    } else {
+        val segments = remember(inlines) { splitAroundMath(inlines) }
+        FlowRow(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.Start,
+            verticalArrangement = Arrangement.Center,
+            // Top-align keeps adjacent text anchored when a math child (e.g. a fraction) is tall,
+            // which in turn keeps list-bullets aligned with their first line of content.
+            itemVerticalAlignment = Alignment.Top,
+        ) {
+            for (seg in segments) {
+                when (seg) {
+                    is InlineSegment.TextRun -> Text(
+                        text = seg.nodes.toAnnotatedString(onLinkClick = { previewUrl = it }).flattenNewlines(),
+                        style = style,
+                        textAlign = textAlign,
+                    )
+                    is InlineSegment.Math -> MathFormula(latex = seg.latex, display = false)
+                }
             }
         }
     }
-}
 
+    previewUrl?.let { url ->
+        LinkPreviewDialog(
+            url = url,
+            onOpen = {
+                previewUrl = null
+                runCatching { uriHandler.openUri(url) }
+            },
+            onDismiss = { previewUrl = null },
+        )
+    }
+}
 /** `\n` inside a FlowRow TextRun forces a hard break that breaks flow around math; flatten to spaces. */
 private fun AnnotatedString.flattenNewlines(): AnnotatedString = if ('\n' !in text) {
     this
