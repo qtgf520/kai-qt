@@ -71,12 +71,31 @@ internal fun CodeFenceBlock(
             }
             HorizontalDivider(color = colorScheme.outline.copy(alpha = 0.2f))
             val scroll = rememberScrollState()
-            Box(Modifier.horizontalScroll(scroll).padding(12.dp)) {
-                Text(
-                    text = highlighted,
-                    fontFamily = FontFamily.Monospace,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
+            // Line-number gutter + monospace code, mirroring Operit's
+            // CodeContentWithLineNumbers: a fixed-width number column keeps
+            // long code readable and gives the block a real editor feel.
+            val lines = remember(code) { code.lines() }
+            Row(Modifier.horizontalScroll(scroll).padding(12.dp)) {
+                Column(horizontalAlignment = Alignment.End) {
+                    for (i in lines.indices) {
+                        Text(
+                            text = "${i + 1}",
+                            fontFamily = FontFamily.Monospace,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                            modifier = Modifier.padding(end = 10.dp),
+                        )
+                    }
+                }
+                Column {
+                    for (line in lines) {
+                        Text(
+                            text = line.ifEmpty { " " },
+                            fontFamily = FontFamily.Monospace,
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                }
             }
         }
     }
