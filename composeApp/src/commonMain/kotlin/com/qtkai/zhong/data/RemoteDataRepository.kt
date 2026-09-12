@@ -2365,9 +2365,10 @@ class RemoteDataRepository(
             }
         } catch (e: OpenAICompatibleEmptyResponseException) {
             // No configured service produced a usable response (e.g. lone Free tier
-            // returned empty). The caller (heartbeat / scheduled task) records this as a
-            // successful no-op run rather than an error — nothing actionable happened.
-            "(heartbeat idle: no model response)"
+            // returned empty). Return EMPTY (not a technical placeholder): the caller
+            // (heartbeat / scheduled task) records the run as a healthy no-op AND skips
+            // adding any assistant message — so the chat never sees "(heartbeat idle...)".
+            ""
         }
     }
     override suspend fun askSilently(question: String): String {
