@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -139,6 +140,13 @@ internal fun BotMessage(
                     )
                 }
             }
+            // Divider under the header — visually separates the meta bar from the
+            // thinking / answer body, matching Operit's layered pipeline look.
+            HorizontalDivider(
+                modifier = Modifier.padding(start = 16.dp, top = 6.dp, end = 16.dp),
+                thickness = 0.5.dp,
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
+            )
             val nonBlankSegments = remember(reasoningSegments) {
                 reasoningSegments.filter { it.isNotBlank() }.toImmutableList()
             }

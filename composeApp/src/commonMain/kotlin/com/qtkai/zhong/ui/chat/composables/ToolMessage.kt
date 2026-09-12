@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -307,11 +308,27 @@ internal fun ToolPipelineMessage(
         shape = shape,
         color = bg,
     ) {
-        Column(
-            modifier = Modifier
-                .animateContentSize(animationSpec = tween(200, easing = FastOutSlowInEasing))
-                .padding(horizontal = 12.dp, vertical = 10.dp),
-        ) {
+        Row {
+            // Left edge status bar — a thin colored stripe that reads as a pipeline
+            // timeline: green done / warm running / red error.
+            Box(
+                Modifier
+                    .width(4.dp)
+                    .fillMaxHeight()
+                    .background(
+                        when {
+                            isError -> MaterialTheme.colorScheme.error
+                            isRunning -> accent.copy(alpha = 0.8f)
+                            else -> Color(0xFF4CAF50)
+                        },
+                    ),
+            )
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .animateContentSize(animationSpec = tween(200, easing = FastOutSlowInEasing))
+                    .padding(horizontal = 12.dp, vertical = 10.dp),
+            ) {
             // Header row: status icon + name + expand/collapse chevron
             Row(verticalAlignment = Alignment.CenterVertically) {
                 if (isRunning) {
@@ -431,10 +448,10 @@ internal fun ToolPipelineMessage(
                     }
                 }
             }
+            }
         }
     }
 }
-
 @Composable
 internal fun PulsingStatusIndicator(
     toolSummary: String?,
