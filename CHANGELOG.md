@@ -5,10 +5,13 @@
 - 思考内容打字机渐进显示：AI 推理过程不再一次性全出，展开后逐字流出，像真实思考过程
 - 思考区块自动展开：有真实推理内容时自动展开可见（可手动折叠）
 - 新增 android_directory 工具注册：AI 可读/写/列/删 /storage/emulated/0/ 下文件（此前只定义未注册）
+- 短信/通知工具回归：主 manifest 声明 READ_SMS/SEND_SMS/通知监听服务，playStore 变体也可用（此前仅 foss）
+- 心跳强制输出中文汇报：默认提示词改为报告模式（邮件/短信/通知/待办统计），即使一切正常也输出可见汇报；本地摘要兜底保证心跳永不静默
 ### Fixes
-- 心跳不再报 OpenAICompatibleEmptyResponseException：无配置服务/Free 空响应时返回 no-op 文案，心跳记录为健康运行
+- 心跳不再报 OpenAICompatibleEmptyResponseException：无配置服务/Free 空响应时返回空内容，心跳记录为健康运行
+- 心跳空响应不再往消息区输出技术文案（移除 heartbeat idle 占位）
 ### 备注
-- 短信/通知工具为 foss 变体专属（Play 政策限制敏感权限），playStore 变体不含；需装 foss 完整版使用
+- 短信/通知工具已并入主 manifest，所有变体可用；使用时需在系统授权短信/通知读取权限
 ## v3.2.4 — 2026-09-12 (Kai2 9000 正式版)
 ### Features
 - UI 美化：用户消息气泡改为品牌色圆角卡片（primaryContainer 半透明，16dp 圆角），AI 消息加浅色卡片背景（18dp 圆角），视觉层级更清晰
