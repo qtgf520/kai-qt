@@ -170,9 +170,13 @@ class HeartbeatManager(
         private const val MAX_LOG_ENTRIES = 5
         private const val MAX_NOTIFICATIONS_IN_PROMPT = 20
         const val DEFAULT_HEARTBEAT_PROMPT =
-            "[HEARTBEAT] This is an automatic self-check. Review your memories and pending tasks. " +
-                "If everything looks good and nothing needs attention, respond with exactly: HEARTBEAT_OK\n" +
-                "If something needs attention (stale memories, due tasks, user follow-ups), address it.\n" +
+            "[HEARTBEAT] This is an automatic self-check. Review your memories, pending tasks, " +
+                "new emails, SMS and notifications. " +
+                "ALWAYS respond in Chinese with a concise heartbeat report, even when everything is fine. " +
+                "Structure: a status line plus bullet points covering: unread/new emails (count per account + subjects needing attention), " +
+                "new SMS (sender + preview), new notifications (app + summary), pending tasks, and anything else that needs the user's attention. " +
+                "If nothing needs attention, still write one short line like \"一切正常，无需处理\" plus the email/SMS/notification counts. " +
+                "Do NOT reply with just HEARTBEAT_OK — the user wants to see that the heartbeat actually ran. " +
                 "You cannot enable, disable, or reschedule heartbeat — the schedule is a user setting."
     }
 

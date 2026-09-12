@@ -21,6 +21,8 @@ import kotlin.math.min
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalTime::class)
 class TaskScheduler(
@@ -176,17 +178,21 @@ class TaskScheduler(
             )
             manager.markHeartbeatExecuted()
             manager.recordHeartbeat(success = true)
-            if (response.isNotBlank() && "HEARTBEAT_OK" !in response) {
-                dataRepository.addAssistantMessage(response)
+            // Always surface a visible heartbeat report — even when the model says
+            // HEARTBEAT_OK / returns empty, the user must see that the heartbeat ran
+            // (and what it looked at: emails, SMS, notifications, tasks).
+            val modelReport = response.trim().takeIf { it.isNotBlank() }
+            val visibleReport = if (modelReport != null && "HEARTBEAT_OK" !in modelReport) {
+                modelReport
+            } else {
+                localHeartbeatSummary(pendingEmails, pendingSms, pendingNotifications)
+            }
+            if (visibleReport.isNotBlank()) {
+                dataRepository.addAssistantMessage(visibleReport)
                 // Push-notify only when the user won't see the in-app banner.
-                // Tapping the notification deep-links into the heartbeat
-                // conversation via `EXTRA_OPEN_HEARTBEAT` (Android actual).
-                // Strip markdown + kai-ui fences before sending to the tray —
-                // the notification surface can't render them and raw fence
-                // text (```kai-ui {...}```) is unreadable.
                 if (!appInForeground) {
                     val preview = truncateForNotification(
-                        parseMarkdown(response).toSpeakableText(),
+                        parseMarkdown(visibleReport).toSpeakableText(),
                     )
                     if (preview.isNotBlank()) {
                         sendHeartbeatNotification(
@@ -225,6 +231,63 @@ class TaskScheduler(
             notificationStore?.sweep()
         } catch (e: Exception) {
             manager.recordHeartbeat(success = false, error = e.message ?: e.toString())
+        }
+    }
+
+    /**
+     * Local fallback heartbeat report — used when the model returns HEARTBEAT_OK or an
+     * empty response, so the heartbeat ALWAYS leaves a visible trace in the heartbeat
+     * conversation: what it checked (emails / SMS / notifications) and counts.
+     */
+    private fun localHeartbeatSummary(
+        pendingEmails: List<EmailMessage>,
+        pendingSms: List<SmsMessage>,
+        pendingNotifications: List<NotificationRecord>,
+    ): String = buildString {
+        append("📊 **心跳自检完成**（")
+        append(Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).let { "${it.hour}:${it.minute.toString().padStart(2, '0')}" })
+        append("）\n")
+        if (pendingEmails.isEmpty() && pendingSms.isEmpty() && pendingNotifications.isEmpty()) {
+            append("一切正常，暂无新邮件 / 短信 / 通知。")
+            return@buildString
+        }
+        if (pendingEmails.isNotEmpty()) {
+            val byAccount = pendingEmails.groupBy { it.accountId }.mapValues { (_, msgs) -> msgs.size }
+            append("📧 新邮件：")
+            append(byAccount.entries.joinToString("、") { (acc, n) -> "$acc $n 封" })
+            pendingEmails.take(3).forEach { msg ->
+                append("\n- ")
+                append(msg.subject.ifBlank { "(无主题)" })
+                append("（")
+                append(msg.from)
+                append("）")
+            }
+            append('\n')
+        }
+        if (pendingSms.isNotEmpty()) {
+            append("💬 新短信：")
+            append(pendingSms.size)
+            append(" 条")
+            pendingSms.take(3).forEach { msg ->
+                append("\n- ")
+                append(msg.address)
+                append(": ")
+                append(msg.preview.take(60))
+            }
+            append('\n')
+        }
+        if (pendingNotifications.isNotEmpty()) {
+            append("🔔 新通知：")
+            append(pendingNotifications.size)
+            append(" 条")
+            pendingNotifications.take(5).forEach { n ->
+                append("\n- ")
+                append(n.appLabel)
+                if (n.title.isNotBlank()) {
+                    append(": ")
+                    append(n.title.take(40))
+                }
+            }
         }
     }
 
