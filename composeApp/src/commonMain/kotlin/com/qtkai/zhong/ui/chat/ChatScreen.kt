@@ -812,6 +812,9 @@ private fun ChatModeScreen(
                                     modifier = Modifier.fillMaxSize(),
                                     state = listState,
                                     horizontalAlignment = CenterHorizontally,
+                                    // Breathe between messages so the pipeline reads as
+                                    // layered sections (user / thinking / tool / answer).
+                                    verticalArrangement = Arrangement.spacedBy(8.dp),
                                 ) {
                                     items(uiState.history, key = { it.id }, contentType = { it.role }) { history ->
                                         when (history.role) {
