@@ -273,26 +273,27 @@ internal fun ToolPipelineMessage(
     result: String? = null,
 ) {
     val isRunning = status == "running"
+    val isError = status == "error"
     // Running cards start expanded so the user can watch the stream; completed cards
     // start collapsed and expand on tap.
     var expanded by remember { mutableStateOf(isRunning) }
     LaunchedEffect(isRunning) {
         if (isRunning) expanded = true
     }
-
     val isTerminalLike = toolName.contains("shell", ignoreCase = true) ||
         toolName.contains("terminal", ignoreCase = true) ||
         toolName.contains("command", ignoreCase = true)
-
     val shape = RoundedCornerShape(12.dp)
     val bg = when {
         isTerminalLike -> Color(0xFF1E1E24) // dark console background
         isRunning -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+        isError -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f)
         else -> MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.5f)
     }
     val fg = when {
         isTerminalLike -> Color(0xFFE0E0E0)
         isRunning -> MaterialTheme.colorScheme.onPrimaryContainer
+        isError -> MaterialTheme.colorScheme.onErrorContainer
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
     val accent = if (isTerminalLike) Color(0xFF4EC9B0) else MaterialTheme.colorScheme.primary
@@ -327,6 +328,13 @@ internal fun ToolPipelineMessage(
                         modifier = Modifier
                             .size(14.dp)
                             .graphicsLayer { rotationZ = rotation },
+                    )
+                } else if (isError) {
+                    Icon(
+                        Icons.Default.Error,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.size(14.dp),
                     )
                 } else {
                     Icon(

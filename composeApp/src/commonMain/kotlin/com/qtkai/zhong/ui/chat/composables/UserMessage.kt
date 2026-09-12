@@ -37,9 +37,11 @@ import com.qtkai.zhong.ui.components.LocalShowFullScreenImage
 import com.qtkai.zhong.ui.handCursor
 import kai.composeapp.generated.resources.Res
 import kai.composeapp.generated.resources.ic_file
+import kai.composeapp.generated.resources.user_message_header_label
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
@@ -61,17 +63,32 @@ internal fun UserMessage(
     var draft by remember(message, isEditing) { mutableStateOf(message) }
 
     SelectionContainer {
-        Row(Modifier.padding(16.dp)) {
-            Spacer(Modifier.weight(1f))
-            Column(
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f),
-                        RoundedCornerShape(16.dp),
-                    )
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalAlignment = Alignment.End,
+        Column(Modifier.padding(16.dp)) {
+            // Header row mirrors the AI reply header: a small "You" label pinned right,
+            // so user bubbles read symmetrically against the AI "Reply" header.
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
+                Text(
+                    text = stringResource(Res.string.user_message_header_label),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f),
+                )
+            }
+            Spacer(Modifier.height(4.dp))
+            Row {
+                Spacer(Modifier.weight(1f))
+                Column(
+                    modifier = Modifier
+                        .background(
+                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f),
+                            RoundedCornerShape(16.dp),
+                        )
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                    horizontalAlignment = Alignment.End,
+                ) {
                 val images = attachments.filter { it.mimeType.startsWith("image/") }
                 val others = attachments.filter { !it.mimeType.startsWith("image/") }
                 for (att in images) {
@@ -178,6 +195,7 @@ internal fun UserMessage(
                                     .padding(4.dp),
                             )
                         }
+                            }
                     }
                 }
             }

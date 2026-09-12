@@ -392,6 +392,7 @@
     <string name="image_viewer_close">关闭</string>
     <string name="bot_message_thinking_label">思考</string>
     <string name="bot_message_header_label">AI 回复</string>
+    <string name="user_message_header_label">我</string>
     <string name="bot_message_thinking_expand_content_description">展开或收起思考</string>
     <string name="settings_theme">主题</string>
     <string name="settings_theme_description">在系统默认、浅色、深色或纯黑 OLED 之间选择。</string>
