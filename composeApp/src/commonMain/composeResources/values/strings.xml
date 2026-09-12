@@ -232,7 +232,7 @@
     <string name="litert_imported">Imported</string>
     <string name="litert_importing">Importing…</string>
     <string name="litert_cancel">Cancel</string>
-    <string name="litert_tool_support">Email, task scheduling, and MCP server tools are not available</string>
+    <string name="litert_tool_support">Tools available: task scheduling, memory, search, shell commands, etc. (MCP tools require a cloud model)</string>
     <string name="litert_recommended">Recommended</string>
     <string name="litert_performance_good">Good</string>
     <string name="litert_performance_ok">OK</string>

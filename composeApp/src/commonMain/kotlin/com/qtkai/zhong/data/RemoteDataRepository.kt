@@ -129,6 +129,10 @@ internal val LOCAL_TOOL_ALLOWLIST = setOf(
     "memory_forget",
     "memory_reinforce",
     "execute_shell_command",
+    // 任务调度也已开放给本地模型（datetime/cron 参数解析由 litert 引擎驱动）
+    "schedule_task",
+    "list_tasks",
+    "cancel_task",
 )
 
 /**

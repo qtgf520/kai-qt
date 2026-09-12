@@ -255,7 +255,7 @@
     <string name="litert_on_device_description">直接在您的设备上运行AI模型。无需API密钥或互联网。</string>
     <string name="litert_download">下载</string>
     <string name="litert_cancel">取消</string>
-    <string name="litert_tool_support">电子邮件、任务调度和 MCP 服务器工具不可用</string>
+    <string name="litert_tool_support">可调用工具：任务调度、记忆、搜索、终端命令等（MCP 工具需云端模型）</string>
     <string name="litert_recommended">推荐</string>
     <string name="litert_performance_good">良好</string>
     <string name="litert_performance_ok">OK</string>
