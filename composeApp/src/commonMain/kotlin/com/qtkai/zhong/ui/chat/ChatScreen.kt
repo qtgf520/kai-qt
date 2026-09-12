@@ -849,8 +849,6 @@ private fun ChatModeScreen(
                                                         },
                                                         onRegenerate = if (isLastAssistant) uiState.actions.regenerate else null,
                                                         isInteractive = isLastAssistant && !uiState.isLoading && frozen == null,
-                                                        // [REQ] Typewriter reveal for the latest in-flight assistant message
-                                                        isStreaming = isLastAssistant && uiState.isLoading,
                                                         onUiCallback = { event, data ->
                                                             uiState.actions.submitUiCallback(event, data)
                                                         },
@@ -861,6 +859,8 @@ private fun ChatModeScreen(
                                                             null
                                                         },
                                                         reasoningSegments = reasoningSegmentsByAssistantId[history.id] ?: persistentListOf(),
+                                                        // Only the latest in-flight answer hand-writes its thinking; older ones render in full.
+                                                        animateReasoning = isLastAssistant && uiState.isLoading,
                                                         // [REQ-5.4] Delete this message
                                                         onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
@@ -886,6 +886,8 @@ private fun ChatModeScreen(
                                                         setIsSpeaking = {},
                                                         reasoningSegments = reasoningSegmentsByAssistantId[history.id]
                                                             ?: persistentListOf(history.content),
+                                                        // This standalone thinking bubble IS the in-flight reasoning — hand-write it.
+                                                        animateReasoning = true,
                                                     )
                                                 }
                                             }

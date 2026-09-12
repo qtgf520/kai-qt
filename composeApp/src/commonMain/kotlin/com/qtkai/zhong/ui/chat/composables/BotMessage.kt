@@ -86,25 +86,14 @@ internal fun BotMessage(
     reasoningSegments: ImmutableList<String> = persistentListOf(),
     // [REQ-5.4] Optional delete action for this message.
     onDelete: (() -> Unit)? = null,
-    // [REQ] When true, reveal the message text with a typewriter effect (streaming look).
-    isStreaming: Boolean = false,
+    // When true (latest in-flight assistant), the thinking block writes itself out
+    // character-by-character (handwriting feel). Historic answers render in full.
+    animateReasoning: Boolean = false,
 ) {
-    // Typewriter: progressively reveal `message` while isStreaming, then snap to full.
-    var visibleChars by remember(message, isStreaming) { mutableStateOf(if (isStreaming) 0 else message.length) }
-    LaunchedEffect(message, isStreaming) {
-        if (!isStreaming) {
-            visibleChars = message.length
-            return@LaunchedEffect
-        }
-        // Reveal progressively — chunks of ~8 chars every 12ms for a natural stream feel.
-        while (visibleChars < message.length) {
-            val step = if (visibleChars < 200) 8 else 24
-            visibleChars = (visibleChars + step).coerceAtMost(message.length)
-            delay(12)
-        }
-    }
-    val revealedMessage = if (visibleChars >= message.length) message else message.take(visibleChars)
-    val document = remember(revealedMessage) { parseMarkdown(revealedMessage) }
+    // The FINAL ANSWER renders in full — no typewriter. Only the reasoning/thinking
+    // block above animates progressively (see ReasoningBlockquote); the answer text
+    // appears complete and instant so the message pipeline reads naturally.
+    val document = remember(message) { parseMarkdown(message) }
     var isEditing by remember(frozen) { mutableStateOf(false) }
     val effectiveFrozen = if (isEditing && frozen != null) frozen.copy(pressedEvent = null) else frozen
     val effectiveInteractive = if (frozen != null) (onResubmit != null && isEditing) else isInteractive
@@ -132,6 +121,7 @@ internal fun BotMessage(
             if (nonBlankSegments.isNotEmpty()) {
                 ReasoningBlockquote(
                     segments = nonBlankSegments,
+                    animate = animateReasoning,
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 16.dp, top = 12.dp, end = 16.dp),
                 )
@@ -240,6 +230,10 @@ internal fun BotMessage(
 private fun ReasoningBlockquote(
     segments: ImmutableList<String>,
     modifier: Modifier = Modifier,
+    // When true (the latest in-flight assistant message), the thinking text is
+    // revealed character-by-character like handwriting — a natural "the AI is
+    // thinking right now" feel. Historic messages render in full instantly.
+    animate: Boolean = false,
 ) {
     // Auto-expand whenever there is real thinking content so the user can see what
     // the AI reasoned about — they can still collapse it manually. Empty/placeholder
@@ -247,21 +241,19 @@ private fun ReasoningBlockquote(
     var expanded by remember(segments.isEmpty()) {
         mutableStateOf(segments.isNotEmpty())
     }
-    // Join all thinking segments into one stream; render it with a typewriter reveal
-    // so thinking content appears progressively (like a real reasoning trace) instead
-    // of one big wall of text. New segments that arrive after the reveal finished snap
-    // in instantly rather than re-typing the whole thing.
+    // Join all thinking segments into one stream. When `animate`, reveal it
+    // character-by-character (handwriting feel); otherwise show everything at once.
     val fullText = remember(segments) { segments.joinToString("\n\n") }
-    var visibleChars by remember(fullText) { mutableStateOf(fullText.length) }
+    var visibleChars by remember(fullText, animate) { mutableStateOf(if (animate) 0 else fullText.length) }
     val alreadyTyped = remember { mutableStateOf(false) }
-    if (expanded && !alreadyTyped.value && fullText.isNotEmpty()) {
+    if (animate && expanded && !alreadyTyped.value && fullText.isNotEmpty()) {
         LaunchedEffect(fullText) {
             alreadyTyped.value = true
-            visibleChars = 0
+            // Handwriting pace: ~1 char every 18ms (≈55 chars/sec) — slow enough to
+            // feel like someone writing, fast enough not to annoy.
             while (visibleChars < fullText.length) {
-                val step = if (visibleChars < 200) 8 else 24
-                visibleChars = (visibleChars + step).coerceAtMost(fullText.length)
-                delay(12)
+                visibleChars = (visibleChars + 1).coerceAtMost(fullText.length)
+                delay(18)
             }
         }
     }
@@ -333,6 +325,16 @@ private fun ReasoningBlockquote(
                             )
                         }
                     }
+                }
+                // While still writing, show a soft blinking caret so it reads as
+                // "in progress", not a truncated message.
+                if (animate && visibleChars < fullText.length) {
+                    Text(
+                        text = "▍",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(start = 10.dp),
+                    )
                 }
             }
         }
