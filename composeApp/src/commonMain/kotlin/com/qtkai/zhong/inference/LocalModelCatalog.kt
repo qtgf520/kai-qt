@@ -14,8 +14,8 @@ package com.qtkai.zhong.inference
  *
  * To bump a model, refresh the commit and the digest together:
  *
- *   curl -s "https://huggingface.co/api/models/<repo>"                        -> .sha is the commit
- *   curl -s "https://huggingface.co/api/models/<repo>/tree/main?recursive=true" -> .lfs.oid is the
+ *   curl -s "https://hf-mirror.com/api/models/<repo>"                        -> .sha is the commit
+ *   curl -s "https://hf-mirror.com/api/models/<repo>/tree/main?recursive=true" -> .lfs.oid is the
  *                                                                                 file's SHA-256,
  *                                                                                 .lfs.size its size
  *
@@ -29,7 +29,7 @@ val MODEL_CATALOG = listOf(
         displayName = "Gemma 4 E2B IT",
         fileName = "gemma-4-E2B-it.litertlm",
         sizeBytes = 2_588_147_712L,
-        downloadUrl = "https://huggingface.co/litert-community/gemma-4-E2B-it-litert-lm/resolve/9262660a1676eed6d0c477ab1a86344430854664/gemma-4-E2B-it.litertlm",
+        downloadUrl = "https://hf-mirror.com/litert-community/gemma-4-E2B-it-litert-lm/resolve/9262660a1676eed6d0c477ab1a86344430854664/gemma-4-E2B-it.litertlm",
         sha256 = "181938105e0eefd105961417e8da75903eacda102c4fce9ce90f50b97139a63c",
         gpuMemoryMb = 676,
         defaultContextTokens = 4_096,
@@ -42,7 +42,7 @@ val MODEL_CATALOG = listOf(
         displayName = "Gemma 4 E4B IT",
         fileName = "gemma-4-E4B-it.litertlm",
         sizeBytes = 3_659_530_240L,
-        downloadUrl = "https://huggingface.co/litert-community/gemma-4-E4B-it-litert-lm/resolve/f7ad3343bd6ebc9607f4dc3bc4f2398bd5749bc5/gemma-4-E4B-it.litertlm",
+        downloadUrl = "https://hf-mirror.com/litert-community/gemma-4-E4B-it-litert-lm/resolve/f7ad3343bd6ebc9607f4dc3bc4f2398bd5749bc5/gemma-4-E4B-it.litertlm",
         sha256 = "0b2a8980ce155fd97673d8e820b4d29d9c7d99b8fa6806f425d969b145bd52e0",
         gpuMemoryMb = 710,
         defaultContextTokens = 4_096,
@@ -59,7 +59,7 @@ val MODEL_CATALOG = listOf(
         displayName = "Gemma 4 12B IT",
         fileName = "gemma-4-12B-it.litertlm",
         sizeBytes = 6_883_278_368L,
-        downloadUrl = "https://huggingface.co/litert-community/gemma-4-12B-it-litert-lm/resolve/7a0b1ce0ea821bcd01c5f72af84155e02191152f/gemma-4-12B-it.litertlm",
+        downloadUrl = "https://hf-mirror.com/litert-community/gemma-4-12B-it-litert-lm/resolve/7a0b1ce0ea821bcd01c5f72af84155e02191152f/gemma-4-12B-it.litertlm",
         sha256 = "58fd31b778ca2c21c80d634fb34fc5a89d11d563a38dfd3cbf1b40dbf252a8b6",
         gpuMemoryMb = 4000,
         defaultContextTokens = 8_192,
@@ -76,7 +76,7 @@ val MODEL_CATALOG = listOf(
         displayName = "LFM2.5 1.2B Instruct",
         fileName = "LFM2.5-1.2B-Instruct_int4_gpu.litertlm",
         sizeBytes = 736_220_768L,
-        downloadUrl = "https://huggingface.co/litert-community/LFM2.5-1.2B-Instruct/resolve/f45d8d8abe93bff4026efee20fa483150ce8e687/LFM2.5-1.2B-Instruct_int4_gpu.litertlm",
+        downloadUrl = "https://hf-mirror.com/litert-community/LFM2.5-1.2B-Instruct/resolve/f45d8d8abe93bff4026efee20fa483150ce8e687/LFM2.5-1.2B-Instruct_int4_gpu.litertlm",
         sha256 = "36f7f0221bcc42c75291da1d7e3422901024a5b06b9bfa3c02d7feface04f70a",
         gpuMemoryMb = 300,
         defaultContextTokens = 4_096,
@@ -91,7 +91,7 @@ val MODEL_CATALOG = listOf(
         displayName = "Qwen3 0.6B",
         fileName = "Qwen3-0.6B.litertlm",
         sizeBytes = 614_236_160L,
-        downloadUrl = "https://huggingface.co/litert-community/Qwen3-0.6B/resolve/dd97997951bb15a2a71f539ba17f604707c0b11a/Qwen3-0.6B.litertlm",
+        downloadUrl = "https://hf-mirror.com/litert-community/Qwen3-0.6B/resolve/dd97997951bb15a2a71f539ba17f604707c0b11a/Qwen3-0.6B.litertlm",
         sha256 = "555579ff2f4fd13379abe69c1c3ab5200f7338bc92471557f1d6614a6e5ab0b4",
         gpuMemoryMb = 300,
         defaultContextTokens = 4_096,
