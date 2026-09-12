@@ -228,7 +228,7 @@
     <string name="litert_on_device_description">Run AI models directly on your device. No API key or internet required.</string>
     <string name="litert_download">Download</string>
     <string name="litert_import">Import</string>
-    <string name="litert_import_description">Import a .litertlm file already on this device</string>
+    <string name="litert_import_description">Or import a .litertlm model file already on this device</string>
     <string name="litert_imported">Imported</string>
     <string name="litert_importing">Importing…</string>
     <string name="litert_cancel">Cancel</string>

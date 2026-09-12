@@ -426,7 +426,7 @@
     <string name="settings_skills_browse_failed">无法加载技能。</string>
     <string name="snackbar_skill_removed">技能已移除</string>
     <string name="litert_import">导入</string>
-    <string name="litert_import_description">导入此设备上已有的 .litertlm 文件</string>
+    <string name="litert_import_description">也可以从本机已有文件导入 .litertlm 模型</string>
     <string name="litert_imported">已导入</string>
     <string name="litert_importing">正在导入…</string>
     <string name="litert_error_import_invalid">只能导入 .litertlm 模型文件。</string>
