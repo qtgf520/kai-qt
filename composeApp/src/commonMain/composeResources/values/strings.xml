@@ -81,6 +81,10 @@
     <string name="tool_set_alarm_description">Set an alarm or countdown timer on the device</string>
     <string name="tool_open_file_name">Open File</string>
     <string name="tool_open_file_description">Open sandbox files in your default Android app</string>
+    <string name="tool_android_directory_name">Android Directory</string>
+    <string name="tool_android_directory_description">Read, write, list, delete, or create files in /storage/emulated/0/ (device storage)</string>
+    <string name="tool_generate_image_name">Image Generation</string>
+    <string name="tool_generate_image_description">Generate an image from a text prompt (DALL·E / compatible API)</string>
     <string name="tool_execute_shell_command_name">Execute Shell Command</string>
     <string name="tool_execute_shell_command_description">Execute a shell command in the Linux sandbox</string>
     <string name="tool_open_url_name">Open URL</string>

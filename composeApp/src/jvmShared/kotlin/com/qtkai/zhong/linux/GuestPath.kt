@@ -27,8 +27,9 @@ class GuestFileMap(
     private val projectsDir: File?,
     /** Host directory bound to `/tmp`. */
     private val tmpDir: File,
+    /** Host directory bound to `/sdcard` & `/storage/emulated/0`, or null when not bound. */
+    private val androidStorageDir: File? = null,
 ) {
-
     fun resolve(guestPath: String): File? {
         val normalized = guestPath.trim().ifEmpty { "/" }
         if (!normalized.startsWith("/")) return null
@@ -37,21 +38,21 @@ class GuestFileMap(
         return when {
             projectsDir != null && parts.size >= 2 && parts[0] == "root" && parts[1] == "projects" ->
                 safeChild(projectsDir, parts.drop(2))
-
+            androidStorageDir != null && (parts.firstOrNull() == "sdcard" ||
+                (parts.size >= 3 && parts[0] == "storage" && parts[1] == "emulated" && parts[2] == "0")) ->
+                safeChild(androidStorageDir, parts.drop(if (parts[0] == "sdcard") 1 else 3))
             parts.firstOrNull() == "tmp" -> safeChild(tmpDir, parts.drop(1))
-
             parts.firstOrNull() == "root" -> safeChild(homeDir, parts.drop(1))
-
             else -> safeChild(rootfsDir, parts)
         }
     }
-
     /** The bind roots themselves are structure, not content: never renamed or deleted. */
     fun isRoot(file: File): Boolean {
         val canonical = file.canonicalPath
         return canonical == rootfsDir.canonicalPath ||
             canonical == homeDir.canonicalPath ||
             canonical == tmpDir.canonicalPath ||
-            canonical == projectsDir?.canonicalPath
+            canonical == projectsDir?.canonicalPath ||
+            canonical == androidStorageDir?.canonicalPath
     }
 }

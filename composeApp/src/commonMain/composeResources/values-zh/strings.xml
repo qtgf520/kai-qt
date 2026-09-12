@@ -64,6 +64,10 @@
     <string name="tool_set_alarm_description">在设备上设置闹钟或倒计时器</string>
     <string name="tool_open_file_name">打开文件</string>
     <string name="tool_open_file_description">在您的默认 Android 应用中打开沙盒文件</string>
+    <string name="tool_android_directory_name">安卓目录</string>
+    <string name="tool_android_directory_description">读取、写入、列出、删除或创建 /storage/emulated/0/（设备存储）中的文件和目录</string>
+    <string name="tool_generate_image_name">图像生成</string>
+    <string name="tool_generate_image_description">根据文字提示生成图片（DALL·E / 兼容 API）</string>
     <string name="tool_execute_shell_command_name">执行命令</string>
     <string name="tool_execute_shell_command_description">在 Linux 沙盒中执行 Shell 命令</string>
     <string name="settings_dynamic_ui">动态界面</string>

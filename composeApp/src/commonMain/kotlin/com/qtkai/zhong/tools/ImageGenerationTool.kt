@@ -12,6 +12,9 @@ import io.ktor.client.request.setBody
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kai.composeapp.generated.resources.Res
+import kai.composeapp.generated.resources.tool_generate_image_description
+import kai.composeapp.generated.resources.tool_generate_image_name
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.jsonArray
@@ -109,8 +112,8 @@ class ImageGenerationTool(
             id = "generate_image",
             name = "Image Generation",
             description = "Generate an image from a text prompt (DALL·E / compatible API)",
-            nameRes = null,
-            descriptionRes = null,
+            nameRes = Res.string.tool_generate_image_name,
+            descriptionRes = Res.string.tool_generate_image_description,
         )
     }
 }

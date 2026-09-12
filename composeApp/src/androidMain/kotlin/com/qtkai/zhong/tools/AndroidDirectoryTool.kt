@@ -1,8 +1,10 @@
 package com.qtkai.zhong.tools
-
 import com.qtkai.zhong.network.tools.ParameterSchema
 import com.qtkai.zhong.network.tools.Tool
 import com.qtkai.zhong.network.tools.ToolSchema
+import kai.composeapp.generated.resources.Res
+import kai.composeapp.generated.resources.tool_android_directory_description
+import kai.composeapp.generated.resources.tool_android_directory_name
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.io.File
@@ -18,6 +20,8 @@ object AndroidDirectoryTool : Tool {
         id = ID,
         name = "Android Directory",
         description = "Read, write, list, delete, or create files and directories in /storage/emulated/0/ (system storage).",
+        nameRes = Res.string.tool_android_directory_name,
+        descriptionRes = Res.string.tool_android_directory_description,
     )
     @Serializable
     data class AndroidDirectoryArgs(

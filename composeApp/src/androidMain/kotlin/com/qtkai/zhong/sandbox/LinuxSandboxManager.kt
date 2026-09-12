@@ -284,6 +284,14 @@ class LinuxSandboxManager(
                 paths.ensureMountPoints()
                 add(paths.projectsDir.absolutePath to "/root/projects")
             }
+            // Android shared storage → guest /sdcard & /storage/emulated/0.
+            // Lets any sandbox Linux tool access the device's files directly.
+            val sdcard = android.os.Environment.getExternalStorageDirectory()
+            if (sdcard.exists()) {
+                paths.ensureAndroidStorageMountPoints()
+                add(sdcard.absolutePath to "/sdcard")
+                add(sdcard.absolutePath to "/storage/emulated/0")
+            }
         }
         return ProotLauncher(
             prootPath = paths.prootPath,
@@ -304,6 +312,7 @@ class LinuxSandboxManager(
             homeDir = paths.homeDir(current),
             projectsDir = if (current.distro == LinuxDistro.DEBIAN) paths.projectsDir else null,
             tmpDir = paths.tmpDir,
+            androidStorageDir = android.os.Environment.getExternalStorageDirectory().takeIf { it.exists() },
         )
     }
 

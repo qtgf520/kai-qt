@@ -115,6 +115,12 @@ class LinuxPaths(
         File(rootfsDir, "root/.local/bin").mkdirs()
     }
 
+    /** Mount points for Android shared storage binds (/sdcard, /storage/emulated/0). */
+    fun ensureAndroidStorageMountPoints() {
+        File(rootfsDir, "sdcard").mkdirs()
+        File(rootfsDir, "storage/emulated/0").apply { parentFile?.mkdirs(); mkdirs() }
+    }
+
     /**
      * Android strips the `.so.2` suffix from jniLibs, so proot cannot find the
      * soname it was linked against until we put a correctly named copy somewhere
