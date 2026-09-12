@@ -861,17 +861,11 @@ private fun ChatModeScreen(
                                                         reasoningSegments = reasoningSegmentsByAssistantId[history.id] ?: persistentListOf(),
                                                         // Only the latest in-flight answer hand-writes its thinking; older ones render in full.
                                                         animateReasoning = isLastAssistant && uiState.isLoading,
+                                                        // Fallback service label shows in the message header (mirrors Operit's meta bar).
+                                                        serviceLabel = history.fallbackServiceName,
                                                         // [REQ-5.4] Delete this message
                                                         onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
-                                                    if (history.fallbackServiceName != null) {
-                                                        androidx.compose.material3.Text(
-                                                            text = stringResource(Res.string.fallback_answered_by, history.fallbackServiceName),
-                                                            style = MaterialTheme.typography.labelSmall,
-                                                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                            modifier = Modifier.padding(start = 16.dp, bottom = 8.dp),
-                                                        )
-                                                    }
                                                 } else if (history.isThinking &&
                                                     history.content.isNotEmpty() &&
                                                     history.id !in suppressedThinkingIds

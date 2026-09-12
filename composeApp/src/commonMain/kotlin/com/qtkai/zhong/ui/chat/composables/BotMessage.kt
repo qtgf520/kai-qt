@@ -51,6 +51,7 @@ import com.qtkai.zhong.ui.rememberCopyToClipboard
 import kai.composeapp.generated.resources.Res
 import kai.composeapp.generated.resources.bot_message_copy_content_description
 import kai.composeapp.generated.resources.bot_message_flag_content_description
+import kai.composeapp.generated.resources.bot_message_header_label
 import kai.composeapp.generated.resources.bot_message_regenerate_content_description
 import kai.composeapp.generated.resources.bot_message_speech_content_description
 import kai.composeapp.generated.resources.bot_message_thinking_expand_content_description
@@ -89,6 +90,8 @@ internal fun BotMessage(
     // When true (latest in-flight assistant), the thinking block writes itself out
     // character-by-character (handwriting feel). Historic answers render in full.
     animateReasoning: Boolean = false,
+    // Service/model label shown in the message header (e.g. fallback service name).
+    serviceLabel: String? = null,
 ) {
     // The FINAL ANSWER renders in full — no typewriter. Only the reasoning/thinking
     // block above animates progressively (see ReasoningBlockquote); the answer text
@@ -115,6 +118,27 @@ internal fun BotMessage(
                     RoundedCornerShape(18.dp),
                 ),
         ) {
+            // Header row: "AI 回复" label on the left, service/model on the right —
+            // mirrors Operit's Response header bar so the pipeline reads clearly.
+            Row(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(start = 16.dp, top = 8.dp, end = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(Res.string.bot_message_header_label),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                )
+                if (!serviceLabel.isNullOrBlank()) {
+                    Text(
+                        text = serviceLabel,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    )
+                }
+            }
             val nonBlankSegments = remember(reasoningSegments) {
                 reasoningSegments.filter { it.isNotBlank() }.toImmutableList()
             }
