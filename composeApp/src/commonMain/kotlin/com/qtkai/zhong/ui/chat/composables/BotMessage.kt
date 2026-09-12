@@ -276,17 +276,22 @@ private fun ReasoningBlockquote(
     // Join all thinking segments into one stream. When `animate`, reveal it
     // character-by-character (handwriting feel); otherwise show everything at once.
     val fullText = remember(segments) { segments.joinToString("\n\n") }
-    var visibleChars by remember(fullText, animate) { mutableStateOf(if (animate) 0 else fullText.length) }
-    val alreadyTyped = remember { mutableStateOf(false) }
-    if (animate && expanded && !alreadyTyped.value && fullText.isNotEmpty()) {
-        LaunchedEffect(fullText) {
-            alreadyTyped.value = true
-            // Handwriting pace: ~1 char every 18ms (≈55 chars/sec) — slow enough to
-            // feel like someone writing, fast enough not to annoy.
-            while (visibleChars < fullText.length) {
-                visibleChars = (visibleChars + 1).coerceAtMost(fullText.length)
-                delay(18)
-            }
+    // Key on `animate` only (NOT fullText): when the thinking text grows mid-animation,
+    // we must keep the current progress and continue writing — keying on fullText would
+    // reset visibleChars to 0 and re-run the effect, which is the bug that left the
+    // thinking block blank on streaming updates.
+    var visibleChars by remember(animate) { mutableStateOf(if (animate) 0 else fullText.length) }
+    LaunchedEffect(fullText, animate) {
+        if (!animate) {
+            visibleChars = fullText.length
+            return@LaunchedEffect
+        }
+        // Handwriting pace: ~1 char every 18ms (≈55 chars/sec) — slow enough to
+        // feel like someone writing, fast enough not to annoy. Continues from the
+        // current progress each time the effect restarts (thinking text grew).
+        while (visibleChars < fullText.length) {
+            visibleChars = (visibleChars + 1).coerceAtMost(fullText.length)
+            delay(18)
         }
     }
     val revealedText = if (visibleChars >= fullText.length) fullText else fullText.take(visibleChars)
