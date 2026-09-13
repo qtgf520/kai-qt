@@ -266,11 +266,12 @@ private fun ReasoningBlockquote(
     // thinking right now" feel. Historic messages render in full instantly.
     animate: Boolean = false,
 ) {
-    // Auto-expand whenever there is real thinking content so the user can see what
-    // the AI reasoned about — they can still collapse it manually. Empty/placeholder
-    // segments (e.g. the live "thinking…" row) stay collapsed.
-    var expanded by remember(segments.isEmpty()) {
-        mutableStateOf(segments.isNotEmpty())
+    // Only the in-flight (animate) thinking block auto-expands so the user can watch
+    // it being written. Historic reasoning stays collapsed by default — the user
+    // taps to expand if they want to read it. Empty/placeholder segments stay
+    // collapsed too.
+    var expanded by remember(segments.isEmpty(), animate) {
+        mutableStateOf(animate && segments.isNotEmpty())
     }
     // Join all thinking segments into one stream. When `animate`, reveal it
     // character-by-character (handwriting feel); otherwise show everything at once.

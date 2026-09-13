@@ -980,11 +980,9 @@ class RemoteDataRepository(
         val turnHistory = MutableStateFlow<List<History>>(chatHistory.value)
         val messages = turnHistory.value
         // Live thinking placeholder: a reasoning bubble that sits above the pipeline
-        // while the request is in flight. It mirrors the real thinking content into
-        // the visible chat progressively (typewriter style) so the user sees the AI
-        // "thinking" instead of a rotating placeholder label. When the assistant's
-        // answer (or a tool call) arrives, the placeholder is removed and the real
-        // reasoning is attached to the answer as usual.
+        // while the request is in flight. The bubble itself stays EMPTY (no fake
+        // "thinking…" dots) so the UI never shows a stray animated row on top —
+        // real reasoning lands directly in the answer's collapsible thinking block.
         val thinkingId = Uuid.random().toString()
         val thinkingEntry = History(
             id = thinkingId,
@@ -993,23 +991,6 @@ class RemoteDataRepository(
             isThinking = true,
         )
         turnHistory.update { it + thinkingEntry }
-        // Typewriter reveal: repeatedly grow the thinking bubble's content until the
-        // turn produces real reasoning. The source is a plain "thinking" marker —
-        // providers without streaming can't feed us token-by-token reasoning, so we
-        // render an honest status line that grows a dot per tick to signal liveness.
-        val revealJob = CoroutineScope(SupervisorJob() + Dispatchers.Default).launch {
-            var dots = 0
-            while (isActive) {
-                delay(400)
-                dots = (dots % 3) + 1
-                turnHistory.update { h ->
-                    h.map {
-                        if (it.id == thinkingId) it.copy(content = "正在思考" + ".".repeat(dots))
-                        else it
-                    }
-                }
-            }
-        }
         // Mirror the private turn history into the visible chat in real time so the
         // user sees the pipeline as it happens (thinking → tool calls → results), not
         // all at once when the turn finishes. Only mirrors while the user is still on
@@ -1123,10 +1104,8 @@ class RemoteDataRepository(
         } finally {
             _fallbackStatus.value = null
             mirrorJob.cancel()
-            // Stop the live thinking typewriter and drop the placeholder bubble on
-            // every exit path (success, failure, cancellation) so no fake reasoning
-            // row lingers in the conversation.
-            revealJob.cancel()
+            // Drop the placeholder bubble on every exit path (success, failure,
+            // cancellation) so no empty reasoning row lingers in the conversation.
             clearThinkingPlaceholder()
             // Any exit path — success, all-failed, exception, cancellation — clears
             // the in-flight marker so the UI stops showing the stop button.
