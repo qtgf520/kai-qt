@@ -113,11 +113,10 @@ internal fun BotMessage(
     Box(modifier = Modifier.fillMaxWidth()) {
         Column(
             modifier = Modifier.fillMaxWidth()
-                .padding(horizontal = 12.dp, vertical = 4.dp)
-                .background(
-                    MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.5f),
-                    RoundedCornerShape(18.dp),
-                ),
+                // No card border/background — plain flowing text, matching the
+                // chat style in the reference: messages read as a clean stream
+                // with only subtle labels, never as boxed cards.
+                .padding(horizontal = 12.dp, vertical = 4.dp),
         ) {
             // Header row: "AI 回复" label on the left, service/model on the right —
             // mirrors Operit's Response header bar so the pipeline reads clearly.

@@ -82,10 +82,8 @@ internal fun UserMessage(
                 Spacer(Modifier.weight(1f))
                 Column(
                     modifier = Modifier
-                        .background(
-                            MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.45f),
-                            RoundedCornerShape(16.dp),
-                        )
+                        // No bubble background/border — plain right-aligned text,
+                        // consistent with the borderless chat style.
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     horizontalAlignment = Alignment.End,
                 ) {

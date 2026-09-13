@@ -1,25 +1,30 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.qtkai.zhong.ui.settings
-
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -41,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import com.qtkai.zhong.data.HeartbeatLogEntry
 import com.qtkai.zhong.data.MemoryEntry
 import com.qtkai.zhong.data.ScheduledTask
+import com.qtkai.zhong.data.TaskStatus
 import com.qtkai.zhong.data.TaskTrigger
 import com.qtkai.zhong.ui.KaiOutlinedTextField
 import com.qtkai.zhong.ui.components.SettingsListItem
@@ -489,9 +495,7 @@ private fun ScheduledTaskList(
             tasks.forEach { task ->
                 val subtitle = when (task.trigger) {
                     TaskTrigger.HEARTBEAT -> "${task.status} - $onEveryHeartbeat"
-
                     TaskTrigger.CRON -> "${task.status} - ${task.cron?.let { describeCron(it) } ?: "cron"}"
-
                     TaskTrigger.TIME -> {
                         val instant = Instant.fromEpochMilliseconds(task.scheduledAtEpochMs)
                         val zone = TimeZone.currentSystemDefault()
@@ -500,14 +504,44 @@ private fun ScheduledTaskList(
                         "${task.status} - $scheduledTime $offset"
                     }
                 }
-                SettingsListItem(
-                    title = task.description,
-                    subtitle = subtitle,
-                    onClick = { selectedTaskId = task.id },
-                    onDelete = { onCancelTask(task.id) },
-                    deleteContentDescription = stringResource(Res.string.settings_scheduled_tasks_cancel),
+                // Status dot + task row, borderless — mirrors the clean pipeline
+                // list style from the reference chat (labels and flow, no boxes).
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .handCursor()
+                        .clickable { selectedTaskId = task.id }
+                        .padding(vertical = 6.dp, horizontal = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        Modifier
+                            .size(8.dp)
+                            .background(taskStatusColor(task.status), CircleShape),
+                    )
+                    Spacer(Modifier.width(10.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(
+                            text = task.description,
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                            color = MaterialTheme.colorScheme.onBackground,
+                        )
+                        Text(
+                            text = subtitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                    }
+                    if (task.status != TaskStatus.COMPLETED) {
+                        TextButton(onClick = { onCancelTask(task.id) }) {
+                            Text(stringResource(Res.string.settings_scheduled_tasks_cancel))
+                        }
+                    }
+                }
+                HorizontalDivider(
+                    color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.3f),
+                    modifier = Modifier.padding(horizontal = 4.dp),
                 )
-                Spacer(Modifier.height(8.dp))
             }
         }
     }
@@ -520,6 +554,12 @@ private fun ScheduledTaskList(
             onDismiss = { selectedTaskId = null },
         )
     }
+}
+
+/** Status dot color for a scheduled task — green done / blue pending. */
+private fun taskStatusColor(status: TaskStatus): Color = when (status) {
+    TaskStatus.COMPLETED -> Color(0xFF4CAF50)
+    TaskStatus.PENDING -> Color(0xFF2196F3)
 }
 
 @Composable
