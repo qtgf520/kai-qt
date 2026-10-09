@@ -512,7 +512,37 @@ sealed class Service(
         apiKeyUrl = "https://console.perplexity.ai",
         apiKeyUrlDisplay = "console.perplexity.ai",
     )
-
+    // Requesty — OpenAI-compatible routing gateway with model fallbacks.
+    data object Requesty : Service(
+        id = "requesty",
+        displayName = "Requesty",
+        icon = Res.drawable.ic_service_openai,
+        requiresApiKey = true,
+        defaultModel = null,
+        settingsKeyPrefix = "requesty",
+        chatUrl = "https://api.requesty.ai/v1/chat/completions",
+        modelsUrl = "https://api.requesty.ai/v1/models",
+        apiKeyUrl = "https://requesty.ai/keys",
+        apiKeyUrlDisplay = "requesty.ai/keys",
+    )
+    // 1min.AI — OpenAI-compatible aggregate provider (one key, many models).
+    data object OneMinAI : Service(
+        id = "1minai",
+        displayName = "1min.AI",
+        icon = Res.drawable.ic_service_openai,
+        requiresApiKey = true,
+        defaultModel = null,
+        settingsKeyPrefix = "1minai",
+        chatUrl = "https://api.1min.ai/api/chat/completions",
+        modelsUrl = null,
+        defaultModels = listOf(
+            ModelDefinition(id = "gpt-4o-mini", subtitle = "1min.AI"),
+            ModelDefinition(id = "gpt-4o", subtitle = "1min.AI"),
+            ModelDefinition(id = "claude-3-5-sonnet", subtitle = "1min.AI"),
+        ),
+        apiKeyUrl = "https://1min.ai/dashboard",
+        apiKeyUrlDisplay = "1min.ai/dashboard",
+    )
     data object OpenAICompatible : Service(
         id = "openai-compatible",
         displayName = "OpenAI-Compatible API",
@@ -538,7 +568,7 @@ sealed class Service(
     )
 
     companion object {
-        val all: List<Service> get() = listOf(Free, AtlasCloud, Gemini, Anthropic, OpenAI, DeepSeek, Mistral, XAI, OpenRouter, Groq, Nvidia, Cerebras, OllamaCloud, LongCat, Together, HuggingFace, Venice, Moonshot, Zai, ZaiCodingPlan, Minimax, AiHubMix, DeepInfra, FireworksAI, OpenCode, PublicAI, AIHorde, Perplexity, OpenAICompatible, LiteRT)
+        val all: List<Service> get() = listOf(Free, AtlasCloud, Gemini, Anthropic, OpenAI, DeepSeek, Mistral, XAI, OpenRouter, Groq, Nvidia, Cerebras, OllamaCloud, LongCat, Together, HuggingFace, Venice, Moonshot, Zai, ZaiCodingPlan, Minimax, AiHubMix, DeepInfra, FireworksAI, OpenCode, PublicAI, AIHorde, Perplexity, Requesty, OneMinAI, OpenAICompatible, LiteRT)
 
         const val DEFAULT_OPENAI_COMPATIBLE_BASE_URL = "http://localhost:11434/v1"
 

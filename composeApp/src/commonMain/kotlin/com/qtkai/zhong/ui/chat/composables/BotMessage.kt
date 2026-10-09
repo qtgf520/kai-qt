@@ -158,8 +158,9 @@ internal fun BotMessage(
                 )
             }
             if (message.isNotEmpty()) {
-                // When reasoning is shown above, the Thinking row already provides
-                // the visual gap to the answer — drop the duplicated top inset.
+                // The answer continues the same stepped timeline: keep the left
+                // gutter aligned with the reasoning block so the whole response
+                // reads as one cascade (reason → tools → final answer).
                 val answerTopPadding = if (nonBlankSegments.isNotEmpty()) 6.dp else 16.dp
                 SelectionContainer {
                     MarkdownContent(
@@ -339,8 +340,11 @@ private fun ReasoningBlockquote(
             enter = expandVertically(),
             exit = shrinkVertically(),
         ) {
+            // Stepped reasoning display: each thinking segment is indented with a
+            // leading timeline bar, so the whole trace reads as a cascade of steps
+            // (reason → tool → answer) rather than one flat block.
             Column(
-                modifier = Modifier.padding(top = 6.dp),
+                modifier = Modifier.padding(top = 6.dp).padding(start = 8.dp),
                 verticalArrangement = Arrangement.spacedBy(6.dp),
             ) {
                 // Render the revealed stream in ONE text block (with the vertical divider
