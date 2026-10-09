@@ -23,6 +23,8 @@
          notification-read tools. Runtime gate (isNotificationsSupported) probes merged
          manifest for the KaiNotificationListenerService. -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
+    <!-- Voice input: system speech recognizer needs RECORD_AUDIO -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
         android:name="com.qtkai.zhong.KaiApplication"

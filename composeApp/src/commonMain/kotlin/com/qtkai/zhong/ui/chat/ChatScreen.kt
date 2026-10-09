@@ -77,6 +77,7 @@ import com.qtkai.zhong.BackIcon
 import com.qtkai.zhong.TerminalLine
 import com.qtkai.zhong.data.Service
 import com.qtkai.zhong.data.supportsAgenticFlows
+import com.qtkai.zhong.createVoiceInputLauncher
 import com.qtkai.zhong.getBackgroundDispatcher
 import com.qtkai.zhong.onDragAndDropEventDropped
 import com.qtkai.zhong.ui.build.KaiBuildScreen
@@ -166,6 +167,18 @@ fun ChatScreenContent(
     // Kai Build is a transient surface, not a conversation — unlike interactive
     // mode it needs no persistence beyond surviving configuration changes.
     var isKaiBuildOpen by rememberSaveable { mutableStateOf(false) }
+    // Hoisted here so the draft survives toggling the sandbox/terminal view, which
+    // removes QuestionInput from composition and would otherwise drop the text.
+    var questionInputText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
+        mutableStateOf(TextFieldValue(""))
+    }
+    // Voice input: platform launcher feeds recognized text into the composer.
+    val voiceLauncher = createVoiceInputLauncher { recognized ->
+        questionInputText = TextFieldValue(
+            text = recognized,
+            selection = TextRange(recognized.length),
+        )
+    }
 
     // Shared text opens a new chat; leave Kai Build so the composer is visible.
     LaunchedEffect(uiState.composerPrefill) {
@@ -225,6 +238,13 @@ private fun InteractiveModeScreen(
     val showFullInput = inputExpanded && !uiState.isLoading
     var questionInputText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
+    }
+    // Voice input: platform launcher feeds recognized text into the composer.
+    val voiceLauncher = createVoiceInputLauncher { recognized ->
+        questionInputText = TextFieldValue(
+            text = recognized,
+            selection = TextRange(recognized.length),
+        )
     }
 
     Box(
@@ -297,6 +317,7 @@ private fun InteractiveModeScreen(
                         availableServices = interactiveServices,
                         onSelectService = uiState.actions.selectService,
                         installedSkills = uiState.installedSkills,
+                        onVoiceInput = voiceLauncher,
                     )
                 }
             }
@@ -510,9 +531,15 @@ private fun ChatModeScreen(
     var questionInputText by rememberSaveable(stateSaver = TextFieldValue.Saver) {
         mutableStateOf(TextFieldValue(""))
     }
+    // Voice input: platform launcher feeds recognized text into the composer.
+    val voiceLauncher = createVoiceInputLauncher { recognized ->
+        questionInputText = TextFieldValue(
+            text = recognized,
+            selection = TextRange(recognized.length),
+        )
+    }
     val keyboardController = LocalSoftwareKeyboardController.current
     val snackbarHostState = remember { SnackbarHostState() }
-
     LaunchedEffect(uiState.composerPrefill) {
         val prefill = uiState.composerPrefill ?: return@LaunchedEffect
         questionInputText = TextFieldValue(
@@ -985,6 +1012,7 @@ private fun ChatModeScreen(
                     availableServices = uiState.availableServices,
                     onSelectService = uiState.actions.selectService,
                     installedSkills = uiState.installedSkills,
+                    onVoiceInput = voiceLauncher,
                 )
             }
         }

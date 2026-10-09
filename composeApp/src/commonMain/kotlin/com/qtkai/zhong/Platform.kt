@@ -43,8 +43,16 @@ expect val currentPlatform: Platform
 expect val defaultUiScale: Float
 
 expect fun getAppFilesDirectory(): String
-
 expect fun getAvailableTools(): List<Tool>
+/**
+ * Returns a launcher that starts system speech recognition (if supported) and
+ * invokes [onResult] with the recognized text. Android launches
+ * `RecognizerIntent.ACTION_RECOGNIZE_SPEECH`; desktop returns null (no-op).
+ */
+@androidx.compose.runtime.Composable
+expect fun createVoiceInputLauncher(
+    onResult: (String) -> Unit,
+): (() -> Unit)?
 
 /**
  * Returns all raw tool definitions available on this platform.

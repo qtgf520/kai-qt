@@ -75,6 +75,7 @@ import kai.composeapp.generated.resources.ic_file
 import kai.composeapp.generated.resources.ic_image
 import kai.composeapp.generated.resources.ic_stop
 import kai.composeapp.generated.resources.ic_up
+import kai.composeapp.generated.resources.ic_volume_up
 import kai.composeapp.generated.resources.prompt_ask_question
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -97,6 +98,9 @@ fun QuestionInput(
     availableServices: ImmutableList<ServiceEntry> = persistentListOf(),
     onSelectService: (String) -> Unit = {},
     installedSkills: ImmutableList<SkillManifest> = persistentListOf(),
+    // When provided, a mic button is shown in the composer; tapping it asks the
+    // platform to launch system speech recognition and feed the result back.
+    onVoiceInput: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
@@ -248,6 +252,13 @@ fun QuestionInput(
                         ServiceSelector(
                             services = availableServices,
                             onSelectService = onSelectService,
+                        )
+                    }
+                    if (onVoiceInput != null && !isLoading) {
+                        TrailingIcon(
+                            icon = Res.drawable.ic_volume_up,
+                            onClick = { onVoiceInput() },
+                            isPulsing = false,
                         )
                     }
                     if (isLoading) {

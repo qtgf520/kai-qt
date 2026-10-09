@@ -1,3 +1,10 @@
+## v3.2.8-2 — 2026-10-10 (Kai2 9000 测试版)
+### Features（语音输入 STT）
+- 新增语音输入：聊天输入框加麦克风按钮，点击唤起系统语音识别（RecognizerIntent），识别结果直接填入输入框
+- 支持交互模式（InteractiveModeScreen）与聊天模式（ChatModeScreen）双入口，各自独立语音输入
+- 平台层 expect/actual：`createVoiceInputLauncher`（Android 用 ActivityResult + RecognizerIntent，自动使用系统默认语言）
+- manifest 声明 RECORD_AUDIO 权限
+
 ## v3.2.8 — 2026-09-13 (Kai2 9000 正式版)
 ### Features（UI 体验大优化）
 - 聊天消息去边框：AI 回复/用户消息去除卡片背景，改纯文本流（参考元宝对话风格：Prompt 标签 + 思考/调用/结果层级，无边框盒子感）
