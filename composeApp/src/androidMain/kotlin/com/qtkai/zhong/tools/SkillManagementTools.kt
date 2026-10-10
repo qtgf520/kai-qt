@@ -5,8 +5,6 @@ import com.qtkai.zhong.network.tools.Tool
 import com.qtkai.zhong.network.tools.ToolInfo
 import com.qtkai.zhong.network.tools.ToolSchema
 import com.qtkai.zhong.skills.SkillManager
-import org.koin.java.KoinJavaComponent.inject
-
 /**
  * Lets the agent inspect and manage installed skills directly from a conversation,
  * no Settings screen required - install a skill from GitHub, list what's installed,
@@ -15,7 +13,16 @@ import org.koin.java.KoinJavaComponent.inject
  */
 object SkillManagementTools {
 
-    private val skillManager: SkillManager by inject(SkillManager::class.java)
+    // Injected lazily and defensively: getPlatformToolDefinitions() can be called before
+    // Koin is ready (screenshot/unit-test paths), and touching an `inject` property at that
+    // point would crash tool-list construction. The getters below return null instead, and
+    // execute() reports the failure to the model instead of throwing.
+    private val skillManager: SkillManager?
+        get() = try {
+            org.koin.java.KoinJavaComponent.get(SkillManager::class.java)
+        } catch (_: Throwable) {
+            null
+        }
 
     val listSkillsToolInfo = ToolInfo(
         id = "list_skills",
@@ -53,7 +60,9 @@ object SkillManagementTools {
             parameters = emptyMap(),
         )
         override suspend fun execute(args: Map<String, Any>): Any {
-            val skills = skillManager.getInstalled()
+            val mgr = skillManager
+                ?: return mapOf("success" to false, "error" to "Skill manager is not ready yet — try again shortly")
+            val skills = mgr.getInstalled()
             if (skills.isEmpty()) return mapOf("success" to true, "skills" to emptyList<Any>(), "count" to 0)
             val list = skills.map {
                 mapOf(
@@ -79,6 +88,7 @@ object SkillManagementTools {
             val id = args["id"]?.toString()?.trim()?.takeIf { it.isNotEmpty() }
                 ?: return mapOf("success" to false, "error" to "Missing id")
             val mgr = skillManager
+                ?: return mapOf("success" to false, "error" to "Skill manager is not ready yet — try again shortly")
             val skill = mgr.getSkill(id)
             if (skill == null) return mapOf("success" to false, "error" to "No installed skill with id '$id'")
             if (skill.isBuiltIn) return mapOf("success" to false, "error" to "Skill '$id' is built-in and cannot be uninstalled")
@@ -107,6 +117,7 @@ object SkillManagementTools {
                 ?: return mapOf("success" to false, "error" to "Missing path")
             val ref = args["ref"]?.toString()?.trim()?.takeIf { it.isNotEmpty() } ?: "main"
             val mgr = skillManager
+                ?: return mapOf("success" to false, "error" to "Skill manager is not ready yet — try again shortly")
             return mgr.installFromGitHub(owner = owner, repo = repo, ref = ref, path = path)
                 .fold(
                     onSuccess = { m -> mapOf("success" to true, "id" to m.id, "name" to m.displayName, "description" to m.description) },
@@ -126,6 +137,7 @@ object SkillManagementTools {
         override suspend fun execute(args: Map<String, Any>): Any {
             val query = args["query"]?.toString()?.trim()?.takeIf { it.isNotEmpty() }?.lowercase()
             val mgr = skillManager
+                ?: return mapOf("success" to false, "error" to "Skill manager is not ready yet — try again shortly")
             return mgr.browseMarketplaces().fold(
                 onSuccess = { entries ->
                     val filtered = query?.let { q ->

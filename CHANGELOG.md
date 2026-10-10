@@ -1,3 +1,7 @@
+## v3.2.9-3 — 2026-10-11 (Kai2 9000 测试版)
+### Fixes（恢复可用）
+- 修复 v3.2.9-2 引入的崩溃级问题：SkillManagementTools 的 Koin 注入在 Koin 未就绪时被触发（getPlatformToolDefinitions 可能在截图/单测环境先于 Koin 启动被调用），导致工具列表构建失败、聊天无法使用。改为惰性 try/catch 安全注入，未就绪时返回友好错误而非崩溃
+
 ## v3.2.9 — 2026-10-10 (Kai2 9000 测试版)
 ### Features（更自主的 Agent 助理）
 - 技能自主管理：AI 对话内可直接 browse_skills（搜索技能市场）/ list_skills（列出已装）/ install_skill（从 GitHub 安装）/ uninstall_skill（卸载），无需进设置页手动管理，实现"技能即插即用"闭环
