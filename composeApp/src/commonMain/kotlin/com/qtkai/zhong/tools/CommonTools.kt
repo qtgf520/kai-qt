@@ -308,7 +308,39 @@ object CommonTools {
             return mapOf("success" to removed, "key" to key)
         }
     }
-
+    fun memorySearchTool(memoryStore: MemoryStore) = object : Tool {
+        override val schema = ToolSchema(
+            name = "memory_search",
+            description = "Search stored memories by a keyword and retrieve matching entries (searches key, content, and category). Use this to recall past user preferences, past learnings, or resolved errors relevant to the current request before answering.",
+            parameters = mapOf(
+                "query" to ParameterSchema(type = "string", description = "The keyword to search for in stored memories", required = true),
+                "limit" to ParameterSchema(type = "integer", description = "Maximum number of results to return (default 10)", required = false),
+            ),
+        )
+        override suspend fun execute(args: Map<String, Any>): Any {
+            val query = args["query"]?.toString()?.trim()?.takeIf { it.isNotEmpty() }
+                ?: return mapOf("success" to false, "error" to "Missing query")
+            val limit = (args["limit"] as? Number)?.toInt()?.coerceIn(1, 50) ?: 10
+            val all = memoryStore.getAllMemories()
+            val q = query.lowercase()
+            val matches = all.filter { m ->
+                m.key.contains(q, ignoreCase = true) ||
+                    m.content.contains(q, ignoreCase = true) ||
+                    m.category.name.contains(q, ignoreCase = true) ||
+                    (m.source?.contains(q, ignoreCase = true) ?: false)
+            }.sortedByDescending { it.updatedAt }.take(limit)
+            if (matches.isEmpty()) return mapOf("success" to true, "count" to 0, "results" to emptyList<Any>())
+            val results = matches.map {
+                mapOf(
+                    "key" to it.key,
+                    "content" to it.content,
+                    "category" to it.category.name,
+                    "hit_count" to it.hitCount,
+                )
+            }
+            return mapOf("success" to true, "count" to results.size, "results" to results)
+        }
+    }
     fun memoryLearnTool(memoryStore: MemoryStore) = object : Tool {
         override val schema = ToolSchema(
             name = "memory_learn",
@@ -362,6 +394,7 @@ object CommonTools {
     fun getMemoryTools(memoryStore: MemoryStore): List<Tool> = listOf(
         memoryStoreTool(memoryStore),
         memoryForgetTool(memoryStore),
+        memorySearchTool(memoryStore),
         memoryLearnTool(memoryStore),
         memoryReinforceTool(memoryStore),
     )

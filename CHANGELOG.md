@@ -1,3 +1,8 @@
+## v3.2.9 — 2026-10-10 (Kai2 9000 测试版)
+### Features（更自主的 Agent 助理）
+- 技能自主管理：AI 对话内可直接 browse_skills（搜索技能市场）/ list_skills（列出已装）/ install_skill（从 GitHub 安装）/ uninstall_skill（卸载），无需进设置页手动管理，实现"技能即插即用"闭环
+- 记忆搜索：新增 memory_search 工具，AI 回答前可主动检索长期记忆（支持关键词匹配 key/content/category/source），强化跨会话记忆召回
+
 ## v3.2.8-2 — 2026-10-10 (Kai2 9000 测试版)
 ### Features（语音输入 STT）
 - 新增语音输入：聊天输入框加麦克风按钮，点击唤起系统语音识别（RecognizerIntent），识别结果直接填入输入框

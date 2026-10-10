@@ -40,6 +40,7 @@ import com.qtkai.zhong.tools.PermissionController
 import com.qtkai.zhong.tools.ProcessManagerTool
 import com.qtkai.zhong.tools.SendNotificationTool
 import com.qtkai.zhong.tools.SetAlarmTool
+import com.qtkai.zhong.tools.SkillManagementTools
 import com.qtkai.zhong.tools.ShellCommandTool
 import com.qtkai.zhong.tools.SmsTools
 import com.qtkai.zhong.tools.SshConfigureHostTool
@@ -181,6 +182,10 @@ actual fun getPlatformToolDefinitions(): List<ToolInfo> = CommonTools.commonTool
         SshConfigureHostTool.toolInfo,
         AndroidDirectoryTool.toolInfo, // 系统文件目录读写（/storage/emulated/0/）
         ImageGenerationTool.toolInfo, // [REQ-12]
+        SkillManagementTools.listSkillsToolInfo,
+        SkillManagementTools.installSkillToolInfo,
+        SkillManagementTools.uninstallSkillToolInfo,
+        SkillManagementTools.browseSkillsToolInfo,
     )
 
 actual fun getAvailableTools(): List<Tool> {
@@ -236,6 +241,13 @@ actual fun getAvailableTools(): List<Tool> {
                 ),
             )
         }
+        // Agent-driven skill management: let the model inspect, install, and uninstall
+        // skills from the conversation without forcing the user into Settings. These are
+        // always available when skills are reachable, and never touch the sandbox shell.
+        add(SkillManagementTools.listSkillsTool)
+        add(SkillManagementTools.installSkillTool)
+        add(SkillManagementTools.uninstallSkillTool)
+        add(SkillManagementTools.browseSkillsTool)
         // 系统文件目录读写工具：/storage/emulated/0/ 树。
         // 此前只定义了对象却从未注册，AI 在工具列表里根本看不到它，所以"无法访问系统文件"。
         if (appSettings.isToolEnabled(AndroidDirectoryTool.ID)) {
