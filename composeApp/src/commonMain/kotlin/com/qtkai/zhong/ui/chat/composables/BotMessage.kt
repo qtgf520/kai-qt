@@ -74,6 +74,20 @@ import nl.marc_apps.tts.TextToSpeechInstance
 import nl.marc_apps.tts.errors.TextToSpeechSynthesisInterruptedError
 import org.jetbrains.compose.resources.stringResource
 
+/**
+ * One step in an assistant reply's tool pipeline: a tool invocation (with its
+ * arguments) and the result that came back. Rendered between the thinking block
+ * and the final answer so a single reply reads as one continuous working
+ * session — think → call tools → see results → answer — instead of separate
+ * disconnected bubbles.
+ */
+data class ToolStep(
+    val toolName: String,
+    val arguments: String? = null,
+    val result: String? = null,
+    val status: String = "done",
+)
+
 @Composable
 internal fun BotMessage(
     message: String,
@@ -93,6 +107,9 @@ internal fun BotMessage(
     animateReasoning: Boolean = false,
     // Service/model label shown in the message header (e.g. fallback service name).
     serviceLabel: String? = null,
+    // Tool pipeline steps between thinking and answer — renders the reply as one
+    // continuous working session (think → call → result → answer).
+    toolSteps: ImmutableList<ToolStep> = persistentListOf(),
 ) {
     // The FINAL ANSWER renders in full — no typewriter. Only the reasoning/thinking
     // block above animates progressively (see ReasoningBlockquote); the answer text
@@ -156,6 +173,26 @@ internal fun BotMessage(
                     modifier = Modifier.fillMaxWidth()
                         .padding(start = 16.dp, top = 12.dp, end = 16.dp),
                 )
+            }
+            // Tool pipeline: each invocation + result renders inline between the
+            // thinking block and the final answer, keeping one reply visually
+            // continuous (think → call tools → see results → answer).
+            if (toolSteps.isNotEmpty()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, top = if (nonBlankSegments.isNotEmpty()) 10.dp else 14.dp, end = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    toolSteps.forEach { step ->
+                        ToolPipelineMessage(
+                            toolName = step.toolName,
+                            status = step.status,
+                            arguments = step.arguments,
+                            result = step.result,
+                        )
+                    }
+                }
             }
             if (message.isNotEmpty()) {
                 // The answer continues the same stepped timeline: keep the left

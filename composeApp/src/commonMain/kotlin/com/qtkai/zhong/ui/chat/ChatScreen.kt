@@ -92,6 +92,7 @@ import com.qtkai.zhong.ui.chat.composables.PendingSmsBanners
 import com.qtkai.zhong.ui.chat.composables.QuestionInput
 import com.qtkai.zhong.ui.chat.composables.ServiceSelector
 import com.qtkai.zhong.ui.chat.composables.ToolPipelineMessage
+import com.qtkai.zhong.ui.chat.composables.ToolStep
 import com.qtkai.zhong.ui.chat.composables.TopBar
 import com.qtkai.zhong.ui.chat.composables.TrailingIcon
 import com.qtkai.zhong.ui.chat.composables.UserMessage
@@ -121,6 +122,7 @@ import kai.composeapp.generated.resources.interactive_ui_parsing_failed
 import kai.composeapp.generated.resources.interactive_welcome_subtitle
 import kai.composeapp.generated.resources.interactive_welcome_title
 import kai.composeapp.generated.resources.scroll_to_bottom_content_description
+import kai.composeapp.generated.resources.waiting_thinking
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -826,7 +828,39 @@ private fun ChatModeScreen(
                                 }
                                 byAnswerId to suppressed
                             }
-
+                            // Group every tool invocation + result in a response cycle under the
+                            // answer-bearing assistant message (same pairing as reasoning segments),
+                            // so the whole reply renders as one continuous pipeline in BotMessage:
+                            // thinking -> tool calls -> results -> final answer.
+                            val toolStepsByAssistantId = remember(uiState.history) {
+                                val byAnswer = mutableMapOf<String, ImmutableList<ToolStep>>()
+                                val pendingTools = mutableListOf<ToolStep>()
+                                for (entry in uiState.history) {
+                                    when {
+                                        entry.role == History.Role.USER -> pendingTools.clear()
+                                        entry.role == History.Role.TOOL_EXECUTING || entry.role == History.Role.TOOL -> {
+                                            val name = entry.toolName ?: entry.content.takeIf { it.isNotBlank() } ?: "tool"
+                                            pendingTools.add(
+                                                ToolStep(
+                                                    toolName = name,
+                                                    arguments = entry.toolCalls?.firstOrNull()?.arguments,
+                                                    result = if (entry.role == History.Role.TOOL) entry.content else null,
+                                                    status = if (entry.role == History.Role.TOOL_EXECUTING) "running" else "done",
+                                                ),
+                                            )
+                                        }
+                                        entry.role == History.Role.ASSISTANT &&
+                                            entry.content.isNotEmpty() &&
+                                            !entry.isThinking -> {
+                                            if (pendingTools.isNotEmpty()) {
+                                                byAnswer[entry.id] = pendingTools.toImmutableList()
+                                            }
+                                            pendingTools.clear()
+                                        }
+                                    }
+                                }
+                                byAnswer
+                            }
                             val showScrollToBottom by remember {
                                 derivedStateOf {
                                     val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
@@ -893,6 +927,7 @@ private fun ChatModeScreen(
                                                         animateReasoning = isLastAssistant && uiState.isLoading,
                                                         // Fallback service label shows in the message header (mirrors Operit's meta bar).
                                                         serviceLabel = history.fallbackServiceName,
+                                                        toolSteps = toolStepsByAssistantId[history.id] ?: persistentListOf(),
                                                         // [REQ-5.4] Delete this message
                                                         onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
@@ -900,38 +935,53 @@ private fun ChatModeScreen(
                                                     history.content.isNotEmpty() &&
                                                     history.id !in suppressedThinkingIds
                                                 ) {
-                                                    // Thinking-only turn still in flight — render as a standalone
-                                                    // reasoning bubble. The precomputation above has already gathered
-                                                    // every earlier thinking segment in this cycle under this id.
-                                                    BotMessage(
-                                                        message = "",
-                                                        textToSpeech = null,
-                                                        isSpeaking = false,
-                                                        setIsSpeaking = {},
-                                                        reasoningSegments = reasoningSegmentsByAssistantId[history.id]
-                                                            ?: persistentListOf(history.content),
-                                                        // This standalone thinking bubble IS the in-flight reasoning — hand-write it.
-                                                        animateReasoning = true,
+                                                    // In-flight thinking: render a compact status row right at
+                                                    // the current position instead of a full standalone bubble.
+                                                    // The full reasoning segments fold into the final answer's
+                                                    // BotMessage once the reply completes (grouped above), so
+                                                    // the user watches one continuous pipeline — the thinking
+                                                    // status sits where the work is happening, never "above".
+                                                    val isLatestThinking = history.id == uiState.history.lastOrNull {
+                                                        it.isThinking && it.content.isNotEmpty()
+                                                    }?.id
+                                                    WaitingResponseRow(
+                                                        executingTools = executingToolsState.tools,
+                                                        isStatusOnly = true,
+                                                        statusText = if (isLatestThinking) {
+                                                            stringResource(Res.string.waiting_thinking)
+                                                        } else {
+                                                            null
+                                                        },
                                                     )
                                                 }
                                             }
 
                                             History.Role.TOOL_EXECUTING -> {
-                                                // Show in-flight tool calls as pipeline messages
-                                                ToolPipelineMessage(
-                                                    toolName = history.toolName ?: history.content.ifBlank { "tool" },
-                                                    status = "running",
-                                                    arguments = history.toolCalls?.firstOrNull()?.arguments,
-                                                )
+                                                // In-flight tool calls render inline inside the owning
+                                                // BotMessage pipeline when grouped; standalone row only
+                                                // for ungrouped cycles (streaming tools pre-answer).
+                                                val groupedInAnswer = toolStepsByAssistantId.values.any { steps ->
+                                                    steps.any { it.toolName == (history.toolName ?: history.content.ifBlank { "tool" }) }
+                                                }
+                                                if (!groupedInAnswer) {
+                                                    ToolPipelineMessage(
+                                                        toolName = history.toolName ?: history.content.ifBlank { "tool" },
+                                                        status = "running",
+                                                        arguments = history.toolCalls?.firstOrNull()?.arguments,
+                                                    )
+                                                }
                                             }
-
                                             History.Role.TOOL -> {
-                                                // Show completed tool results as pipeline messages
-                                                ToolPipelineMessage(
-                                                    toolName = history.toolName ?: "tool",
-                                                    status = "done",
-                                                    result = history.content,
-                                                )
+                                                val groupedInAnswer = toolStepsByAssistantId.values.any { steps ->
+                                                    steps.any { it.toolName == (history.toolName ?: "tool") }
+                                                }
+                                                if (!groupedInAnswer) {
+                                                    ToolPipelineMessage(
+                                                        toolName = history.toolName ?: "tool",
+                                                        status = "done",
+                                                        result = history.content,
+                                                    )
+                                                }
                                             }
                                         }
                                     }
