@@ -726,6 +726,12 @@ private fun ChatModeScreen(
                             }
 
                             val lastAssistantId = remember(uiState.history) { uiState.history.lastRenderedAssistant()?.id }
+                            // Virtual cycle id for the in-flight (no answer yet) reply. Every thinking
+                            // segment and tool step of the current working turn folds under this id so
+                            // the UI renders ONE continuously growing pipeline (think → call → result)
+                            // instead of scattered standalone bubbles — the same model Operit uses where
+                            // a single AI reply is one flowing unit that grows as work happens.
+                            val IN_FLIGHT_CYCLE_ID = "__in_flight_cycle__"
                             // Pair every user submission with its originating assistant so the kai-ui
                             // renders once (on the assistant side) with a frozen snapshot — never as a
                             // separate user-side card. pressedEvent + values persist across the loading
@@ -773,7 +779,7 @@ private fun ChatModeScreen(
                             // thinking-only turns plus the final answer's own reasoning) under the
                             // answer-bearing assistant message, so each response shows a single
                             // collapsible "Thinking" section instead of N standalone ones.
-                            val (reasoningSegmentsByAssistantId, suppressedThinkingIds) = remember(uiState.history) {
+                            val (reasoningSegmentsByAssistantId, suppressedThinkingIds) = remember(uiState.history, uiState.isLoading) {
                                 val byAnswerId = mutableMapOf<String, ImmutableList<String>>()
                                 val suppressed = mutableSetOf<String>()
                                 val pending = mutableListOf<String>()
@@ -822,8 +828,19 @@ private fun ChatModeScreen(
                                 if (pendingThinkingIds.isNotEmpty()) {
                                     val lastId = pendingThinkingIds.last()
                                     byAnswerId[lastId] = pending.toImmutableList()
-                                    for (i in 0 until pendingThinkingIds.size - 1) {
-                                        suppressed.add(pendingThinkingIds[i])
+                                    // Only while a turn is truly in flight do we fold under the
+                                    // virtual in-flight id and suppress the standalone rows; once
+                                    // the answer lands (or the run is cancelled) the real answer
+                                    // id owns the full pipeline.
+                                    if (uiState.isLoading) {
+                                        byAnswerId[IN_FLIGHT_CYCLE_ID] = pending.toImmutableList()
+                                        for (i in 0 until pendingThinkingIds.size) {
+                                            suppressed.add(pendingThinkingIds[i])
+                                        }
+                                    } else {
+                                        for (i in 0 until pendingThinkingIds.size - 1) {
+                                            suppressed.add(pendingThinkingIds[i])
+                                        }
                                     }
                                 }
                                 byAnswerId to suppressed
@@ -832,7 +849,7 @@ private fun ChatModeScreen(
                             // answer-bearing assistant message (same pairing as reasoning segments),
                             // so the whole reply renders as one continuous pipeline in BotMessage:
                             // thinking -> tool calls -> results -> final answer.
-                            val toolStepsByAssistantId = remember(uiState.history) {
+                            val toolStepsByAssistantId = remember(uiState.history, uiState.isLoading) {
                                 val byAnswer = mutableMapOf<String, ImmutableList<ToolStep>>()
                                 val pendingTools = mutableListOf<ToolStep>()
                                 for (entry in uiState.history) {
@@ -858,6 +875,13 @@ private fun ChatModeScreen(
                                             pendingTools.clear()
                                         }
                                     }
+                                }
+                                // In-flight tools (before the answer arrives) fold under the virtual
+                                // in-flight cycle id so they render inside the growing pipeline — but
+                                // only while a turn is actually running. Once the answer lands the
+                                // tools belong to the real answer id.
+                                if (pendingTools.isNotEmpty() && uiState.isLoading) {
+                                    byAnswer[IN_FLIGHT_CYCLE_ID] = pendingTools.toImmutableList()
                                 }
                                 byAnswer
                             }
@@ -958,8 +982,8 @@ private fun ChatModeScreen(
 
                                             History.Role.TOOL_EXECUTING -> {
                                                 // In-flight tool calls render inline inside the owning
-                                                // BotMessage pipeline when grouped; standalone row only
-                                                // for ungrouped cycles (streaming tools pre-answer).
+                                                // BotMessage pipeline when grouped (including the live
+                                                // in-flight cycle above); no standalone row needed.
                                                 val groupedInAnswer = toolStepsByAssistantId.values.any { steps ->
                                                     steps.any { it.toolName == (history.toolName ?: history.content.ifBlank { "tool" }) }
                                                 }
@@ -985,10 +1009,32 @@ private fun ChatModeScreen(
                                             }
                                         }
                                     }
+                                    // In-flight reply cycle (answer not arrived yet): the agent is
+                                    // already thinking / calling tools. Render ONE continuously growing
+                                    // pipeline at the bottom of the stream (right where the work is
+                                    // happening) instead of scattered standalone bubbles — the same
+                                    // "one reply = one flowing unit" model the reference uses.
+                                    val hasInflightCycle = uiState.isLoading &&
+                                        (reasoningSegmentsByAssistantId[IN_FLIGHT_CYCLE_ID] != null ||
+                                            toolStepsByAssistantId[IN_FLIGHT_CYCLE_ID] != null)
+                                    if (hasInflightCycle) {
+                                        item(key = IN_FLIGHT_CYCLE_ID) {
+                                            BotMessage(
+                                                message = "",
+                                                textToSpeech = null,
+                                                isSpeaking = false,
+                                                setIsSpeaking = {},
+                                                reasoningSegments = reasoningSegmentsByAssistantId[IN_FLIGHT_CYCLE_ID] ?: persistentListOf(),
+                                                toolSteps = toolStepsByAssistantId[IN_FLIGHT_CYCLE_ID] ?: persistentListOf(),
+                                                animateReasoning = true,
+                                            )
+                                        }
+                                    }
                                     // Skip the generic "thinking" row during a pending kai-ui submission — the
                                     // pressed button's pulse already signals work in flight. Keep it for tool
                                     // activity so tool feedback isn't lost.
                                     val showWaitingRow = uiState.isLoading &&
+                                        !hasInflightCycle &&
                                         (frozenByAssistantId.values.none { it.isPending } || executingToolsState.tools.isNotEmpty()) &&
                                         // The live "正在思考…" reasoning bubble already communicates the
                                         // in-flight state — skip the redundant bottom status row while it's up.
