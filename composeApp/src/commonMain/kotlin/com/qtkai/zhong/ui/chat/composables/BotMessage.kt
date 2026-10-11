@@ -80,12 +80,19 @@ import org.jetbrains.compose.resources.stringResource
  * and the final answer so a single reply reads as one continuous working
  * session — think → call tools → see results → answer — instead of separate
  * disconnected bubbles.
+ *
+ * [sourceId] is the originating History id (TOOL / TOOL_EXECUTING entry). The
+ * renderer matches on it to drop the standalone row for steps already drawn
+ * inside a pipeline — exact id match, never a tool-name match, so two replies
+ * that call the same tool (e.g. execute_shell_command twice) can't hide each
+ * other's results.
  */
 data class ToolStep(
     val toolName: String,
     val arguments: String? = null,
     val result: String? = null,
     val status: String = "done",
+    val sourceId: String? = null,
 )
 
 @Composable
