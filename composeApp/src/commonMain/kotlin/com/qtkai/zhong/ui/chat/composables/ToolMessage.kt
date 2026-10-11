@@ -11,6 +11,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -119,74 +120,43 @@ internal fun WaitingResponseRow(
     val summary = statusText ?: toolSummaryText(executingTools)
     val effectiveStatusOnly = isStatusOnly || statusText != null
     val waitingCd = stringResource(Res.string.waiting_content_description)
-
     if (!effectiveStatusOnly && executingTools.isNotEmpty()) {
-        // Advanced multi-tool card
+        // In-flight tool chips: one quiet row per running tool — icon + name only,
+        // no loud card. Keeps the stream light while work is happening.
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 4.dp),
+            verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-            ) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                    executingTools.forEachIndexed { index, (_, toolName) ->
-                        if (index > 0) Spacer(Modifier.size(8.dp))
-                        ToolCallChip(
-                            toolName = toolName,
-                            isRunning = true,
-                        )
-                    }
-                    Spacer(Modifier.size(12.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        PulsingStatusIndicator(
-                            toolSummary = null,
-                            isStatusOnly = true,
-                            statusText = summary,
-                            dotSize = 14.dp,
-                            dotColor = MaterialTheme.colorScheme.primary,
-                            textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            textStyle = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-                }
-            }
-        }
-    } else {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-                .clipToBounds(),
-        ) {
-            Box(
-                modifier = Modifier
-                    .background(
-                        MaterialTheme.colorScheme.surfaceVariant,
-                        RoundedCornerShape(8.dp),
-                    )
-                    .animateContentSize(
-                        animationSpec = tween(durationMillis = 300, easing = FastOutSlowInEasing),
-                    )
-                    .padding(12.dp)
-                    .semantics { contentDescription = waitingCd },
-            ) {
-                PulsingStatusIndicator(
-                    toolSummary = summary,
-                    isStatusOnly = effectiveStatusOnly,
-                    statusText = statusText,
-                    dotSize = 16.dp,
-                    dotColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textStyle = MaterialTheme.typography.bodyMedium,
+            executingTools.forEach { (_, toolName) ->
+                ToolCallChip(
+                    toolName = toolName,
+                    isRunning = true,
                 )
             }
         }
+    } else {
+        // Minimal status line: pulsing dot + text, no background box at all.
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 6.dp)
+                .clipToBounds()
+                .semantics { contentDescription = waitingCd },
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            PulsingStatusIndicator(
+                toolSummary = summary,
+                isStatusOnly = effectiveStatusOnly,
+                statusText = statusText,
+                dotSize = 12.dp,
+                dotColor = MaterialTheme.colorScheme.primary,
+                textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                textStyle = MaterialTheme.typography.bodySmall,
+            )
+        }
     }
 }
-
 /** A single in-flight or completed tool call chip with icon + name + status. */
 @Composable
 private fun ToolCallChip(
