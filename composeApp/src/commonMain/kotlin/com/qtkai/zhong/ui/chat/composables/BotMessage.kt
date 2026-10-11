@@ -1,6 +1,8 @@
 package com.qtkai.zhong.ui.chat.composables
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
@@ -8,27 +10,21 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -39,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -142,34 +139,28 @@ internal fun BotMessage(
                 // with only subtle labels, never as boxed cards.
                 .padding(horizontal = 12.dp, vertical = 4.dp),
         ) {
-            // Header row: "AI 回复" label on the left, service/model on the right —
-            // mirrors Operit's Response header bar so the pipeline reads clearly.
+            // Minimal header: a small quiet label on the left, optional service
+            // name on the right. No divider, no chrome — the reference keeps the
+            // meta bar feather-light so the content below reads uninterrupted.
             Row(
                 modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp, top = 8.dp, end = 16.dp),
+                    .padding(start = 16.dp, top = 6.dp, end = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = stringResource(Res.string.bot_message_header_label),
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f),
                 )
                 if (!serviceLabel.isNullOrBlank()) {
                     Text(
                         text = serviceLabel,
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
                     )
                 }
             }
-            // Divider under the header — visually separates the meta bar from the
-            // thinking / answer body, matching Operit's layered pipeline look.
-            HorizontalDivider(
-                modifier = Modifier.padding(start = 16.dp, top = 6.dp, end = 16.dp),
-                thickness = 0.5.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f),
-            )
             val nonBlankSegments = remember(reasoningSegments) {
                 reasoningSegments.filter { it.isNotBlank() }.toImmutableList()
             }
@@ -349,30 +340,40 @@ private fun ReasoningBlockquote(
             ?.firstOrNull { it.isNotEmpty() }
             .orEmpty()
     }
+    // Rotating chevron, matching the reference's CanvasExpandableHeaderRow: a
+    // right-pointing arrow that turns 90° when expanded, no card, no divider.
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (expanded) 90f else 0f,
+        animationSpec = tween(durationMillis = 250),
+        label = "thinking-arrow-rotation",
+    )
     Column(modifier = modifier) {
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .clickable { expanded = !expanded }
                 .handCursor(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
                 contentDescription = stringResource(Res.string.bot_message_thinking_expand_content_description),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.size(16.dp),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
+                modifier = Modifier
+                    .size(16.dp)
+                    .graphicsLayer { rotationZ = arrowRotation },
             )
-            Spacer(Modifier.size(6.dp))
+            Spacer(Modifier.size(2.dp))
             Text(
                 text = stringResource(Res.string.bot_message_thinking_label),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.75f),
             )
-            if (!expanded && preview.isNotEmpty()) {
+            if (!expanded && preview.isNotEmpty() && !animate) {
                 Text(
                     text = " · $preview",
                     style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f).padding(start = 4.dp),
@@ -384,31 +385,20 @@ private fun ReasoningBlockquote(
             enter = expandVertically(),
             exit = shrinkVertically(),
         ) {
-            // Stepped reasoning display: each thinking segment is indented with a
-            // leading timeline bar, so the whole trace reads as a cascade of steps
-            // (reason → tool → answer) rather than one flat block.
+            // Plain, quiet reasoning text — no vertical dividers, no boxes, no
+            // per-segment chrome. Just indented body text that reads naturally.
             Column(
-                modifier = Modifier.padding(top = 6.dp).padding(start = 8.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp),
+                modifier = Modifier.padding(top = 4.dp, start = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
-                // Render the revealed stream in ONE text block (with the vertical divider
-                // styling), split on double newlines so the typewriter still shows the
-                // progressive reveal while keeping the original segment layout.
                 val revealedSegments = remember(revealedText) { revealedText.split("\n\n") }
                 for (segment in revealedSegments) {
-                    Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-                        VerticalDivider(
-                            thickness = 2.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            modifier = Modifier.fillMaxHeight(),
+                    SelectionContainer {
+                        Text(
+                            text = segment,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
+                            style = MaterialTheme.typography.bodySmall,
                         )
-                        SelectionContainer(modifier = Modifier.padding(start = 10.dp)) {
-                            Text(
-                                text = segment,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                style = MaterialTheme.typography.bodySmall,
-                            )
-                        }
                     }
                 }
                 // While still writing, show a soft blinking caret so it reads as
@@ -418,7 +408,6 @@ private fun ReasoningBlockquote(
                         text = "▍",
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(start = 10.dp),
                     )
                 }
             }

@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -259,12 +260,11 @@ private fun ToolCallChip(
 }
 
 /**
- * Pipeline-style tool message shown inline in the chat, like ChatGPT's tool calls.
- * Running tools show a spinner + name; completed tools show a check + name + result.
- * The card is expandable/collapsible: collapsed shows a short preview, expanded shows
- * the FULL arguments and result with automatic line wrapping (no truncation).
- * Running cards auto-expand so streaming output stays visible.
- * Terminal-style tools (shell/terminal) render with a dark monospace console look.
+ * Pipeline-style tool call shown inline in the chat — aligned with the reference
+ * visual language: ONE compact row per tool (leading icon + name + one-line
+ * summary), never a loud card. Completed calls show a small green check,
+ * running calls a pulsing dot, failed calls a red error tint. Tapping expands
+ * the full arguments + result inline.
  */
 @Composable
 internal fun ToolPipelineMessage(
@@ -275,179 +275,127 @@ internal fun ToolPipelineMessage(
 ) {
     val isRunning = status == "running"
     val isError = status == "error"
-    // Running cards start expanded so the user can watch the stream; completed cards
-    // start collapsed and expand on tap.
-    var expanded by remember { mutableStateOf(isRunning) }
-    LaunchedEffect(isRunning) {
-        if (isRunning) expanded = true
-    }
+    var expanded by remember { mutableStateOf(false) }
     val isTerminalLike = toolName.contains("shell", ignoreCase = true) ||
         toolName.contains("terminal", ignoreCase = true) ||
         toolName.contains("command", ignoreCase = true)
-    val shape = RoundedCornerShape(12.dp)
-    val bg = when {
-        isTerminalLike -> Color(0xFF1E1E24) // dark console background
-        isRunning -> MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
-        isError -> MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.5f)
-        else -> MaterialTheme.colorScheme.surfaceContainerHighest.copy(alpha = 0.5f)
-    }
-    val fg = when {
-        isTerminalLike -> Color(0xFFE0E0E0)
-        isRunning -> MaterialTheme.colorScheme.onPrimaryContainer
-        isError -> MaterialTheme.colorScheme.onErrorContainer
-        else -> MaterialTheme.colorScheme.onSurfaceVariant
-    }
-    val accent = if (isTerminalLike) Color(0xFF4EC9B0) else MaterialTheme.colorScheme.primary
+    val accent = MaterialTheme.colorScheme.primary
+    val doneColor = Color(0xFF4CAF50)
     val mono = androidx.compose.ui.text.font.FontFamily.Monospace
 
-    Surface(
+    // Collapsed preview text: args while running, summarized result when done.
+    val preview = when {
+        isRunning && !arguments.isNullOrBlank() -> arguments
+        !isRunning && !result.isNullOrBlank() -> summarizeToolResult(result)
+        else -> null
+    }
+
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 12.dp, vertical = 4.dp)
-            .clickable { expanded = !expanded },
-        shape = shape,
-        color = bg,
+            .clip(RoundedCornerShape(8.dp))
+            .clickable { expanded = !expanded }
+            .padding(horizontal = 4.dp, vertical = 2.dp),
     ) {
-        Row {
-            // Left edge status bar — a thin colored stripe that reads as a pipeline
-            // timeline: green done / warm running / red error.
-            Box(
-                Modifier
-                    .width(4.dp)
-                    .fillMaxHeight()
-                    .background(
-                        when {
-                            isError -> MaterialTheme.colorScheme.error
-                            isRunning -> accent.copy(alpha = 0.8f)
-                            else -> Color(0xFF4CAF50)
-                        },
-                    ),
-            )
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .animateContentSize(animationSpec = tween(200, easing = FastOutSlowInEasing))
-                    .padding(horizontal = 12.dp, vertical = 10.dp),
-            ) {
-            // Header row: status icon + name + expand/collapse chevron
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (isRunning) {
-                    val infiniteTransition = rememberInfiniteTransition()
-                    val rotation by infiniteTransition.animateFloat(
-                        initialValue = 0f,
-                        targetValue = 360f,
-                        animationSpec = infiniteRepeatable(tween(1000, easing = FastOutSlowInEasing)),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            // Leading status glyph — small, quiet, informative.
+            when {
+                isRunning -> {
+                    val dotTrans = rememberInfiniteTransition()
+                    val alpha by dotTrans.animateFloat(
+                        initialValue = 0.3f,
+                        targetValue = 1f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(600, easing = FastOutSlowInEasing),
+                            repeatMode = RepeatMode.Reverse,
+                        ),
                     )
-                    Icon(
-                        Icons.Default.HourglassTop,
-                        contentDescription = null,
-                        tint = accent,
-                        modifier = Modifier
-                            .size(14.dp)
-                            .graphicsLayer { rotationZ = rotation },
-                    )
-                } else if (isError) {
-                    Icon(
-                        Icons.Default.Error,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.size(14.dp),
-                    )
-                } else {
-                    Icon(
-                        Icons.Default.CheckCircle,
-                        contentDescription = null,
-                        tint = Color(0xFF4CAF50),
-                        modifier = Modifier.size(14.dp),
+                    Box(
+                        Modifier
+                            .size(7.dp)
+                            .graphicsLayer { this.alpha = alpha }
+                            .background(accent, CircleShape),
                     )
                 }
+                isError -> Icon(
+                    Icons.Default.Error,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(14.dp),
+                )
+                else -> Icon(
+                    Icons.Default.CheckCircle,
+                    contentDescription = null,
+                    tint = doneColor,
+                    modifier = Modifier.size(14.dp),
+                )
+            }
+            Spacer(Modifier.width(8.dp))
+            // Tool name — accent-colored, semi-bold, single line.
+            Text(
+                text = toolName,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontFamily = if (isTerminalLike) mono else MaterialTheme.typography.labelMedium.fontFamily,
+                    fontWeight = FontWeight.SemiBold,
+                ),
+                color = if (isRunning) accent else if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+            // One-line summary / preview.
+            if (!expanded && preview != null) {
                 Spacer(Modifier.width(8.dp))
                 Text(
-                    text = toolName,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        fontFamily = if (isTerminalLike) mono else MaterialTheme.typography.labelMedium.fontFamily,
+                    text = preview,
+                    style = MaterialTheme.typography.bodySmall.copy(
+                        fontFamily = if (isTerminalLike) mono else MaterialTheme.typography.bodySmall.fontFamily,
                     ),
-                    color = fg,
-                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier.weight(1f),
                 )
+            }
+            // Expand affordance — only when there is detail to reveal.
+            if (arguments != null || result != null) {
                 Icon(
                     imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                     contentDescription = null,
-                    tint = fg.copy(alpha = 0.6f),
-                    modifier = Modifier.size(16.dp),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    modifier = Modifier.size(14.dp),
                 )
             }
-
-            // Collapsed preview — wraps up to 2 lines so longer commands still readable.
-            if (!expanded) {
-                val preview = when {
-                    isRunning && !arguments.isNullOrBlank() -> arguments
-                    !isRunning && !result.isNullOrBlank() -> summarizeToolResult(result)
-                    else -> null
-                }
-                if (!preview.isNullOrBlank()) {
-                    Spacer(Modifier.size(4.dp))
-                    Text(
-                        text = preview,
-                        style = MaterialTheme.typography.bodySmall.copy(
-                            fontFamily = if (isTerminalLike) mono else MaterialTheme.typography.bodySmall.fontFamily,
-                        ),
-                        color = fg.copy(alpha = 0.7f),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis,
-                    )
-                }
-            }
-
-            // Expanded detail — FULL text, automatic wrapping, no truncation.
-            if (expanded) {
+        }
+        if (expanded) {
+            Column(modifier = Modifier.padding(start = 22.dp, bottom = 6.dp)) {
                 if (!arguments.isNullOrBlank()) {
-                    Spacer(Modifier.size(6.dp))
                     Text(
                         text = if (isTerminalLike) "$ " + arguments else "参数: $arguments",
                         style = MaterialTheme.typography.bodySmall.copy(fontFamily = mono),
-                        color = if (isTerminalLike) Color(0xFF4EC9B0) else fg.copy(alpha = 0.85f),
+                        color = if (isTerminalLike) accent else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f),
                     )
                 }
                 if (!result.isNullOrBlank()) {
-                    Spacer(Modifier.size(6.dp))
-                    // Full readable result with wrapping — no truncation.
+                    Spacer(Modifier.size(4.dp))
                     Text(
                         text = summarizeToolResult(result, 4000),
                         style = MaterialTheme.typography.bodySmall.copy(fontFamily = mono),
-                        color = fg,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 if (isRunning) {
-                    Spacer(Modifier.size(6.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        val dotTrans = rememberInfiniteTransition()
-                        val alpha by dotTrans.animateFloat(
-                            initialValue = 0.3f,
-                            targetValue = 1f,
-                            animationSpec = infiniteRepeatable(
-                                animation = tween(600, easing = FastOutSlowInEasing),
-                                repeatMode = RepeatMode.Reverse,
-                            ),
-                        )
-                        Box(
-                            Modifier
-                                .size(6.dp)
-                                .graphicsLayer { this.alpha = alpha }
-                                .background(accent, CircleShape),
-                        )
-                        Spacer(Modifier.width(6.dp))
-                        Text(
-                            text = "执行中…",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = accent,
-                        )
-                    }
+                    Spacer(Modifier.size(4.dp))
+                    Text(
+                        text = "执行中…",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = accent,
+                    )
                 }
-            }
             }
         }
     }
