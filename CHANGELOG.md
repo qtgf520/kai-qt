@@ -1,3 +1,10 @@
+## v3.2.12 — 2026-10-12 (Kai2 9000 正式版)
+### Refactor（聊天流水渲染根治性简化，正式发布）
+- 在 v3.2.11-2 测试版验证通过的基础上正式发布：删除全部"归组预计算"逻辑（`reasoningSegmentsByAssistantId` / `toolStepsByAssistantId` / `IN_FLIGHT_CYCLE_ID` / `suppressedThinkingIds` / `groupedInAnswer` / `hasInflightCycle` 六套互相纠缠的逻辑全部移除）
+- 回到逐条朴素渲染：history 按序逐条独立显示，用户消息→思考→工具执行→工具结果→再思考→答案，每条都显示、不隐藏、不合并、不乱挂
+- 思考条目原地实时显示：进行中的思考以独立轻量思考块（无"AI 回复"头部）在当前消息位置逐字书写流出，不再折叠到最终答案上方、不再被"思考中"状态行替代
+- 工具气泡永不消失：TOOL_EXECUTING / TOOL 条目始终独立渲染为紧凑单行（状态点/勾 + 工具名 + 摘要），不再因匹配归组而隐藏
+- 旧消息思考不再误跑：只有"loading 且是最后一条 history"的思考条目才动画书写，历史思考块完整静态展示
 ## v3.2.11-2 — 2026-10-12 (Kai2 9000 测试版)
 ### Refactor（聊天流水渲染根治性简化）
 - **删除全部"归组预计算"逻辑**：`reasoningSegmentsByAssistantId` / `toolStepsByAssistantId` / `IN_FLIGHT_CYCLE_ID` / `suppressedThinkingIds` / `groupedInAnswer` / `hasInflightCycle` 六套互相纠缠的逻辑全部移除
