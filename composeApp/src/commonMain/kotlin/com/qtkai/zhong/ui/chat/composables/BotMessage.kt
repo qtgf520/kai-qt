@@ -114,6 +114,9 @@ internal fun BotMessage(
     // Tool pipeline steps between thinking and answer — renders the reply as one
     // continuous working session (think → call → result → answer).
     toolSteps: ImmutableList<ToolStep> = persistentListOf(),
+    // When false (standalone thinking block), the "AI 回复" header row is hidden
+    // so the entry reads as a light inline thinking note, not a full message.
+    showHeader: Boolean = true,
 ) {
     // The FINAL ANSWER renders in full — no typewriter. Only the reasoning/thinking
     // block above animates progressively (see ReasoningBlockquote); the answer text
@@ -142,23 +145,25 @@ internal fun BotMessage(
             // Minimal header: a small quiet label on the left, optional service
             // name on the right. No divider, no chrome — the reference keeps the
             // meta bar feather-light so the content below reads uninterrupted.
-            Row(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = 16.dp, top = 6.dp, end = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(Res.string.bot_message_header_label),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f),
-                )
-                if (!serviceLabel.isNullOrBlank()) {
+            if (showHeader) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(start = 16.dp, top = 6.dp, end = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
                     Text(
-                        text = serviceLabel,
+                        text = stringResource(Res.string.bot_message_header_label),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f),
                     )
+                    if (!serviceLabel.isNullOrBlank()) {
+                        Text(
+                            text = serviceLabel,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                        )
+                    }
                 }
             }
             val nonBlankSegments = remember(reasoningSegments) {

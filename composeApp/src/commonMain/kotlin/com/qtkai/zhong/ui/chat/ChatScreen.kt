@@ -92,7 +92,6 @@ import com.qtkai.zhong.ui.chat.composables.PendingSmsBanners
 import com.qtkai.zhong.ui.chat.composables.QuestionInput
 import com.qtkai.zhong.ui.chat.composables.ServiceSelector
 import com.qtkai.zhong.ui.chat.composables.ToolPipelineMessage
-import com.qtkai.zhong.ui.chat.composables.ToolStep
 import com.qtkai.zhong.ui.chat.composables.TopBar
 import com.qtkai.zhong.ui.chat.composables.TrailingIcon
 import com.qtkai.zhong.ui.chat.composables.UserMessage
@@ -122,7 +121,6 @@ import kai.composeapp.generated.resources.interactive_ui_parsing_failed
 import kai.composeapp.generated.resources.interactive_welcome_subtitle
 import kai.composeapp.generated.resources.interactive_welcome_title
 import kai.composeapp.generated.resources.scroll_to_bottom_content_description
-import kai.composeapp.generated.resources.waiting_thinking
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -732,12 +730,6 @@ private fun ChatModeScreen(
                             }
 
                             val lastAssistantId = remember(uiState.history) { uiState.history.lastRenderedAssistant()?.id }
-                            // Virtual cycle id for the in-flight (no answer yet) reply. Every thinking
-                            // segment and tool step of the current working turn folds under this id so
-                            // the UI renders ONE continuously growing pipeline (think → call → result)
-                            // instead of scattered standalone bubbles — the same model Operit uses where
-                            // a single AI reply is one flowing unit that grows as work happens.
-                            val IN_FLIGHT_CYCLE_ID = "__in_flight_cycle__"
                             // Pair every user submission with its originating assistant so the kai-ui
                             // renders once (on the assistant side) with a frozen snapshot — never as a
                             // separate user-side card. pressedEvent + values persist across the loading
@@ -774,126 +766,10 @@ private fun ChatModeScreen(
                             val frozenByAssistantId = pairings.first
                             val userIdByAssistantId = pairings.second
                             val executingToolsState = rememberExecutingTools(uiState.history)
-
                             val fallbackStatusText = uiState.fallbackStatus?.let { status ->
                                 val failed = stringResource(Res.string.fallback_service_failed, status.serviceName, uiErrorText(status.errorReason))
                                 val next = status.nextServiceName?.let { stringResource(Res.string.fallback_trying_next, it) }
                                 if (next != null) "$failed\n$next" else failed
-                            }
-
-                            // Group every reasoning segment in a response (intermediate tool-call /
-                            // thinking-only turns plus the final answer's own reasoning) under the
-                            // answer-bearing assistant message, so each response shows a single
-                            // collapsible "Thinking" section instead of N standalone ones.
-                            val (reasoningSegmentsByAssistantId, suppressedThinkingIds) = remember(uiState.history, uiState.isLoading) {
-                                val byAnswerId = mutableMapOf<String, ImmutableList<String>>()
-                                val suppressed = mutableSetOf<String>()
-                                val pending = mutableListOf<String>()
-                                val pendingThinkingIds = mutableListOf<String>()
-                                for (entry in uiState.history) {
-                                    when {
-                                        entry.role == History.Role.USER -> {
-                                            pending.clear()
-                                            pendingThinkingIds.clear()
-                                        }
-
-                                        entry.role == History.Role.ASSISTANT &&
-                                            entry.isThinking &&
-                                            entry.content.isNotEmpty() -> {
-                                            pending.add(entry.content)
-                                            pendingThinkingIds.add(entry.id)
-                                        }
-
-                                        entry.role == History.Role.ASSISTANT &&
-                                            !entry.isThinking &&
-                                            entry.content.isNotEmpty() -> {
-                                            val combined = buildList {
-                                                addAll(pending)
-                                                entry.reasoningContent?.takeIf { it.isNotBlank() }?.let { add(it) }
-                                            }
-                                            if (combined.isNotEmpty()) byAnswerId[entry.id] = combined.toImmutableList()
-                                            suppressed.addAll(pendingThinkingIds)
-                                            pending.clear()
-                                            pendingThinkingIds.clear()
-                                        }
-
-                                        entry.role == History.Role.ASSISTANT &&
-                                            entry.toolCalls != null -> {
-                                            // Assistant turn with tool calls but no answer text yet —
-                                            // capture its reasoning, attach to the eventual answer.
-                                            entry.reasoningContent
-                                                ?.takeIf { it.isNotBlank() }
-                                                ?.let { pending.add(it) }
-                                        }
-                                    }
-                                }
-                                // In-flight: the user is still waiting for the answer but earlier
-                                // thinking turns are already in history. Collapse them into the most
-                                // recent thinking entry so the user sees ONE growing Thinking section
-                                // instead of a separate bubble per tool-loop iteration.
-                                if (pendingThinkingIds.isNotEmpty()) {
-                                    val lastId = pendingThinkingIds.last()
-                                    byAnswerId[lastId] = pending.toImmutableList()
-                                    // Only while a turn is truly in flight do we fold under the
-                                    // virtual in-flight id and suppress the standalone rows; once
-                                    // the answer lands (or the run is cancelled) the real answer
-                                    // id owns the full pipeline.
-                                    if (uiState.isLoading) {
-                                        byAnswerId[IN_FLIGHT_CYCLE_ID] = pending.toImmutableList()
-                                        for (i in 0 until pendingThinkingIds.size) {
-                                            suppressed.add(pendingThinkingIds[i])
-                                        }
-                                    } else {
-                                        for (i in 0 until pendingThinkingIds.size - 1) {
-                                            suppressed.add(pendingThinkingIds[i])
-                                        }
-                                    }
-                                }
-                                byAnswerId to suppressed
-                            }
-                            // Group every tool invocation + result in a response cycle under the
-                            // answer-bearing assistant message (same pairing as reasoning segments),
-                            // so the whole reply renders as one continuous pipeline in BotMessage:
-                            // thinking -> tool calls -> results -> final answer.
-                            val toolStepsByAssistantId = remember(uiState.history, uiState.isLoading) {
-                                val byAnswer = mutableMapOf<String, ImmutableList<ToolStep>>()
-                                val pendingTools = mutableListOf<ToolStep>()
-                                for (entry in uiState.history) {
-                                    when {
-                                        entry.role == History.Role.USER -> pendingTools.clear()
-                                        entry.role == History.Role.TOOL_EXECUTING || entry.role == History.Role.TOOL -> {
-                                            val name = entry.toolName ?: entry.content.takeIf { it.isNotBlank() } ?: "tool"
-                                            pendingTools.add(
-                                                ToolStep(
-                                                    toolName = name,
-                                                    arguments = entry.toolCalls?.firstOrNull()?.arguments,
-                                                    result = if (entry.role == History.Role.TOOL) entry.content else null,
-                                                    status = if (entry.role == History.Role.TOOL_EXECUTING) "running" else "done",
-                                                    // Exact history id so the renderer can drop the standalone
-                                                    // row without ever confusing a same-named tool from another
-                                                    // reply cycle.
-                                                    sourceId = entry.id,
-                                                ),
-                                            )
-                                        }
-                                        entry.role == History.Role.ASSISTANT &&
-                                            entry.content.isNotEmpty() &&
-                                            !entry.isThinking -> {
-                                            if (pendingTools.isNotEmpty()) {
-                                                byAnswer[entry.id] = pendingTools.toImmutableList()
-                                            }
-                                            pendingTools.clear()
-                                        }
-                                    }
-                                }
-                                // In-flight tools (before the answer arrives) fold under the virtual
-                                // in-flight cycle id so they render inside the growing pipeline — but
-                                // only while a turn is actually running. Once the answer lands the
-                                // tools belong to the real answer id.
-                                if (pendingTools.isNotEmpty() && uiState.isLoading) {
-                                    byAnswer[IN_FLIGHT_CYCLE_ID] = pendingTools.toImmutableList()
-                                }
-                                byAnswer
                             }
                             val showScrollToBottom by remember {
                                 derivedStateOf {
@@ -934,7 +810,25 @@ private fun ChatModeScreen(
                                             }
 
                                             History.Role.ASSISTANT -> {
-                                                if (history.content.isNotEmpty() && !history.isThinking) {
+                                                if (history.isThinking && history.content.isNotEmpty()) {
+                                                    // Thinking entry: render IN PLACE as its own growing
+                                                    // thinking block — never folded into the answer, never
+                                                    // suppressed, never animated on an old message. The
+                                                    // current in-flight one writes itself out live.
+                                                    val isLiveThinking = uiState.isLoading &&
+                                                        history.id == uiState.history.lastOrNull()?.id
+                                                    BotMessage(
+                                                        message = "",
+                                                        textToSpeech = null,
+                                                        isSpeaking = false,
+                                                        setIsSpeaking = {},
+                                                        reasoningSegments = persistentListOf(history.content),
+                                                        animateReasoning = isLiveThinking,
+                                                        // Standalone thinking note: no "AI 回复" header row,
+                                                        // just the light thinking block itself.
+                                                        showHeader = false,
+                                                    )
+                                                } else if (history.content.isNotEmpty()) {
                                                     val isLastAssistant = history.id == lastAssistantId
                                                     val frozen = frozenByAssistantId[history.id]
                                                     val pairedUserId = userIdByAssistantId[history.id]
@@ -956,121 +850,40 @@ private fun ChatModeScreen(
                                                         } else {
                                                             null
                                                         },
-                                                        reasoningSegments = reasoningSegmentsByAssistantId[history.id] ?: persistentListOf(),
-                                                        // Only the CURRENT in-flight turn animates its thinking —
-                                                        // never a historic answer, even if it happens to be the
-                                                        // last assistant row while a new turn is loading. The
-                                                        // in-flight cycle id only exists while THIS turn runs,
-                                                        // so animating is safe only when this message owns it.
-                                                        animateReasoning = uiState.isLoading &&
-                                                            history.id == lastAssistantId &&
-                                                            reasoningSegmentsByAssistantId.keys.any { it == history.id },
-                                                        // Fallback service label shows in the message header (mirrors Operit's meta bar).
+                                                        // Fallback service label shows in the message header.
                                                         serviceLabel = history.fallbackServiceName,
-                                                        toolSteps = toolStepsByAssistantId[history.id] ?: persistentListOf(),
                                                         // [REQ-5.4] Delete this message
                                                         onDelete = { uiState.actions.deleteMessage(history.id) },
                                                     )
-                                                } else if (history.isThinking &&
-                                                    history.content.isNotEmpty() &&
-                                                    history.id !in suppressedThinkingIds
-                                                ) {
-                                                    if (uiState.isLoading) {
-                                                        // In-flight thinking: render a compact status row right at
-                                                        // the current position instead of a full standalone bubble.
-                                                        // The full reasoning segments fold into the final answer's
-                                                        // BotMessage once the reply completes (grouped above), so
-                                                        // the user watches one continuous pipeline — the thinking
-                                                        // status sits where the work is happening, never "above".
-                                                        val isLatestThinking = history.id == uiState.history.lastOrNull {
-                                                            it.isThinking && it.content.isNotEmpty()
-                                                        }?.id
-                                                        WaitingResponseRow(
-                                                            executingTools = executingToolsState.tools,
-                                                            isStatusOnly = true,
-                                                            statusText = if (isLatestThinking) {
-                                                                stringResource(Res.string.waiting_thinking)
-                                                            } else {
-                                                                null
-                                                            },
-                                                        )
-                                                    } else {
-                                                        // Not running any more (history replay / cancelled run):
-                                                        // a thinking-only entry that never got an answer renders
-                                                        // as a real, collapsible thinking block — not a fake
-                                                        // "正在思考…" status row.
-                                                        BotMessage(
-                                                            message = "",
-                                                            textToSpeech = null,
-                                                            isSpeaking = false,
-                                                            setIsSpeaking = {},
-                                                            reasoningSegments = persistentListOf(history.content),
-                                                            animateReasoning = false,
-                                                        )
-                                                    }
                                                 }
                                             }
-
                                             History.Role.TOOL_EXECUTING -> {
-                                                // In-flight tool calls render inline inside the owning
-                                                // BotMessage pipeline when grouped (including the live
-                                                // in-flight cycle); no standalone row needed. Matched by
-                                                // exact history id so a same-named tool from another
-                                                // reply cycle is never wrongly hidden.
-                                                val groupedInAnswer = toolStepsByAssistantId.values.any { steps ->
-                                                    steps.any { it.sourceId == history.id }
-                                                }
-                                                if (!groupedInAnswer) {
-                                                    ToolPipelineMessage(
-                                                        toolName = history.toolName ?: history.content.ifBlank { "tool" },
-                                                        status = "running",
-                                                        arguments = history.toolCalls?.firstOrNull()?.arguments,
-                                                    )
-                                                }
+                                                // In-flight tool call: compact single-line pipeline row,
+                                                // always shown in place (never hidden).
+                                                ToolPipelineMessage(
+                                                    toolName = history.toolName ?: history.content.ifBlank { "tool" },
+                                                    status = "running",
+                                                    arguments = history.toolCalls?.firstOrNull()?.arguments,
+                                                )
                                             }
                                             History.Role.TOOL -> {
-                                                val groupedInAnswer = toolStepsByAssistantId.values.any { steps ->
-                                                    steps.any { it.sourceId == history.id }
-                                                }
-                                                if (!groupedInAnswer) {
-                                                    ToolPipelineMessage(
-                                                        toolName = history.toolName ?: "tool",
-                                                        status = "done",
-                                                        result = history.content,
-                                                    )
-                                                }
+                                                // Tool result: compact single-line pipeline row,
+                                                // always shown in place (never hidden).
+                                                ToolPipelineMessage(
+                                                    toolName = history.toolName ?: "tool",
+                                                    status = "done",
+                                                    result = history.content,
+                                                )
                                             }
-                                        }
-                                    }
-                                    // In-flight reply cycle (answer not arrived yet): the agent is
-                                    // already thinking / calling tools. Render ONE continuously growing
-                                    // pipeline at the bottom of the stream (right where the work is
-                                    // happening) instead of scattered standalone bubbles — the same
-                                    // "one reply = one flowing unit" model the reference uses.
-                                    val hasInflightCycle = uiState.isLoading &&
-                                        (reasoningSegmentsByAssistantId[IN_FLIGHT_CYCLE_ID] != null ||
-                                            toolStepsByAssistantId[IN_FLIGHT_CYCLE_ID] != null)
-                                    if (hasInflightCycle) {
-                                        item(key = IN_FLIGHT_CYCLE_ID) {
-                                            BotMessage(
-                                                message = "",
-                                                textToSpeech = null,
-                                                isSpeaking = false,
-                                                setIsSpeaking = {},
-                                                reasoningSegments = reasoningSegmentsByAssistantId[IN_FLIGHT_CYCLE_ID] ?: persistentListOf(),
-                                                toolSteps = toolStepsByAssistantId[IN_FLIGHT_CYCLE_ID] ?: persistentListOf(),
-                                                animateReasoning = true,
-                                            )
                                         }
                                     }
                                     // Skip the generic "thinking" row during a pending kai-ui submission — the
                                     // pressed button's pulse already signals work in flight. Keep it for tool
                                     // activity so tool feedback isn't lost.
                                     val showWaitingRow = uiState.isLoading &&
-                                        !hasInflightCycle &&
                                         (frozenByAssistantId.values.none { it.isPending } || executingToolsState.tools.isNotEmpty()) &&
-                                        // The live "正在思考…" reasoning bubble already communicates the
-                                        // in-flight state — skip the redundant bottom status row while it's up.
+                                        // The live thinking block already communicates the in-flight
+                                        // state — skip the redundant bottom status row while it's up.
                                         uiState.history.none { it.isThinking && it.content.isNotEmpty() }
                                     if (showWaitingRow) {
                                         item(key = "loading") {
