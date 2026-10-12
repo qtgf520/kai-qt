@@ -322,12 +322,13 @@ private fun ReasoningBlockquote(
             visibleChars = fullText.length
             return@LaunchedEffect
         }
-        // Handwriting pace: ~1 char every 18ms (≈55 chars/sec) — slow enough to
-        // feel like someone writing, fast enough not to annoy. Continues from the
-        // current progress each time the effect restarts (thinking text grew).
+        // Handwriting pace: ~1 char every 35ms (≈28 chars/sec) — deliberate and
+        // human, so the thinking text visibly "writes itself" instead of flashing
+        // through in a burst. Continues from the current progress each time the
+        // effect restarts (thinking text grew).
         while (visibleChars < fullText.length) {
             visibleChars = (visibleChars + 1).coerceAtMost(fullText.length)
-            delay(18)
+            delay(35)
         }
     }
     val revealedText = if (visibleChars >= fullText.length) fullText else fullText.take(visibleChars)

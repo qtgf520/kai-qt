@@ -1,7 +1,7 @@
 [versions]
 agp = "9.4.0"
-appVersion = "3.2.11"
-android-versionCode = "170"
+appVersion = "3.2.11-1"
+android-versionCode = "171"
 android-compileSdk = "37"
 android-minSdk = "26"
 android-targetSdk = "37"
@@ -68,6 +68,7 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
 ktor-network-tls = { module = "io.ktor:ktor-network-tls", version.ref = "ktor" }
+okhttp-sse = { module = "com.squareup.okhttp3:okhttp-sse", version = "4.12.0" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
 play-review = { module = "com.google.android.play:review-ktx", version.ref = "playReview" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformSettings" }

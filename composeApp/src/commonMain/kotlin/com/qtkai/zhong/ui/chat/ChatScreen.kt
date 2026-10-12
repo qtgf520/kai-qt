@@ -957,8 +957,14 @@ private fun ChatModeScreen(
                                                             null
                                                         },
                                                         reasoningSegments = reasoningSegmentsByAssistantId[history.id] ?: persistentListOf(),
-                                                        // Only the latest in-flight answer hand-writes its thinking; older ones render in full.
-                                                        animateReasoning = isLastAssistant && uiState.isLoading,
+                                                        // Only the CURRENT in-flight turn animates its thinking —
+                                                        // never a historic answer, even if it happens to be the
+                                                        // last assistant row while a new turn is loading. The
+                                                        // in-flight cycle id only exists while THIS turn runs,
+                                                        // so animating is safe only when this message owns it.
+                                                        animateReasoning = uiState.isLoading &&
+                                                            history.id == lastAssistantId &&
+                                                            reasoningSegmentsByAssistantId.keys.any { it == history.id },
                                                         // Fallback service label shows in the message header (mirrors Operit's meta bar).
                                                         serviceLabel = history.fallbackServiceName,
                                                         toolSteps = toolStepsByAssistantId[history.id] ?: persistentListOf(),
