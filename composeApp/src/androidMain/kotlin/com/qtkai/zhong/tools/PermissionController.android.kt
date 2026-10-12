@@ -41,8 +41,8 @@ private fun permissionsFor(permission: AppPermission): Array<String> = when (per
     // READ_SMS/SEND_SMS aren't declared in the Play Store flavor's merged manifest, so
     // checkSelfPermission returns DENIED there and the feature stays invisible.
     AppPermission.READ_SMS -> arrayOf(Manifest.permission.READ_SMS)
-
     AppPermission.SEND_SMS -> arrayOf(Manifest.permission.SEND_SMS)
+    AppPermission.RECORD_AUDIO -> arrayOf(Manifest.permission.RECORD_AUDIO)
 
     // Only gated on Android 17+ for apps targeting SDK 37+.
     AppPermission.LOCAL_NETWORK -> if (Build.VERSION.SDK_INT >= LOCAL_NETWORK_ENFORCEMENT_SDK) {

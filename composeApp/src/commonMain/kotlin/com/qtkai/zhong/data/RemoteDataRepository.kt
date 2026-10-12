@@ -108,7 +108,7 @@ import kotlin.uuid.Uuid
 private const val MAX_TOOL_ITERATIONS = 15
 private const val MIN_TOOL_DISPLAY_MS = 2000L
 private const val MAX_REPEATED_TOOL_CALLS = 3
-private const val MAX_API_RETRIES = 2
+private const val MAX_API_RETRIES = 6
 private const val MAX_HEARTBEAT_MESSAGES = 50
 private const val ESTIMATED_CHARS_PER_TOKEN = 4
 private const val COMPACTION_THRESHOLD = 0.7 // Compact when history exceeds 70% of context window
@@ -1467,7 +1467,12 @@ class RemoteDataRepository(
     private fun isNonRetryableException(e: Exception): Boolean = e is AnthropicInsufficientCreditsException || e is OpenAICompatibleQuotaExhaustedException
 
     /**
-     * Retries an API call with simple exponential backoff.
+     * Retries an API call with exponential backoff.
+     *
+     * The app must keep working through transient failures — provider hiccups, network
+     * drops, timeouts — without dying. Each attempt backs off progressively
+     * (1s, 2s, 4s, 8s, 16s, 30s cap) so retries stay aggressive early and gentle late.
+     * Non-retryable failures (quota exhausted, insufficient credits) surface immediately.
      */
     private suspend fun <T> retryApiCall(block: suspend () -> T): T {
         var lastException: Exception? = null
@@ -1479,7 +1484,8 @@ class RemoteDataRepository(
                 if (isNonRetryableException(e)) throw e
                 lastException = e
                 if (attempt < MAX_API_RETRIES) {
-                    delay((attempt + 1).seconds)
+                    val backoffSeconds = (1L shl attempt.coerceAtMost(4)).coerceAtMost(30L)
+                    delay(backoffSeconds.seconds)
                 }
             }
         }

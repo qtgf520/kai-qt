@@ -15,6 +15,7 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.Url
 import io.ktor.http.contentType
 import io.ktor.http.isSuccess
+import kotlinx.coroutines.delay
 import kai.composeapp.generated.resources.Res
 import kai.composeapp.generated.resources.tool_fetch_url_description
 import kai.composeapp.generated.resources.tool_fetch_url_name
@@ -84,33 +85,45 @@ object FetchUrlTool : Tool {
         }
 
         return try {
-            val response = client.request(urlArg) {
-                method = HttpMethod.parse(methodArg)
-                header("User-Agent", "Mozilla/5.0 (compatible; Kai/1.0)")
-                if (bodyArg != null && methodArg == "POST") {
-                    contentType(
-                        contentTypeArg?.let { runCatching { ContentType.parse(it) }.getOrNull() }
-                            ?: ContentType.Application.FormUrlEncoded,
+            // Network hiccups shouldn't kill a tool call: GET/HEAD are safe to retry
+            // (idempotent); POST is NOT retried to avoid duplicate side effects.
+            val maxAttempts = if (methodArg == "GET" || methodArg == "HEAD") 3 else 1
+            var lastError: String? = null
+            var responseBody: Any? = null
+            for (attempt in 1..maxAttempts) {
+                try {
+                    val response = client.request(urlArg) {
+                        method = HttpMethod.parse(methodArg)
+                        header("User-Agent", "Mozilla/5.0 (compatible; Kai/1.0)")
+                        if (bodyArg != null && methodArg == "POST") {
+                            contentType(
+                                contentTypeArg?.let { runCatching { ContentType.parse(it) }.getOrNull() }
+                                    ?: ContentType.Application.FormUrlEncoded,
+                            )
+                            setBody(bodyArg)
+                        }
+                    }
+                    val responseCt = response.headers["Content-Type"].orEmpty()
+                    val rawBody = if (methodArg == "HEAD") "" else response.bodyAsText()
+                    val body = if (responseCt.startsWith("text/html", ignoreCase = true)) {
+                        rawBody.replace(HTML_TAG_REGEX, "").decodeHtmlEntities()
+                    } else {
+                        rawBody
+                    }
+                    responseBody = mapOf(
+                        "success" to response.status.isSuccess(),
+                        "status" to response.status.value,
+                        "final_url" to response.call.request.url.toString(),
+                        "content_type" to responseCt,
+                        "body" to body,
                     )
-                    setBody(bodyArg)
+                    break
+                } catch (e: Exception) {
+                    lastError = e.message ?: "unknown error"
+                    if (attempt < maxAttempts) delay(1000L * attempt)
                 }
             }
-
-            val responseCt = response.headers["Content-Type"].orEmpty()
-            val rawBody = if (methodArg == "HEAD") "" else response.bodyAsText()
-            val body = if (responseCt.startsWith("text/html", ignoreCase = true)) {
-                rawBody.replace(HTML_TAG_REGEX, "").decodeHtmlEntities()
-            } else {
-                rawBody
-            }
-
-            mapOf(
-                "success" to response.status.isSuccess(),
-                "status" to response.status.value,
-                "final_url" to response.call.request.url.toString(),
-                "content_type" to responseCt,
-                "body" to body,
-            )
+            responseBody ?: mapOf("success" to false, "error" to "fetch failed: $lastError")
         } catch (e: Exception) {
             mapOf("success" to false, "error" to "fetch failed: ${e.message}")
         }

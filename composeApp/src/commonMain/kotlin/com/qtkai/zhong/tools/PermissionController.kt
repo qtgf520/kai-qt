@@ -19,9 +19,9 @@ enum class AppPermission {
     POST_NOTIFICATIONS,
 
     READ_SMS,
-
     SEND_SMS,
-
+    /** Microphone access for speech recognition (voice input). */
+    RECORD_AUDIO,
     /**
      * Access to LAN addresses. Android 17+ blocks all traffic to local network addresses for apps
      * targeting SDK 37+ unless granted, which silently breaks self-hosted servers (Jan, Ollama,

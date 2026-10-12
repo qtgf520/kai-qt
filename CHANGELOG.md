@@ -1,3 +1,14 @@
+## v3.2.11 — 2026-10-12 (Kai2 9000 正式版)
+### Features（稳定性与自动化强化）
+- 语音输入修复：麦克风按钮点击前请求 RECORD_AUDIO 权限（新增 AppPermission.RECORD_AUDIO + Android 映射）；检测系统语音识别服务，缺失/启动失败时 Toast 友好提示，不再静默无反应
+- 自动重试强化：API 调用重试从 2 次提升到 6 次，配合指数退避（1s/2s/4s/8s/16s/30s 封顶）——模型不稳定或网络波动自动重试，不掉线
+- fetch_url 网络重试：GET/HEAD 自动重试 3 次（幂等安全），POST 不重试防重复副作用——联网工具更稳
+
+### 已具备能力（确认完善）
+- 定时任务自动化：schedule_task（execute_at 一次性 / cron 周期 / on_heartbeat 心跳常驻）+ DaemonService 前台保活 + TaskScheduler 轮询 + 失败指数退避——任务自动跑不掉线
+- 终端远程 SSH/scp/sftp：ssh_configure_host 写 ~/.ssh/config 别名 + 沙盒 openssh-client/rsync/lftp/curl（base/optional 包已含）+ sshpass 密码通道 + ServerAlive 保活
+- 技能自主管理、记忆搜索、回复周期连续流水、语音/视觉轻量化（v3.2.10 系列）
+
 ## v3.2.10-2 — 2026-10-12 (Kai2 9000 测试版)
 ### Visual（消息视觉全面轻量化，对齐参考工作流渲染）
 - 工具调用从"重色块卡片"改为"紧凑单行"：状态圆点/绿勾 + 工具名 + 单行摘要，点击展开详情——不再喧宾夺主

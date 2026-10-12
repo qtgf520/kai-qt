@@ -57,6 +57,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.okhttp.OkHttp
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent
 import org.koin.java.KoinJavaComponent.inject
 import kotlin.coroutines.CoroutineContext
@@ -349,19 +350,60 @@ actual fun createVoiceInputLauncher(
             .orEmpty()
         if (text.isNotEmpty()) onResult(text)
     }
+    // Runtime mic permission gate: launching RecognizerIntent without RECORD_AUDIO
+    // granted fails silently (or the system dialog never opens), which is exactly
+    // the "voice button does nothing" bug. The permission launcher is set up once
+    // here and fired right before speech recognition starts.
+    val micPermissionController = androidx.compose.runtime.remember {
+        com.qtkai.zhong.tools.PermissionController(
+            com.qtkai.zhong.tools.AppPermission.RECORD_AUDIO,
+        )
+    }
+    com.qtkai.zhong.tools.SetupPermissionHandler(micPermissionController)
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    val recognizerAvailable = androidx.compose.runtime.remember {
+        android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            .resolveActivity(context.packageManager) != null
+    }
     return {
-        val speechIntent = android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-            putExtra(
-                android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
-            )
-            putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault().toLanguageTag())
-            putExtra(android.speech.RecognizerIntent.EXTRA_PROMPT, "说话输入…")
+        if (!recognizerAvailable) {
+            android.widget.Toast.makeText(
+                context,
+                "未检测到语音识别服务（无 Google/系统语音识别）",
+                android.widget.Toast.LENGTH_SHORT,
+            ).show()
+        } else if (!micPermissionController.hasPermission()) {
+            // Ask for mic permission first; only then launch recognition.
+            scope.launch(kotlinx.coroutines.Dispatchers.Main) {
+                val granted = micPermissionController.requestPermission()
+                if (granted) launchSpeechRecognition(context, launcher)
+            }
+        } else {
+            launchSpeechRecognition(context, launcher)
         }
-        try {
-            launcher.launch(speechIntent)
-        } catch (_: Exception) {
-            // No speech recognizer available — silently no-op.
-        }
+    }
+}
+
+private fun launchSpeechRecognition(
+    context: android.content.Context,
+    launcher: androidx.activity.compose.ManagedActivityResultLauncher<android.content.Intent, androidx.activity.result.ActivityResult>,
+) {
+    val speechIntent = android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+        putExtra(
+            android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+            android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM,
+        )
+        putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE, java.util.Locale.getDefault().toLanguageTag())
+        putExtra(android.speech.RecognizerIntent.EXTRA_PROMPT, "说话输入…")
+    }
+    try {
+        launcher.launch(speechIntent)
+    } catch (_: Exception) {
+        // No speech recognizer available — surface a toast instead of silent no-op.
+        android.widget.Toast.makeText(
+            context,
+            "语音识别启动失败，请检查语音服务",
+            android.widget.Toast.LENGTH_SHORT,
+        ).show()
     }
 }
